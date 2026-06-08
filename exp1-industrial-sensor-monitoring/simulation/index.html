@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Industrial Sensor Monitoring & Machine Health Analysis</title>
+
+<link rel="stylesheet" href="css/main.css">
+
+</head>
+<body>
+
+<div class="dashboard">
+
+    <header class="header">
+        <h1>Industrial Sensor Monitoring & Machine Health Analysis</h1>
+        <p>SmartFactory 4.0 Virtual Lab</p>
+    </header>
+
+    <section class="sensor-grid">
+
+        <div class="sensor-card">
+            <h3>Temperature</h3>
+            <div id="tempDisplay">40 °C</div>
+        </div>
+
+        <div class="sensor-card">
+            <h3>Pressure</h3>
+            <div id="pressureDisplay">5 Bar</div>
+        </div>
+
+        <div class="sensor-card">
+            <h3>Vibration</h3>
+            <div id="vibrationDisplay">5 mm/s</div>
+        </div>
+
+        <div class="sensor-card">
+            <h3>Humidity</h3>
+            <div id="humidityDisplay">50 %</div>
+        </div>
+
+    </section>
+
+    <section class="control-health">
+
+        <div class="control-panel">
+
+            <h2>Sensor Controls</h2>
+
+            <label>
+                Temperature
+                <span id="tempValue">40</span>
+            </label>
+            <input type="range" id="temperature"
+                   min="0" max="100" value="40">
+
+            <label>
+                Pressure
+                <span id="pressureValue">5</span>
+            </label>
+            <input type="range" id="pressure"
+                   min="0" max="20" value="5">
+
+            <label>
+                Vibration
+                <span id="vibrationValue">5</span>
+            </label>
+            <input type="range" id="vibration"
+                   min="0" max="20" value="5">
+
+            <label>
+                Humidity
+                <span id="humidityValue">50</span>
+            </label>
+            <input type="range" id="humidity"
+                   min="0" max="100" value="50">
+
+            <div class="btn-row">
+                <button id="calculateBtn">Calculate Health</button>
+                <button id="resetBtn">Reset</button>
+            </div>
+
+        </div>
+
+        <div class="health-panel">
+
+            <div class="health-circle">
+                <span id="healthPercent">100%</span>
+            </div>
+
+            <h3>Machine Health</h3>
+
+        </div>
+
+    </section>
+
+    <section class="kpi-grid">
+
+        <div class="kpi-card">
+            <h4>Status</h4>
+            <p id="overallStatus">Excellent</p>
+        </div>
+
+        <div class="kpi-card">
+            <h4>Risk</h4>
+            <p id="riskLevel">Low</p>
+        </div>
+
+        <div class="kpi-card">
+            <h4>Performance</h4>
+            <p id="performanceIndex">100</p>
+        </div>
+
+        <div class="kpi-card">
+            <h4>Reliability</h4>
+            <p id="reliability">High</p>
+        </div>
+
+        <div class="kpi-card">
+            <h4>Maintenance</h4>
+            <p id="maintenance">30 Days</p>
+        </div>
+
+    </section>
+
+    <section class="analysis-section">
+
+        <div class="observation-box">
+
+            <h2>Observation</h2>
+
+            <p id="observation">
+                Machine operating under normal conditions.
+            </p>
+
+            <h2>Recommendation</h2>
+
+            <p id="recommendation">
+                Continue monitoring regularly.
+            </p>
+
+        </div>
+
+        <div class="alarm-panel">
+
+            <h2>Alarm Panel</h2>
+
+            <div class="alarm-item">
+                Temperature
+                <span id="tempAlarm">🟢 Normal</span>
+            </div>
+
+            <div class="alarm-item">
+                Pressure
+                <span id="pressureAlarm">🟢 Normal</span>
+            </div>
+
+            <div class="alarm-item">
+                Vibration
+                <span id="vibrationAlarm">🟢 Normal</span>
+            </div>
+
+            <div class="alarm-item">
+                Humidity
+                <span id="humidityAlarm">🟢 Normal</span>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="table-section">
+
+        <h2>Recent Data Log</h2>
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Temp</th>
+                    <th>Pressure</th>
+                    <th>Vibration</th>
+                    <th>Humidity</th>
+                    <th>Health</th>
+                </tr>
+            </thead>
+
+            <tbody id="logTable">
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+</div>
+
+<script src="js/main.js"></script>
+
+</body>
+</html>

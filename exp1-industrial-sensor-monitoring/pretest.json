@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the primary purpose of industrial sensors?",
+      "answers": {
+        "a": "Machine monitoring and data collection",
+        "b": "Entertainment",
+        "c": "Gaming",
+        "d": "Internet browsing"
+      },
+      "explanations": {
+        "a": "Industrial sensors continuously monitor machine parameters.",
+        "b": "Entertainment is unrelated to industrial monitoring.",
+        "c": "Gaming is not an industrial application.",
+        "d": "Internet browsing is not the purpose of industrial sensors."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which sensor is commonly used for temperature measurement?",
+      "answers": {
+        "a": "RTD Sensor",
+        "b": "GPS Sensor",
+        "c": "Touch Sensor",
+        "d": "Camera Sensor"
+      },
+      "explanations": {
+        "a": "RTD sensors are widely used for temperature monitoring.",
+        "b": "GPS determines location.",
+        "c": "Touch sensors detect contact.",
+        "d": "Camera sensors capture images."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What does Industry 4.0 emphasize?",
+      "answers": {
+        "a": "Manual processes",
+        "b": "Smart manufacturing",
+        "c": "Paper records",
+        "d": "Mechanical-only systems"
+      },
+      "explanations": {
+        "a": "Industry 4.0 reduces manual intervention.",
+        "b": "Industry 4.0 focuses on smart and connected manufacturing.",
+        "c": "Digital systems replace paper records.",
+        "d": "It includes digital technologies."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which parameter is measured in bar?",
+      "answers": {
+        "a": "Humidity",
+        "b": "Temperature",
+        "c": "Pressure",
+        "d": "Vibration"
+      },
+      "explanations": {
+        "a": "Humidity is measured in percentage.",
+        "b": "Temperature is measured in degree Celsius.",
+        "c": "Pressure is commonly measured in bar.",
+        "d": "Vibration is measured in mm/s."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "High machine temperature may indicate:",
+      "answers": {
+        "a": "Proper cooling",
+        "b": "Overheating",
+        "c": "Perfect operation",
+        "d": "Reduced load"
+      },
+      "explanations": {
+        "a": "Proper cooling keeps temperatures lower.",
+        "b": "High temperatures often indicate overheating.",
+        "c": "Excess temperature is undesirable.",
+        "d": "Reduced load generally lowers temperature."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the purpose of vibration monitoring?",
+      "answers": {
+        "a": "Measure internet speed",
+        "b": "Monitor machine condition",
+        "c": "Control lighting",
+        "d": "Track employee attendance"
+      },
+      "explanations": {
+        "a": "Internet speed is unrelated.",
+        "b": "Vibration monitoring helps detect machine faults.",
+        "c": "Lighting control is a separate system.",
+        "d": "Attendance tracking is unrelated."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What does IoT stand for?",
+      "answers": {
+        "a": "Internet of Things",
+        "b": "Industrial of Technology",
+        "c": "Input of Things",
+        "d": "Integrated Output Technology"
+      },
+      "explanations": {
+        "a": "IoT means Internet of Things.",
+        "b": "Incorrect expansion.",
+        "c": "Incorrect expansion.",
+        "d": "Incorrect expansion."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which system is commonly used for industrial monitoring?",
+      "answers": {
+        "a": "SCADA",
+        "b": "MS Paint",
+        "c": "Photoshop",
+        "d": "VLC Media Player"
+      },
+      "explanations": {
+        "a": "SCADA systems are widely used in industries.",
+        "b": "MS Paint is an image editor.",
+        "c": "Photoshop is image-editing software.",
+        "d": "VLC is a media player."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Humidity is usually measured in:",
+      "answers": {
+        "a": "Bar",
+        "b": "Degree Celsius",
+        "c": "Percentage",
+        "d": "Volts"
+      },
+      "explanations": {
+        "a": "Bar measures pressure.",
+        "b": "Degree Celsius measures temperature.",
+        "c": "Humidity is measured as a percentage.",
+        "d": "Volts measure electrical potential."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Why is predictive maintenance important?",
+      "answers": {
+        "a": "Increase downtime",
+        "b": "Reduce equipment life",
+        "c": "Prevent unexpected failures",
+        "d": "Stop monitoring systems"
+      },
+      "explanations": {
+        "a": "Predictive maintenance reduces downtime.",
+        "b": "It increases equipment life.",
+        "c": "Predictive maintenance helps avoid unexpected failures.",
+        "d": "Monitoring is essential for predictive maintenance."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    }
+  ]
+}

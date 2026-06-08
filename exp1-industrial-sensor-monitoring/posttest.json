@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "If the machine temperature increases significantly, what is the most likely effect on machine health?",
+      "answers": {
+        "a": "Machine health improves",
+        "b": "Machine health decreases",
+        "c": "No effect",
+        "d": "Machine shuts down immediately"
+      },
+      "explanations": {
+        "a": "Higher temperatures generally reduce machine health.",
+        "b": "Excessive temperature negatively affects machine condition.",
+        "c": "Temperature affects machine health.",
+        "d": "Shutdown is not always immediate."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which parameter is most useful for detecting bearing wear?",
+      "answers": {
+        "a": "Humidity",
+        "b": "Temperature",
+        "c": "Vibration",
+        "d": "Pressure"
+      },
+      "explanations": {
+        "a": "Humidity does not directly indicate bearing wear.",
+        "b": "Temperature may rise but is not the primary indicator.",
+        "c": "Vibration monitoring is commonly used for bearing fault detection.",
+        "d": "Pressure is unrelated."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "A machine health score below 60 generally indicates:",
+      "answers": {
+        "a": "Excellent condition",
+        "b": "Good condition",
+        "c": "Critical condition",
+        "d": "Optimal performance"
+      },
+      "explanations": {
+        "a": "Excellent condition is usually above 90.",
+        "b": "Good condition is typically above 75.",
+        "c": "Below 60 indicates a critical state.",
+        "d": "Critical condition is not optimal."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Why is real-time monitoring important in smart factories?",
+      "answers": {
+        "a": "To increase failures",
+        "b": "To detect problems quickly",
+        "c": "To reduce automation",
+        "d": "To avoid data collection"
+      },
+      "explanations": {
+        "a": "Monitoring helps prevent failures.",
+        "b": "Real-time monitoring enables rapid fault detection.",
+        "c": "Industry 4.0 promotes automation.",
+        "d": "Data collection is essential."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which combination is most likely to reduce machine health?",
+      "answers": {
+        "a": "Normal temperature and low vibration",
+        "b": "Low humidity and stable pressure",
+        "c": "High temperature and high vibration",
+        "d": "Stable operating conditions"
+      },
+      "explanations": {
+        "a": "These are normal conditions.",
+        "b": "These conditions are generally acceptable.",
+        "c": "High temperature and vibration significantly reduce machine health.",
+        "d": "Stable conditions improve reliability."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the primary goal of predictive maintenance?",
+      "answers": {
+        "a": "Increase machine failures",
+        "b": "Prevent unexpected breakdowns",
+        "c": "Reduce monitoring",
+        "d": "Increase downtime"
+      },
+      "explanations": {
+        "a": "Predictive maintenance aims to avoid failures.",
+        "b": "Predictive maintenance forecasts problems before they occur.",
+        "c": "Monitoring is necessary.",
+        "d": "Downtime should be minimized."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which technology enables sensors to share data with monitoring systems?",
+      "answers": {
+        "a": "IoT",
+        "b": "Word Processing",
+        "c": "Spreadsheet Software",
+        "d": "Graphic Design"
+      },
+      "explanations": {
+        "a": "IoT enables connected devices and real-time data exchange.",
+        "b": "Not applicable.",
+        "c": "Not applicable.",
+        "d": "Not applicable."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What should be done when abnormal sensor readings are observed?",
+      "answers": {
+        "a": "Ignore them",
+        "b": "Continue operation without checking",
+        "c": "Investigate the cause",
+        "d": "Disconnect all sensors"
+      },
+      "explanations": {
+        "a": "Abnormal readings should not be ignored.",
+        "b": "Investigation is required.",
+        "c": "Correct action begins with identifying the root cause.",
+        "d": "Sensors are needed for monitoring."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which Industry 4.0 feature is demonstrated in this experiment?",
+      "answers": {
+        "a": "Manual logging",
+        "b": "Real-time machine monitoring",
+        "c": "Paper-based maintenance",
+        "d": "Mechanical-only operation"
+      },
+      "explanations": {
+        "a": "Industry 4.0 promotes digital systems.",
+        "b": "Sensor-based real-time monitoring is a core Industry 4.0 feature.",
+        "c": "Digital systems replace paper processes.",
+        "d": "Industry 4.0 integrates digital technologies."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the expected outcome when all sensor values remain within normal ranges?",
+      "answers": {
+        "a": "Low machine health",
+        "b": "Machine failure",
+        "c": "High machine health",
+        "d": "Sensor malfunction"
+      },
+      "explanations": {
+        "a": "Normal operating conditions improve machine health.",
+        "b": "Failure is unlikely under normal conditions.",
+        "c": "Healthy operating conditions produce a high machine health score.",
+        "d": "Sensors continue operating normally."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    }
+  ]
+}
