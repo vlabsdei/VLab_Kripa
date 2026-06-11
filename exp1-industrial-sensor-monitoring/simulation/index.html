@@ -1,202 +1,277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Industrial Sensor Monitoring & Machine Health Analysis</title>
-
-<link rel="stylesheet" href="css/main.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Sensor Monitoring & Machine Health Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
 
-<div class="dashboard">
-
-    <header class="header">
-        <h1>Industrial Sensor Monitoring & Machine Health Analysis</h1>
-        <p>SmartFactory 4.0 Virtual Lab</p>
+    <header class="app-header">
+        <div class="header-left">
+            <h1>Industrial Sensor Monitoring & Machine Health Analysis</h1>
+            <p class="subtitle">Smart Factory Diagnostics - Interactive Virtual Lab Experiment</p>
+        </div>
+        <div class="header-right">
+            <span class="telemetry-badge">
+                <span class="dot"></span> Telemetry Active
+            </span>
+        </div>
     </header>
 
-    <section class="sensor-grid">
+    <div class="dashboard-grid">
+        
+        <aside class="sidebar-controls">
+            
+            <section class="card-panel">
+                <div class="section-title blue-border">
+                    <h2>Select Machine Type</h2>
+                </div>
+                <div class="machinery-selector">
+                    <button class="machinery-btn" data-machine="pump">Centrifugal Pump</button>
+                    <button class="machinery-btn" data-machine="motor">AC Induction Motor</button>
+                    <button class="machinery-btn active" data-machine="compressor">Rotary Air Compressor</button>
+                </div>
+            </section>
 
-        <div class="sensor-card">
-            <h3>Temperature</h3>
-            <div id="tempDisplay">40 °C</div>
-        </div>
+            <section class="card-panel">
+                <div class="section-title blue-border">
+                    <h2>Sensor Input Parameters</h2>
+                </div>
+                
+                <div class="slider-box">
+                    <div class="slider-meta">
+                        <span class="slider-label">Temperature (T)</span>
+                        <span class="slider-readout"><strong id="txtTemp">70.0</strong> °C</span>
+                    </div>
+                    <input type="range" id="sliderTemp" min="0" max="150" step="0.5" value="70">
+                </div>
 
-        <div class="sensor-card">
-            <h3>Pressure</h3>
-            <div id="pressureDisplay">5 Bar</div>
-        </div>
+                <div class="slider-box">
+                    <div class="slider-meta">
+                        <span class="slider-label">Pressure</span>
+                        <span class="slider-readout"><strong id="txtPress">7.0</strong> bar</span>
+                    </div>
+                    <input type="range" id="sliderPress" min="0" max="50" step="0.1" value="7">
+                </div>
 
-        <div class="sensor-card">
-            <h3>Vibration</h3>
-            <div id="vibrationDisplay">5 mm/s</div>
-        </div>
+                <div class="slider-box">
+                    <div class="slider-meta">
+                        <span class="slider-label">Vibration (V)</span>
+                        <span class="slider-readout"><strong id="txtVib">3.5</strong> mm/s</span>
+                    </div>
+                    <input type="range" id="sliderVib" min="0" max="30" step="0.1" value="3.5">
+                </div>
 
-        <div class="sensor-card">
-            <h3>Humidity</h3>
-            <div id="humidityDisplay">50 %</div>
-        </div>
+                <div class="slider-box">
+                    <div class="slider-meta">
+                        <span class="slider-label">Ambient Humidity (H)</span>
+                        <span class="slider-readout"><strong id="txtHum">40.0</strong> %</span>
+                    </div>
+                    <input type="range" id="sliderHum" min="0" max="100" step="0.5" value="40">
+                </div>
+            </section>
 
-    </section>
+            <section class="card-panel">
+                <div class="section-title blue-border">
+                    <h2>Signal Configuration</h2>
+                </div>
+                <div class="toggle-row">
+                    <span class="toggle-label">Enable Signal Noise</span>
+                    <label class="switch">
+                        <input type="checkbox" id="chkNoise" checked>
+                        <span class="slider-toggle"></span>
+                    </label>
+                </div>
+                <div class="slider-box small-margin">
+                    <div class="slider-meta">
+                        <span class="slider-label">Refresh Rate</span>
+                        <span class="slider-readout" id="txtSpeed">3x</span>
+                    </div>
+                    <input type="range" id="sliderSpeed" min="1" max="5" step="1" value="3">
+                </div>
+                <button id="btnReinit" class="btn btn-blue" style="background-color: #0ea5e9; color: white; margin-top: 12px;">Reset to Factory Baseline</button>
+            </section>
 
-    <section class="control-health">
+            <section class="card-panel fault-container">
+                <div class="section-title red-border">
+                    <h2>Fault Injection Panel</h2>
+                </div>
+                <div class="fault-buttons">
+                    <button class="btn btn-fault" id="btnFaultCavitation" data-fault="cavitation">Trigger Cavitation Fault</button>
+                    <button class="btn btn-fault" id="btnFaultBearing" data-fault="bearing">Induce Bearing Degradation</button>
+                    <button class="btn btn-fault" id="btnFaultThermal" data-fault="overload">Force Thermal Overload</button>
+                    <button class="btn btn-fault" id="btnFaultLeak" data-fault="leak">Simulate Pressure Leak</button>
+                    <button class="btn btn-fault" id="btnFaultBlockage" data-fault="blockage">Simulate Line Blockage</button>
+                </div>
+                <button id="btnResetFaults" class="btn btn-clear-status">Clear All Faults</button>
+            </section>
+        </aside>
 
-        <div class="control-panel">
+        <main class="main-dashboard-view">
+            
+            <div class="top-row-grid">
+                
+                <div class="card-panel center-align card-top-blue">
+                    <h3>MACHINE HEALTH INDEX</h3>
+                    <div class="health-ring-box">
+                        <svg class="progress-ring" width="120" height="120">
+                            <circle class="progress-ring__background" stroke="#e2e8f0" stroke-width="8" fill="transparent" r="50" cx="60" cy="60"/>
+                            <circle id="healthRingCircle" class="progress-ring__bar" stroke="#10b981" stroke-width="8" fill="transparent" r="50" cx="60" cy="60"/>
+                        </svg>
+                        <div class="health-ring-text">
+                            <span id="lblHealthValue">100</span>
+                            <small>HEALTH</small>
+                        </div>
+                    </div>
+                    <div id="lblHealthBadge" class="status-badge badge-excellent">Excellent</div>
+                </div>
 
-            <h2>Sensor Controls</h2>
+                <div class="card-panel dynamic-simulation-panel card-top-blue">
+                    <div class="section-title">
+                        <h3>LIVE MACHINE SCHEMATIC</h3>
+                    </div>
+                    <div class="simulation-viewframe">
+                        <svg id="machineSvgGraphic" viewBox="0 0 200 100" width="100%" height="100%">
+                            </svg>
+                    </div>
+                    <div id="activeMachineLabel" style="text-align: center; margin-top: 8px; font-weight: 600; font-size: 0.85rem; color: #1f2937;">Rotary Air Compressor Active</div>
+                </div>
 
-            <label>
-                Temperature
-                <span id="tempValue">40</span>
-            </label>
-            <input type="range" id="temperature"
-                   min="0" max="100" value="40">
+                <div class="card-panel card-top-blue">
+                    <div class="section-title">
+                        <h3>PREDICTIVE MAINTENANCE</h3>
+                    </div>
+                    <div id="alertBanner" class="alert-banner alert-banner-success">
+                        All operations normal. Baseline telemetry signature stable.
+                    </div>
+                    
+                    <div class="analytics-metrics">
+                        <div class="metric-progress-row">
+                            <span class="metric-name">Cavitation Risk:</span>
+                            <div class="progress-track">
+                                <div id="barCavitation" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span id="lblCavitation" class="metric-end-val">0%</span>
+                        </div>
 
-            <label>
-                Pressure
-                <span id="pressureValue">5</span>
-            </label>
-            <input type="range" id="pressure"
-                   min="0" max="20" value="5">
+                        <div class="metric-progress-row">
+                            <span class="metric-name">Bearing Wear:</span>
+                            <div class="progress-track">
+                                <div id="barBearing" class="progress-fill" style="width: 0%"></div>
+                            </div>
+                            <span id="lblBearing" class="metric-end-val">0%</span>
+                        </div>
 
-            <label>
-                Vibration
-                <span id="vibrationValue">5</span>
-            </label>
-            <input type="range" id="vibration"
-                   min="0" max="20" value="5">
-
-            <label>
-                Humidity
-                <span id="humidityValue">50</span>
-            </label>
-            <input type="range" id="humidity"
-                   min="0" max="100" value="50">
-
-            <div class="btn-row">
-                <button id="calculateBtn">Calculate Health</button>
-                <button id="resetBtn">Reset</button>
+                        <div class="metric-rtd-row">
+                            <span class="metric-name">RTD Resistance:</span>
+                            <span id="lblRtdValue" class="rtd-bold-value">100.00 Ω</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-        </div>
+            <div class="gauges-row-grid">
+                <div class="card-panel gauge-card">
+                    <div class="mini-gauge-container">
+                        <div id="gaugeTemp" class="mini-gauge" style="--gauge-angle: 180deg; border-top-color: #f59e0b;"></div>
+                        <span id="lblGaugeTempText" class="gauge-value">70.0°C</span>
+                    </div>
+                    <span class="gauge-label">RTD Temperature</span>
+                </div>
 
-        <div class="health-panel">
+                <div class="card-panel gauge-card">
+                    <div class="mini-gauge-container">
+                        <div id="gaugePress" class="mini-gauge" style="--gauge-angle: 90deg; border-top-color: #3b82f6;"></div>
+                        <span id="lblGaugePressText" class="gauge-value">7.0 bar</span>
+                    </div>
+                    <span class="gauge-label">Fluid Pressure</span>
+                </div>
 
-            <div class="health-circle">
-                <span id="healthPercent">100%</span>
+                <div class="card-panel gauge-card">
+                    <div class="mini-gauge-container">
+                        <div id="gaugeVib" class="mini-gauge" style="--gauge-angle: 45deg; border-top-color: #ec4899;"></div>
+                        <span id="lblGaugeVibText" class="gauge-value">3.5 Hz</span>
+                    </div>
+                    <span class="gauge-label">Vibration Level</span>
+                </div>
+
+                <div class="card-panel gauge-card">
+                    <div class="mini-gauge-container">
+                        <div id="gaugeHum" class="mini-gauge" style="--gauge-angle: 120deg; border-top-color: #06b6d4;"></div>
+                        <span id="lblGaugeHumText" class="gauge-value">40.0%</span>
+                    </div>
+                    <span class="gauge-label">Relative Humidity</span>
+                </div>
             </div>
 
-            <h3>Machine Health</h3>
+            <section class="card-panel">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div class="section-title blue-border" style="margin-bottom: 0;">
+                        <h3>Real-Time Sensor Waveform Plotter</h3>
+                    </div>
+                    <div class="plotter-legends-top" style="display: flex; gap: 15px; font-size: 0.8rem; font-weight: 600; color: #111827;">
+                        <div style="display: flex; align-items: center; gap: 5px;"><span class="dot-lg yellow"></span> Temp</div>
+                        <div style="display: flex; align-items: center; gap: 5px;"><span class="dot-lg teal"></span> Pressure</div>
+                        <div style="display: flex; align-items: center; gap: 5px;"><span class="dot-lg red"></span> Vibration</div>
+                        <div style="display: flex; align-items: center; gap: 5px;"><span class="dot-lg cyan"></span> Humidity</div>
+                        <div style="display: flex; align-items: center; gap: 5px;"><span class="dot-lg blue"></span> Health</div>
+                    </div>
+                </div>
+                <div class="canvas-container" style="border-top: 2px solid #3b82f6;">
+                    <canvas id="telemetryCanvas" height="140"></canvas>
+                </div>
+            </section>
 
-        </div>
+            <section class="card-panel">
+                <div class="section-title blue-border">
+                    <h3>Lab Observation Log</h3>
+                </div>
+                <p class="notebook-hint">Adjust values using the sliders, then click "Record Data Point" to log the current readings into the table below.</p>
+                
+                <div class="action-bar">
+                    <button id="btnCaptureRun" class="btn btn-blue">Record Data Point</button>
+                    <button id="btnExportCSV" class="btn btn-gray" style="color: black;">Export as CSV</button>
+                </div>
 
-    </section>
+                <div class="table-scroll-wrapper">
+                    <table class="notebook-table" id="notebookTable">
+                        <thead>
+                            <tr>
+                                <th>RUN ID</th>
+                                <th>TIMESTAMP</th>
+                                <th>MACHINE</th>
+                                <th>TEMP (°C)</th>
+                                <th>RTD (OHM)</th>
+                                <th>PRESSURE (BAR)</th>
+                                <th>VIBRATION (HZ)</th>
+                                <th>HUMIDITY (%)</th>
+                                <th>HEALTH SCORE</th>
+                                <th>STATUS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="emptyRowPlaceholder">
+                                <td colspan="10" class="empty-table-text">Your engineering notebook is empty. Adjust data points on the left menu and record your first run observation!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
-    <section class="kpi-grid">
+            <section class="card-panel">
+                <div class="section-title blue-border">
+                    <h3>SCADA Event Log</h3>
+                </div>
+                <div class="scada-terminal" id="terminalLog">
+                    </div>
+            </section>
 
-        <div class="kpi-card">
-            <h4>Status</h4>
-            <p id="overallStatus">Excellent</p>
-        </div>
+        </main>
+    </div>
 
-        <div class="kpi-card">
-            <h4>Risk</h4>
-            <p id="riskLevel">Low</p>
-        </div>
-
-        <div class="kpi-card">
-            <h4>Performance</h4>
-            <p id="performanceIndex">100</p>
-        </div>
-
-        <div class="kpi-card">
-            <h4>Reliability</h4>
-            <p id="reliability">High</p>
-        </div>
-
-        <div class="kpi-card">
-            <h4>Maintenance</h4>
-            <p id="maintenance">30 Days</p>
-        </div>
-
-    </section>
-
-    <section class="analysis-section">
-
-        <div class="observation-box">
-
-            <h2>Observation</h2>
-
-            <p id="observation">
-                Machine operating under normal conditions.
-            </p>
-
-            <h2>Recommendation</h2>
-
-            <p id="recommendation">
-                Continue monitoring regularly.
-            </p>
-
-        </div>
-
-        <div class="alarm-panel">
-
-            <h2>Alarm Panel</h2>
-
-            <div class="alarm-item">
-                Temperature
-                <span id="tempAlarm">🟢 Normal</span>
-            </div>
-
-            <div class="alarm-item">
-                Pressure
-                <span id="pressureAlarm">🟢 Normal</span>
-            </div>
-
-            <div class="alarm-item">
-                Vibration
-                <span id="vibrationAlarm">🟢 Normal</span>
-            </div>
-
-            <div class="alarm-item">
-                Humidity
-                <span id="humidityAlarm">🟢 Normal</span>
-            </div>
-
-        </div>
-
-    </section>
-
-    <section class="table-section">
-
-        <h2>Recent Data Log</h2>
-
-        <table>
-
-            <thead>
-                <tr>
-                    <th>Time</th>
-                    <th>Temp</th>
-                    <th>Pressure</th>
-                    <th>Vibration</th>
-                    <th>Humidity</th>
-                    <th>Health</th>
-                </tr>
-            </thead>
-
-            <tbody id="logTable">
-
-            </tbody>
-
-        </table>
-
-    </section>
-
-</div>
-
-<script src="js/main.js"></script>
-
+    <script src="js/main.js"></script>
 </body>
 </html>

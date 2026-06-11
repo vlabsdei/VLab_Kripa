@@ -1,4 +1,4 @@
-### References
+# References
 
 1. Frank Lamb, Industrial Automation: Hands-On.
 

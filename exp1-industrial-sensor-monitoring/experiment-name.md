@@ -1,1 +1,1 @@
-## Industrial Sensor Monitoring and Machine Health Analysis
+# Industrial Sensor Monitoring and Machine Health Analysis
