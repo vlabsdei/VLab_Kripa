@@ -121,6 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             state.speedFactor = parseInt(e.target.value);
             if (textDisplays.speed) textDisplays.speed.textContent = `${state.speedFactor}x`;
             appendTerminalLine(`Failure transition physics rate boosted to ${state.speedFactor}x.`, 'info');
+            if (typeof startSimulationLoop === 'function') startSimulationLoop();
         });
 
         if (chkNoise) chkNoise.addEventListener('change', (e) => {
@@ -137,6 +138,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (btnExportCSV) btnExportCSV.addEventListener('click', exportNotebookLedgerToCSV);
 
+        // Mobile Sidebar Controls
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        if (mobileMenuBtn && sidebarOverlay) {
+            mobileMenuBtn.addEventListener('click', () => {
+                document.body.classList.add('sidebar-open');
+            });
+            sidebarOverlay.addEventListener('click', () => {
+                document.body.classList.remove('sidebar-open');
+            });
+        }
+
         // Setup individual emergency fault triggers
         setupFaultTriggers();
 
@@ -144,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
         applyMachineBaselineDefaults(state.selectedMachine);
 
         // Kick off asynchronous live tracking systems
-        setInterval(renderLivePlotterGraph, 500);
+        if (typeof startSimulationLoop === 'function') startSimulationLoop();
         appendTerminalLine("Telemetry infrastructure initial link successfully initialized.", "info");
     }
 
@@ -170,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let bearingAbrasion = 0;
 
         if (state.selectedMachine === 'pump') {
-            if (V > 8 || P < 3 || state.activeFault === 'cavitation') {
+            if (V > 8 || P < 3 || state.activeFault === 'cavitation' || state.activeFault === 'leak') {
                 cavitationRisk = Math.min(100, (V * 3.5) + (30 - P * 4));
             }
             if (V > 12 || T > 85 || state.activeFault === 'bearing') {
@@ -178,13 +191,13 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else if (state.selectedMachine === 'motor') {
             if (T > 90 || state.activeFault === 'thermal') {
-                bearingAbrasion = Math.min(100, (T - 80) * 2.5 + (V * 1.5));
+                cavitationRisk = Math.min(100, (T - 80) * 2.5 + (V * 1.5));
             }
             if (V > 10 || state.activeFault === 'bearing') {
-                bearingAbrasion = Math.max(bearingAbrasion, Math.min(100, V * 4));
+                bearingAbrasion = Math.min(100, V * 4);
             }
         } else if (state.selectedMachine === 'compressor') {
-            if (P > 25 || V > 9 || state.activeFault === 'blockage') {
+            if (P > 25 || V > 9 || state.activeFault === 'blockage' || state.activeFault === 'leak') {
                 cavitationRisk = Math.min(100, (P * 2) + (V * 1.8));
             }
             if (T > 80 || V > 11 || state.activeFault === 'bearing') {
@@ -221,9 +234,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDashboardUITheme(targetHealth, cavitationRisk, bearingAbrasion);
         updateMiniGaugesUI(T, P, V, H);
 
-        historyPoints.push({ t: T, p: P, v: V, h: H, score: targetHealth });
-        if (historyPoints.length > 60) historyPoints.shift();
-
         drawMachineVectorSimulation(targetHealth);
     }
 
@@ -232,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!analytics.healthBadge) return;
 
         // Use the CSS class names that actually exist in main.css
-        analytics.healthBadge.className = "badge";
+        analytics.healthBadge.className = "status-badge";
         if (score >= 85) {
             analytics.healthBadge.textContent = "Excellent";
             analytics.healthBadge.classList.add('badge-success');
@@ -392,6 +402,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 8. Canvas Oscilloscope Multi-Sensor Waveforms Plotter Engine ---
+    let plotterIntervalId = null;
+
+    function startSimulationLoop() {
+        if (plotterIntervalId) clearInterval(plotterIntervalId);
+        let delay = 1000 / state.speedFactor; 
+        plotterIntervalId = setInterval(simulationTick, delay);
+    }
+
+    function simulationTick() {
+        historyPoints.push({ t: state.temperature, p: state.pressure, v: state.vibration, h: state.humidity, score: state.calculatedHealth });
+        if (historyPoints.length > 60) historyPoints.shift();
+        renderLivePlotterGraph();
+    }
+
     function renderLivePlotterGraph() {
         if (!canvas || !ctx) return;
 
@@ -446,14 +470,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 9. Automated Environmental Presets ---
     function applyMachineBaselineDefaults(machineKey) {
         state.activeFault = null;
-        document.querySelectorAll('.btn-fault').forEach(b => b.classList.remove('active-fault'));
+        document.querySelectorAll('.btn-fault').forEach(b => {
+            b.classList.remove('active-fault');
+            b.style.display = 'none';
+        });
+
+        const lblRisk1 = document.getElementById('lblRisk1');
 
         if (machineKey === 'pump') {
             state.temperature = 42.0; state.pressure = 12.4; state.vibration = 2.1; state.humidity = 65.0;
+            if (document.getElementById('btnFaultCavitation')) document.getElementById('btnFaultCavitation').style.display = 'inline-flex';
+            if (document.getElementById('btnFaultBearing')) document.getElementById('btnFaultBearing').style.display = 'inline-flex';
+            if (document.getElementById('btnFaultLeak')) document.getElementById('btnFaultLeak').style.display = 'inline-flex';
+            if (lblRisk1) lblRisk1.textContent = 'Cavitation Risk:';
         } else if (machineKey === 'motor') {
             state.temperature = 55.0; state.pressure = 0.0; state.vibration = 1.8; state.humidity = 35.0;
+            if (document.getElementById('btnFaultBearing')) document.getElementById('btnFaultBearing').style.display = 'inline-flex';
+            if (document.getElementById('btnFaultThermal')) document.getElementById('btnFaultThermal').style.display = 'inline-flex';
+            if (lblRisk1) lblRisk1.textContent = 'Thermal Risk:';
         } else if (machineKey === 'compressor') {
             state.temperature = 70.0; state.pressure = 7.0; state.vibration = 3.5; state.humidity = 40.0;
+            if (document.getElementById('btnFaultBlockage')) document.getElementById('btnFaultBlockage').style.display = 'inline-flex';
+            if (document.getElementById('btnFaultLeak')) document.getElementById('btnFaultLeak').style.display = 'inline-flex';
+            if (document.getElementById('btnFaultBearing')) document.getElementById('btnFaultBearing').style.display = 'inline-flex';
+            if (lblRisk1) lblRisk1.textContent = 'Blockage Risk:';
         }
 
         if (sliders.temp) sliders.temp.value = state.temperature;

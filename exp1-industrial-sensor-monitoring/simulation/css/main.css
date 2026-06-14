@@ -28,6 +28,7 @@ body {
     background-color: var(--bg-main);
     color: var(--text-main);
     padding: 12px;
+    overflow-x: hidden;
 }
 
 /* Header UI Elements styles */
@@ -82,7 +83,6 @@ body {
     align-items: start;
 }
 
-/* Reusable Card Panel Container elements layout */
 .card-panel {
     background-color: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -90,6 +90,8 @@ body {
     padding: 12px;
     margin-bottom: 12px;
     box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    min-width: 0;
+    max-width: 100%;
 }
 
 .section-title {
@@ -315,6 +317,8 @@ input:checked + .slider-toggle:before { transform: translateX(16px); }
 .main-dashboard-view {
     display: flex;
     flex-direction: column;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .top-row-grid {
@@ -597,6 +601,13 @@ input:checked + .slider-toggle:before { transform: translateX(16px); }
     border-radius: 6px;
     padding: 4px;
     min-height: 140px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.canvas-container canvas {
+    width: 100%;
+    display: block;
 }
 
 /* Notebook Observation Workbook Table Layouts styles */
@@ -620,6 +631,8 @@ input:checked + .slider-toggle:before { transform: translateX(16px); }
     overflow-x: auto;
     border: 1px solid var(--border-color);
     border-radius: 8px;
+    min-width: 0;
+    max-width: 100%;
 }
 
 .notebook-table {
@@ -680,8 +693,91 @@ input:checked + .slider-toggle:before { transform: translateX(16px); }
 .log-warn { color: #f59e0b; font-weight: bold; }
 .log-err { color: #f87171; font-weight: bold; }
 
+/* Mobile Menu Styles */
+.mobile-menu-btn {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.mobile-menu-btn:hover { background-color: #2563eb; }
+
+.sidebar-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 998;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+body.sidebar-open .sidebar-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
 @media (max-width: 900px) {
-    .dashboard-grid { grid-template-columns: 1fr; }
-    .top-row-grid { grid-template-columns: 1fr; }
-    .gauges-row-grid { grid-template-columns: 1fr 1fr; }
+    body { padding: 6px; }
+    
+    .mobile-menu-btn { display: inline-flex; }
+    
+    .sidebar-controls {
+        position: fixed;
+        top: 0;
+        left: -320px;
+        bottom: 0;
+        width: 300px;
+        background: var(--bg-main);
+        z-index: 999;
+        overflow-y: auto;
+        padding: 12px;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    }
+    
+    body.sidebar-open .sidebar-controls {
+        left: 0;
+    }
+
+    .dashboard-grid { 
+        display: block; /* Remove grid/flex column so dashboard fills naturally */
+    }
+    
+    .top-row-grid { grid-template-columns: 1fr; gap: 10px; }
+    .gauges-row-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    
+    .app-header { flex-direction: column; align-items: stretch; text-align: center; gap: 8px; padding: 12px; }
+    .header-left h1 { font-size: 1.15rem; }
+    .subtitle { font-size: 0.75rem; }
+    .header-right { align-self: center; justify-content: space-between; width: 100%; }
+    
+    .card-panel { padding: 10px; margin-bottom: 10px; }
+    .card-top-blue { border-top-width: 4px; }
+}
+
+@media (max-width: 600px) {
+    .gauges-row-grid { grid-template-columns: 1fr 1fr; } /* Keep 2 per row even on small mobile for compactness */
+    .mini-gauge-container { transform: scale(0.9); margin-bottom: 0; }
+    .gauge-label { font-size: 0.7rem; }
+    
+    .action-bar { flex-direction: column; gap: 8px; }
+    .action-bar .btn { width: 100%; }
+    
+    .plotter-header-wrapper { flex-direction: column; align-items: stretch; gap: 8px; }
+    .plotter-legends-top { justify-content: center; }
+    
+    .health-ring-box { width: 100px; height: 100px; }
+    #lblHealthValue { font-size: 1.5rem; }
+    
+    .machinery-btn { padding: 12px 14px; font-size: 0.95rem; } /* Larger touch targets */
+    .btn-fault { padding: 10px 12px; font-size: 0.85rem; }
 }

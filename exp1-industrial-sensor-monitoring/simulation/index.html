@@ -14,12 +14,18 @@
             <h1>Industrial Sensor Monitoring & Machine Health Analysis</h1>
             <p class="subtitle">Smart Factory Diagnostics - Interactive Virtual Lab Experiment</p>
         </div>
-        <div class="header-right">
+        <div class="header-right" style="display: flex; gap: 10px; align-items: center;">
+            <button id="mobileMenuBtn" class="mobile-menu-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"></path></svg>
+                <span>Controls</span>
+            </button>
             <span class="telemetry-badge">
                 <span class="dot"></span> Telemetry Active
             </span>
         </div>
     </header>
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
     <div class="dashboard-grid">
         
@@ -117,7 +123,7 @@
                 <div class="card-panel center-align card-top-blue">
                     <h3>MACHINE HEALTH INDEX</h3>
                     <div class="health-ring-box">
-                        <svg class="progress-ring" width="120" height="120">
+                        <svg class="progress-ring" viewBox="0 0 120 120" width="100%" height="100%">
                             <circle class="progress-ring__background" stroke="#e2e8f0" stroke-width="8" fill="transparent" r="50" cx="60" cy="60"/>
                             <circle id="healthRingCircle" class="progress-ring__bar" stroke="#10b981" stroke-width="8" fill="transparent" r="50" cx="60" cy="60"/>
                         </svg>
@@ -150,7 +156,7 @@
                     
                     <div class="analytics-metrics">
                         <div class="metric-progress-row">
-                            <span class="metric-name">Cavitation Risk:</span>
+                            <span id="lblRisk1" class="metric-name">Cavitation Risk:</span>
                             <div class="progress-track">
                                 <div id="barCavitation" class="progress-fill" style="width: 0%"></div>
                             </div>
@@ -208,11 +214,11 @@
             </div>
 
             <section class="card-panel">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px;">
                     <div class="section-title blue-border" style="margin-bottom: 0;">
                         <h3>Real-Time Sensor Waveform Plotter</h3>
                     </div>
-                    <div class="plotter-legends-top" style="display: flex; gap: 15px; font-size: 0.8rem; font-weight: 600; color: #111827;">
+                    <div class="plotter-legends-top" style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.8rem; font-weight: 600; color: #111827;">
                         <div style="display: flex; align-items: center; gap: 5px;"><span class="dot-lg yellow"></span> Temp</div>
                         <div style="display: flex; align-items: center; gap: 5px;"><span class="dot-lg teal"></span> Pressure</div>
                         <div style="display: flex; align-items: center; gap: 5px;"><span class="dot-lg red"></span> Vibration</div>
