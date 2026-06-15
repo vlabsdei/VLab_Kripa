@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conveyor Belt Automation — Virtual Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="hdr-l">
+    <div class="hdr-icon">
+      <svg width="26" height="16" viewBox="0 0 26 16" fill="none">
+        <circle cx="4"  cy="8" r="4" fill="#3b82f6"/>
+        <circle cx="22" cy="8" r="4" fill="#64748b"/>
+        <rect x="4" y="5.5" width="18" height="5" fill="#334155"/>
+        <rect x="4" y="5.5" width="18" height="2" fill="#60a5fa" opacity=".5"/>
+      </svg>
+    </div>
+    <div>
+      <h1>Conveyor Belt Automation &amp; Diagnostics Simulator</h1>
+      <p>Experiment 2 — SmartFactory 4.0 Virtual Lab</p>
+    </div>
+  </div>
+  <div id="telemBadge" class="tbadge"><span class="pdot"></span>Telemetry Active</div>
+</header>
+
+<div class="page">
+
+<!-- ════ SIDEBAR ════ -->
+<aside class="sidebar">
+  <div class="sb-sec">
+    <h3 class="sb-ttl"><span class="sb-bar"></span>System Parameters</h3>
+    <div class="sg"><div class="sh"><label>Belt Speed</label><span id="vS">2.0 m/s</span></div><input type="range" id="slS" min="1" max="10" step=".1" value="2"></div>
+    <div class="sg"><div class="sh"><label>Load Weight</label><span id="vL">10.0 kg</span></div><input type="range" id="slL" min="5" max="50" step=".5" value="10"></div>
+    <div class="sg"><div class="sh"><label>Motor RPM</label><span id="vR">800 rpm</span></div><input type="range" id="slR" min="500" max="2000" step="10" value="800"></div>
+    <div class="sg"><div class="sh"><label>Belt Length</label><span id="vN">5 m</span></div><input type="range" id="slN" min="2" max="20" step="1" value="5"></div>
+  </div>
+
+  <div class="sb-sec">
+    <h3 class="sb-ttl"><span class="sb-bar b"></span>Controls</h3>
+    <div class="trow"><span>Run Simulation</span><label class="tog"><input type="checkbox" id="togRun" checked><span class="ttrack"><span class="tthumb"></span></span></label></div>
+    <div class="trow"><span>Signal Noise</span><label class="tog"><input type="checkbox" id="togNoise" checked><span class="ttrack"><span class="tthumb"></span></span></label></div>
+    <button id="btnReset" class="btn sec" style="margin-top:10px">↺ Reset to Baseline</button>
+  </div>
+
+  <div class="sb-sec">
+    <h3 class="sb-ttl"><span class="sb-bar r"></span>Fault Injection</h3>
+    <button id="btnFM"  class="btn flt">⚡ Trigger Motor Fault</button>
+    <button id="btnFO"  class="btn flt">⚠ Simulate Overload</button>
+  </div>
+
+</aside>
+
+<!-- ════ MAIN CONTENT ════ -->
+<main class="main">
+
+  <!-- ▶▶▶ SIMULATION — THE STAR ◀◀◀ -->
+  <div class="sim-hero">
+    <div class="sim-bar">
+      <div class="sim-bar-l">
+        <div class="live-dot"></div>
+        <span>Live Conveyor Belt Simulation</span>
+      </div>
+      <div class="sim-hud">
+        <div class="shu"><span class="shu-l">BELT SPEED</span><span class="shu-v" id="hudS">2.0 m/s</span></div>
+        <div class="shu-div"></div>
+        <div class="shu"><span class="shu-l">ITEMS OUT</span><span class="shu-v g" id="hudI">0</span></div>
+        <div class="shu-div"></div>
+        <div class="shu"><span class="shu-l">RPM</span><span class="shu-v" id="hudR">800</span></div>
+        <div class="shu-div"></div>
+        <div class="shu"><span class="shu-l">STATUS</span><span class="shu-v g" id="hudSt">RUNNING</span></div>
+      </div>
+    </div>
+
+    <!-- THE CANVAS -->
+    <canvas id="simCanvas"></canvas>
+
+    <!-- SENSOR STRIP -->
+    <div class="ss">
+      <div class="ss-c"><div class="led on" id="lE"></div><div><div class="ss-n">Entry Sensor</div><div class="ss-v" id="sE">Waiting…</div></div></div>
+      <div class="ss-c"><div class="led on" id="lW"></div><div><div class="ss-n">Weight Sensor</div><div class="ss-v" id="sW">10.0 kg</div></div></div>
+      <div class="ss-c"><div class="led on" id="lM"></div><div><div class="ss-n">Motor Temp</div><div class="ss-v" id="sM">25.0 °C</div></div></div>
+      <div class="ss-c"><div class="led on" id="lX"></div><div><div class="ss-n">Exit Counter</div><div class="ss-v" id="sX">0 items</div></div></div>
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-row">
+    <div class="kc"><div class="ki" style="background:#dbeafe;color:#1d4ed8">⚡</div><div><div class="kl">Throughput</div><div class="kv" id="kT">—</div><div class="ku">units/hr</div></div></div>
+    <div class="kc"><div class="ki" style="background:#d1fae5;color:#047857">%</div><div><div class="kl">Efficiency</div><div class="kv" id="kE">—</div><div class="ku">percent</div></div></div>
+    <div class="kc"><div class="ki" style="background:#fef3c7;color:#92400e">⚙</div><div><div class="kl">Power Draw</div><div class="kv" id="kP">—</div><div class="ku">kW</div></div></div>
+    <div class="kc"><div class="ki" style="background:#fee2e2;color:#991b1b">🌡</div><div><div class="kl">Temperature</div><div class="kv" id="kTp">—</div><div class="ku">°C</div></div></div>
+    <div class="kc"><div class="ki" style="background:#ede9fe;color:#6d28d9">⏱</div><div><div class="kl">Transport Time</div><div class="kv" id="kTr">—</div><div class="ku">seconds</div></div></div>
+    <div class="kc"><div class="ki" style="background:#ecfdf5;color:#065f46">↗</div><div><div class="kl">Items Processed</div><div class="kv" id="kI">0</div><div class="ku">total</div></div></div>
+  </div>
+
+  <!-- SENSOR GAUGES + PREDICTIVE -->
+  <div class="mid">
+    <div class="card">
+      <div class="ct">Live Sensor Gauges</div>
+      <div class="mg-grid">
+        <div class="mgc"><div class="mgw"><canvas id="cTemp"></canvas><div class="mgval" id="mvT">25°C</div></div><div class="mglbl">Temperature</div></div>
+        <div class="mgc"><div class="mgw"><canvas id="cLoad"></canvas><div class="mgval" id="mvL">10 kg</div></div><div class="mglbl">Load Weight</div></div>
+        <div class="mgc"><div class="mgw"><canvas id="cSpd"></canvas><div class="mgval" id="mvS">2.0 m/s</div></div><div class="mglbl">Belt Speed</div></div>
+        <div class="mgc"><div class="mgw"><canvas id="cEff"></canvas><div class="mgval" id="mvE">100%</div></div><div class="mglbl">Efficiency</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="ct">Machine Health &amp; Predictive</div>
+      <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+        <div class="gauge-wrap" style="width:70px;height:70px;margin:0;flex-shrink:0;"><canvas id="cHealth" width="70" height="70"></canvas><div class="gc"><span id="healthNum" style="font-size:1.1rem">100</span></div></div>
+        <div style="flex:1; display:flex; flex-direction:column; gap:5px;">
+          <div id="healthPill" class="hpill ok" style="padding:3px 0;font-size:0.65rem;">Excellent</div>
+          <div id="predB" class="pb ok" style="margin-bottom:0;padding:5px 8px;font-size:0.65rem;">✅ All systems nominal.</div>
+        </div>
+      </div>
+      <div class="pr">
+        <div class="pr-r"><span class="pr-l">Thermal Risk</span><div class="pr-b"><div id="pfT" class="pr-f" style="width:0%"></div></div><span id="ptT" class="pr-n">0%</span></div>
+        <div class="pr-r"><span class="pr-l">Overload Risk</span><div class="pr-b"><div id="pfO" class="pr-f" style="width:0%"></div></div><span id="ptO" class="pr-n">0%</span></div>
+        <div class="pr-r"><span class="pr-l">Wear Index</span><div class="pr-b"><div id="pfW" class="pr-f" style="width:5%"></div></div><span id="ptW" class="pr-n">5%</span></div>
+      </div>
+      <div class="ps-grid">
+        <div class="ps"><div class="psk">Throughput</div><div class="psv" id="psT">—</div></div>
+        <div class="ps"><div class="psk">Power (kW)</div><div class="psv" id="psP">—</div></div>
+        <div class="ps"><div class="psk">MTBF (hr)</div><div class="psv" id="psM">—</div></div>
+        <div class="ps"><div class="psk">Uptime</div><div class="psv" id="psU">00:00</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WAVEFORM -->
+  <div class="card">
+    <div class="wave-hdr">
+      <div class="ct">Real-Time Sensor Waveform Plotter</div>
+      <div class="wleg">
+        <span><span class="ld" style="background:#f59e0b"></span>Temp</span>
+        <span><span class="ld" style="background:#06b6d4"></span>Load</span>
+        <span><span class="ld" style="background:#ec4899"></span>Speed</span>
+        <span><span class="ld" style="background:#3b82f6"></span>Health</span>
+      </div>
+    </div>
+    <div class="wave-c"><canvas id="cWave"></canvas></div>
+  </div>
+
+  <!-- LAB LOG -->
+  <div class="card">
+    <div class="ct">Lab Observation Log</div>
+    <p class="ldesc">Adjust sliders, then click <strong>Record Data Point</strong> to log readings.</p>
+    <div class="lbtns">
+      <button id="btnRec" class="btn-rec">⊕ Record Data Point</button>
+      <button id="btnExp" class="btn-csv">⬇ Export as CSV</button>
+      <button id="btnClr" class="btn-csv">✕ Clear</button>
+    </div>
+    <div class="tbw"><table>
+      <thead><tr>
+        <th>RUN ID</th>
+        <th>TIMESTAMP</th>
+        <th>SPEED (m/s)</th>
+        <th>LOAD (kg)</th>
+        <th>RPM</th>
+        <th>TEMP (°C)</th>
+        <th>POWER (kW)</th>
+        <th>EFF (%)</th>
+        <th>HEALTH SCORE</th>
+        <th>STATUS</th>
+      </tr></thead>
+      <tbody id="tBody"></tbody>
+    </table></div>
+  </div>
+
+</main>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

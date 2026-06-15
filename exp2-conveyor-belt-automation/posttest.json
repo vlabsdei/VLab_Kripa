@@ -1,0 +1,175 @@
+{
+  "version": "2.0",
+  "questions": [
+    {
+      "question": "A conveyor belt is operating at a very high speed. What is the most likely outcome?",
+      "answers": {
+        "a": "Reduced transport time",
+        "b": "Increased transport time",
+        "c": "Motor stops immediately",
+        "d": "Load weight becomes zero"
+      },
+      "explanations": {
+        "a": "Correct. Increasing belt speed reduces the time required to transport products.",
+        "b": "Incorrect. Higher speed decreases transport time.",
+        "c": "Incorrect. High speed does not automatically stop the motor.",
+        "d": "Incorrect. Belt speed does not affect load weight."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is likely to happen when load weight is increased significantly?",
+      "answers": {
+        "a": "Motor temperature may increase",
+        "b": "Conveyor length decreases",
+        "c": "Sensor count increases",
+        "d": "Power consumption becomes zero"
+      },
+      "explanations": {
+        "a": "Correct. Higher loads require more motor effort, increasing temperature.",
+        "b": "Incorrect. Load weight does not affect conveyor length.",
+        "c": "Incorrect. Sensors are independent of load weight.",
+        "d": "Incorrect. Power consumption generally increases."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which parameter directly affects product transport time?",
+      "answers": {
+        "a": "Conveyor Speed",
+        "b": "Sensor Color",
+        "c": "Dashboard Theme",
+        "d": "Controller Brand"
+      },
+      "explanations": {
+        "a": "Correct. Transport time depends on conveyor speed and length.",
+        "b": "Incorrect. Sensor color has no effect.",
+        "c": "Incorrect. Dashboard appearance is unrelated.",
+        "d": "Incorrect. Controller brand does not directly affect transport time."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Why is conveyor efficiency reduced under excessive load conditions?",
+      "answers": {
+        "a": "Increased mechanical stress",
+        "b": "More internet connectivity",
+        "c": "Reduced conveyor length",
+        "d": "More dashboard cards"
+      },
+      "explanations": {
+        "a": "Correct. Heavy loads increase stress and energy requirements.",
+        "b": "Incorrect. Internet connectivity is unrelated.",
+        "c": "Incorrect. Load does not reduce conveyor length.",
+        "d": "Incorrect. Dashboard cards do not affect efficiency."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the purpose of an industrial dashboard in conveyor automation?",
+      "answers": {
+        "a": "Monitor system performance",
+        "b": "Move products",
+        "c": "Replace the motor",
+        "d": "Increase belt length"
+      },
+      "explanations": {
+        "a": "Correct. Dashboards display real-time operational information.",
+        "b": "Incorrect. The conveyor belt transports products.",
+        "c": "Incorrect. Dashboards do not perform mechanical functions.",
+        "d": "Incorrect. Conveyor length is a design parameter."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which Industry 4.0 feature enables real-time conveyor monitoring?",
+      "answers": {
+        "a": "IoT Integration",
+        "b": "Manual Registers",
+        "c": "Paper Logs",
+        "d": "Mechanical Drawing Boards"
+      },
+      "explanations": {
+        "a": "Correct. IoT enables real-time monitoring and data collection.",
+        "b": "Incorrect. Manual registers are not real-time systems.",
+        "c": "Incorrect. Paper logs cannot provide live monitoring.",
+        "d": "Incorrect. Drawing boards are unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the likely effect of extremely high motor RPM?",
+      "answers": {
+        "a": "Higher power consumption",
+        "b": "Lower power consumption",
+        "c": "Zero conveyor movement",
+        "d": "No effect"
+      },
+      "explanations": {
+        "a": "Correct. Higher RPM generally increases power consumption and heat generation.",
+        "b": "Incorrect. Power consumption usually increases.",
+        "c": "Incorrect. Conveyor movement continues unless a fault occurs.",
+        "d": "Incorrect. RPM significantly affects system behavior."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the benefit of conveyor automation compared to manual transportation?",
+      "answers": {
+        "a": "Improved efficiency",
+        "b": "Increased manual effort",
+        "c": "Reduced productivity",
+        "d": "More operational delays"
+      },
+      "explanations": {
+        "a": "Correct. Automation improves efficiency and throughput.",
+        "b": "Incorrect. Automation reduces manual effort.",
+        "c": "Incorrect. Productivity generally increases.",
+        "d": "Incorrect. Automation reduces delays."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which output parameter indicates the health of conveyor operation?",
+      "answers": {
+        "a": "Efficiency",
+        "b": "Folder Name",
+        "c": "Monitor Size",
+        "d": "Screen Resolution"
+      },
+      "explanations": {
+        "a": "Correct. Efficiency reflects system performance and effectiveness.",
+        "b": "Incorrect. Folder names are unrelated.",
+        "c": "Incorrect. Monitor size does not affect conveyor health.",
+        "d": "Incorrect. Screen resolution is unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "After completing this experiment, what concept should students understand best?",
+      "answers": {
+        "a": "Industrial conveyor automation",
+        "b": "Mobile game development",
+        "c": "Video editing",
+        "d": "Social media marketing"
+      },
+      "explanations": {
+        "a": "Correct. The experiment focuses on conveyor automation systems and smart manufacturing.",
+        "b": "Incorrect. Mobile game development is unrelated.",
+        "c": "Incorrect. Video editing is unrelated.",
+        "d": "Incorrect. Marketing is outside the experiment scope."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    }
+  ]
+}

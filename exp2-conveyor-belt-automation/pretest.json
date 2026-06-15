@@ -1,0 +1,175 @@
+{
+  "version": "2.0",
+  "questions": [
+    {
+      "question": "What is the primary function of a conveyor belt system?",
+      "answers": {
+        "a": "Material transportation",
+        "b": "Power generation",
+        "c": "Data storage",
+        "d": "Cooling"
+      },
+      "explanations": {
+        "a": "Correct. Conveyor systems are designed to transport materials and products efficiently.",
+        "b": "Incorrect. Conveyors consume power but do not generate it.",
+        "c": "Incorrect. Data storage is not a function of conveyor systems.",
+        "d": "Incorrect. Cooling is performed by separate industrial systems."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which component provides motion to the conveyor belt?",
+      "answers": {
+        "a": "Sensor",
+        "b": "Motor",
+        "c": "Dashboard",
+        "d": "Controller"
+      },
+      "explanations": {
+        "a": "Incorrect. Sensors only detect and monitor conditions.",
+        "b": "Correct. The motor drives the conveyor belt through pulleys.",
+        "c": "Incorrect. Dashboards display system information.",
+        "d": "Incorrect. Controllers manage logic but do not directly provide motion."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the SI unit commonly used for conveyor speed?",
+      "answers": {
+        "a": "kg",
+        "b": "m/s",
+        "c": "RPM",
+        "d": "W"
+      },
+      "explanations": {
+        "a": "Incorrect. kg measures mass.",
+        "b": "Correct. Conveyor speed is typically measured in meters per second.",
+        "c": "Incorrect. RPM measures rotational speed.",
+        "d": "Incorrect. Watt measures power."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the role of sensors in conveyor automation?",
+      "answers": {
+        "a": "Generate electricity",
+        "b": "Transport products",
+        "c": "Detect and monitor system conditions",
+        "d": "Increase belt length"
+      },
+      "explanations": {
+        "a": "Incorrect. Sensors do not generate electricity.",
+        "b": "Incorrect. The conveyor belt transports products.",
+        "c": "Correct. Sensors detect products and monitor operational parameters.",
+        "d": "Incorrect. Belt length is a mechanical design parameter."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What does PLC stand for?",
+      "answers": {
+        "a": "Programmable Logic Controller",
+        "b": "Power Load Controller",
+        "c": "Primary Logic Circuit",
+        "d": "Process Load Circuit"
+      },
+      "explanations": {
+        "a": "Correct. PLC stands for Programmable Logic Controller.",
+        "b": "Incorrect. This is not the correct expansion.",
+        "c": "Incorrect. This is not the correct expansion.",
+        "d": "Incorrect. This is not the correct expansion."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which Industry 4.0 technology is commonly integrated with conveyor systems?",
+      "answers": {
+        "a": "Typewriter",
+        "b": "IoT",
+        "c": "Manual Register",
+        "d": "Fax Machine"
+      },
+      "explanations": {
+        "a": "Incorrect. Typewriters are unrelated to automation.",
+        "b": "Correct. IoT enables real-time monitoring and connectivity.",
+        "c": "Incorrect. Manual registers are not Industry 4.0 technologies.",
+        "d": "Incorrect. Fax machines are outdated communication tools."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What happens to transport time when conveyor speed increases?",
+      "answers": {
+        "a": "It decreases",
+        "b": "It increases",
+        "c": "It becomes zero",
+        "d": "It remains constant"
+      },
+      "explanations": {
+        "a": "Correct. Higher speed reduces the time required to transport products.",
+        "b": "Incorrect. Transport time decreases with increasing speed.",
+        "c": "Incorrect. Transport time cannot become zero.",
+        "d": "Incorrect. Speed directly affects transport time."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which parameter represents the weight carried by the conveyor?",
+      "answers": {
+        "a": "Load Weight",
+        "b": "RPM",
+        "c": "Conveyor Length",
+        "d": "Voltage"
+      },
+      "explanations": {
+        "a": "Correct. Load Weight represents the mass transported by the conveyor.",
+        "b": "Incorrect. RPM measures rotational speed.",
+        "c": "Incorrect. Conveyor length measures distance.",
+        "d": "Incorrect. Voltage is an electrical parameter."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Why are conveyor systems widely used in industries?",
+      "answers": {
+        "a": "To increase manual labor",
+        "b": "To improve material handling efficiency",
+        "c": "To reduce productivity",
+        "d": "To increase downtime"
+      },
+      "explanations": {
+        "a": "Incorrect. Automation reduces manual labor requirements.",
+        "b": "Correct. Conveyor systems improve efficiency and productivity.",
+        "c": "Incorrect. They are designed to improve productivity.",
+        "d": "Incorrect. They help reduce downtime."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which of the following is a major application of conveyor automation?",
+      "answers": {
+        "a": "Manufacturing industries",
+        "b": "Swimming pools",
+        "c": "Libraries only",
+        "d": "Classroom attendance"
+      },
+      "explanations": {
+        "a": "Correct. Manufacturing industries extensively use conveyor automation.",
+        "b": "Incorrect. Conveyor systems are not used for swimming pool operations.",
+        "c": "Incorrect. Libraries do not commonly require conveyor automation.",
+        "d": "Incorrect. Attendance management is unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    }
+  ]
+}
