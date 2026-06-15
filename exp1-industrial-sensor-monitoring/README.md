@@ -1,36 +1,24 @@
-# Industrial Sensor Monitoring Lab
-
 ## Introduction
 
-Industrial Sensor Monitoring Lab is a simulation-based experiment developed under SmartFactory 4.0 Virtual Lab. The experiment allows students to explore industrial monitoring systems used in modern smart factories.
+| **Discipline** | Computer Science and Engineering                                  |
+| :------------- | :---------------------------------------------------------------- |
+| **Lab**        | SmartFactory 4.0 Virtual Lab                                      |
+| **Experiment** | Industrial Sensor Monitoring and Machine Health Analysis          |
 
-Students can vary different machine parameters and observe their impact on machine health and operational safety.
+### About the Experiment
 
-## Learning Outcomes
+The Industrial Sensor Monitoring and Machine Health Analysis is a virtual laboratory experiment developed under the SmartFactory 4.0 Virtual Lab project. This experiment helps students understand the role of industrial sensors in monitoring machine conditions within modern smart manufacturing environments.
 
-After completing this experiment, students will be able to:
+The experiment provides an interactive simulation where users can modify machine operating parameters such as temperature, pressure, vibration, and humidity, and observe their impact on machine health, operational safety, and predictive maintenance indicators.
 
-- Understand industrial IoT monitoring systems.
-- Analyze industrial sensor data.
-- Interpret machine health conditions.
-- Understand predictive maintenance concepts.
-- Learn Industry 4.0 monitoring principles.
+| **Name of Developer** | Kripa Bansal                                             |
+| :-------------------- | :------------------------------------------------------- |
+| **Institute**         | Jaypee Institute of Information Technology (JIIT), Noida |
+| **Email id**          | kripabansal.06@gmail.com                                 |
+| **Department**        | Computer Science and Engineering                         |
 
-## Folder Structure
+### Contributors List
 
-experiment-1/
-
-- experiment-name.md
-- aim.md
-- theory.md
-- procedure.md
-- references.md
-- pretest.md
-- posttest.md
-- README.md
-- images/
-- simulation/
-
-## Developed Under
-
-SmartFactory 4.0 Virtual Lab
+| Sr. No. | Name               | Faculty or Student | Department                       | Institute                                  | Email id                 |
+| :------ | :----------------- | :----------------- | :------------------------------- | :----------------------------------------- | :----------------------- |
+| 1       | Kripa Bansal       | Student            | Computer Science and Engineering | Jaypee Institute of Information Technology | kripabansal.06@gmail.com |
