@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the primary purpose of an industrial robotic arm?",
+      "answers": {
+        "a": "Automate industrial tasks",
+        "b": "Play video games",
+        "c": "Browse the internet",
+        "d": "Store documents"
+      },
+      "explanations": {
+        "a": "Industrial robotic arms automate repetitive manufacturing tasks.",
+        "b": "Gaming is not an industrial application.",
+        "c": "Internet browsing is unrelated to robotic automation.",
+        "d": "Document storage is not a robotic function."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which component directly interacts with objects in a robotic arm?",
+      "answers": {
+        "a": "Base Joint",
+        "b": "Elbow Joint",
+        "c": "End Effector",
+        "d": "Controller"
+      },
+      "explanations": {
+        "a": "The base joint provides rotational movement.",
+        "b": "The elbow joint helps positioning.",
+        "c": "The end effector or gripper handles objects.",
+        "d": "The controller manages robot operations."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What does payload represent in robotics?",
+      "answers": {
+        "a": "Robot color",
+        "b": "Weight carried by the robot",
+        "c": "Robot speed",
+        "d": "Power supply voltage"
+      },
+      "explanations": {
+        "a": "Color has no relation to payload.",
+        "b": "Payload is the weight handled by the robotic arm.",
+        "c": "Speed and payload are different parameters.",
+        "d": "Voltage is unrelated to payload."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Forward kinematics is used to determine:",
+      "answers": {
+        "a": "Robot color",
+        "b": "End effector position",
+        "c": "Network speed",
+        "d": "Database size"
+      },
+      "explanations": {
+        "a": "Robot color is unrelated.",
+        "b": "Forward kinematics calculates end effector coordinates.",
+        "c": "Network speed is unrelated.",
+        "d": "Database size is not part of robotics."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the role of the base joint?",
+      "answers": {
+        "a": "Rotate the robotic arm",
+        "b": "Measure temperature",
+        "c": "Store programs",
+        "d": "Detect humidity"
+      },
+      "explanations": {
+        "a": "The base joint provides rotational movement.",
+        "b": "Temperature measurement is done by sensors.",
+        "c": "Program storage is not its function.",
+        "d": "Humidity detection is unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which industrial revolution emphasizes smart manufacturing?",
+      "answers": {
+        "a": "Industry 1.0",
+        "b": "Industry 2.0",
+        "c": "Industry 3.0",
+        "d": "Industry 4.0"
+      },
+      "explanations": {
+        "a": "Industry 1.0 focused on mechanization.",
+        "b": "Industry 2.0 focused on mass production.",
+        "c": "Industry 3.0 introduced automation.",
+        "d": "Industry 4.0 emphasizes smart and connected manufacturing."
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which parameter can reduce robotic arm accuracy?",
+      "answers": {
+        "a": "Proper calibration",
+        "b": "Excessive payload",
+        "c": "Regular maintenance",
+        "d": "Optimal joint angles"
+      },
+      "explanations": {
+        "a": "Calibration improves accuracy.",
+        "b": "High payload can reduce positioning accuracy.",
+        "c": "Maintenance improves performance.",
+        "d": "Optimal angles improve precision."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is a common application of industrial robots?",
+      "answers": {
+        "a": "Assembly operations",
+        "b": "Movie streaming",
+        "c": "Social networking",
+        "d": "Web hosting"
+      },
+      "explanations": {
+        "a": "Assembly is a major robotic application.",
+        "b": "Movie streaming is unrelated.",
+        "c": "Social networking is unrelated.",
+        "d": "Web hosting is unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Why is robot health monitoring important?",
+      "answers": {
+        "a": "To predict failures",
+        "b": "To change robot color",
+        "c": "To increase internet speed",
+        "d": "To store files"
+      },
+      "explanations": {
+        "a": "Health monitoring helps detect issues before failures occur.",
+        "b": "Color changes are unrelated.",
+        "c": "Internet speed is unrelated.",
+        "d": "File storage is unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the main purpose of pick-and-place operations?",
+      "answers": {
+        "a": "Move objects between locations",
+        "b": "Measure humidity",
+        "c": "Browse websites",
+        "d": "Generate reports"
+      },
+      "explanations": {
+        "a": "Pick-and-place systems transfer objects efficiently.",
+        "b": "Humidity measurement requires sensors.",
+        "c": "Website browsing is unrelated.",
+        "d": "Report generation is not the primary purpose."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    }
+  ]
+}

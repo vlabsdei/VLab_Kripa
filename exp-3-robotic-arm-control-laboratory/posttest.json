@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the primary advantage of using forward kinematics in robotic systems?",
+      "answers": {
+        "a": "Calculating end effector position",
+        "b": "Changing robot color",
+        "c": "Increasing internet speed",
+        "d": "Storing production data"
+      },
+      "explanations": {
+        "a": "Forward kinematics determines the end effector coordinates from joint parameters.",
+        "b": "Color changes are unrelated to kinematics.",
+        "c": "Internet speed has no connection to robotic movement.",
+        "d": "Data storage is not the purpose of forward kinematics."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is likely to happen if payload weight exceeds the robot's recommended limit?",
+      "answers": {
+        "a": "Improved accuracy",
+        "b": "Increased stability",
+        "c": "Reduced precision and instability",
+        "d": "Reduced power consumption"
+      },
+      "explanations": {
+        "a": "Excess payload generally decreases accuracy.",
+        "b": "Stability usually decreases with excessive load.",
+        "c": "High payload can cause instability and positioning errors.",
+        "d": "Power consumption typically increases."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which parameter directly affects robotic arm reachability?",
+      "answers": {
+        "a": "Arm length",
+        "b": "Screen brightness",
+        "c": "Internet bandwidth",
+        "d": "File size"
+      },
+      "explanations": {
+        "a": "Arm length determines how far the robot can reach.",
+        "b": "Screen brightness does not affect robot motion.",
+        "c": "Bandwidth is unrelated.",
+        "d": "File size has no effect on reachability."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "In industrial robotics, the gripper is classified as:",
+      "answers": {
+        "a": "Controller",
+        "b": "End effector",
+        "c": "Sensor",
+        "d": "Actuator housing"
+      },
+      "explanations": {
+        "a": "Controllers manage robot operations.",
+        "b": "The gripper is the end effector that interacts with objects.",
+        "c": "Sensors only detect information.",
+        "d": "Actuator housing is different from a gripper."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Why are robotic arms widely used in smart manufacturing?",
+      "answers": {
+        "a": "To increase manual labor",
+        "b": "To reduce automation",
+        "c": "To improve productivity and precision",
+        "d": "To increase downtime"
+      },
+      "explanations": {
+        "a": "Robotics reduces repetitive manual work.",
+        "b": "Robotics enhances automation.",
+        "c": "Higher productivity and precision are major benefits.",
+        "d": "Robotics aims to reduce downtime."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What happens when joint angles are not optimized?",
+      "answers": {
+        "a": "Positioning accuracy may decrease",
+        "b": "Robot speed becomes infinite",
+        "c": "Power becomes zero",
+        "d": "Payload increases automatically"
+      },
+      "explanations": {
+        "a": "Poor joint configurations can reduce positioning accuracy.",
+        "b": "Robot speed cannot become infinite.",
+        "c": "Power consumption never becomes zero during operation.",
+        "d": "Payload is independent of joint angles."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which Industry 4.0 technology is commonly integrated with industrial robots?",
+      "answers": {
+        "a": "Industrial IoT",
+        "b": "Typewriters",
+        "c": "Paper registers",
+        "d": "Mechanical calculators"
+      },
+      "explanations": {
+        "a": "Industrial IoT enables connectivity and monitoring.",
+        "b": "Typewriters are obsolete for industrial automation.",
+        "c": "Paper registers are not Industry 4.0 technologies.",
+        "d": "Mechanical calculators are unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the benefit of robot health monitoring?",
+      "answers": {
+        "a": "Predictive maintenance",
+        "b": "Increasing machine failures",
+        "c": "Reducing efficiency",
+        "d": "Eliminating automation"
+      },
+      "explanations": {
+        "a": "Health monitoring supports predictive maintenance strategies.",
+        "b": "Monitoring aims to prevent failures.",
+        "c": "It generally improves efficiency.",
+        "d": "Automation is enhanced, not removed."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which industrial application commonly uses robotic pick-and-place systems?",
+      "answers": {
+        "a": "Packaging",
+        "b": "Social media management",
+        "c": "Online advertising",
+        "d": "Video streaming"
+      },
+      "explanations": {
+        "a": "Packaging is a major application of robotic handling systems.",
+        "b": "Social media management is unrelated.",
+        "c": "Advertising is unrelated.",
+        "d": "Video streaming is unrelated."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the primary objective of industrial robotic automation?",
+      "answers": {
+        "a": "Improve efficiency and consistency",
+        "b": "Increase human error",
+        "c": "Reduce production quality",
+        "d": "Eliminate monitoring systems"
+      },
+      "explanations": {
+        "a": "Automation improves efficiency, consistency, and productivity.",
+        "b": "Automation reduces human error.",
+        "c": "Automation generally improves quality.",
+        "d": "Monitoring remains essential."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    }
+  ]
+}
