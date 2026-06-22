@@ -56,6 +56,18 @@ pixel_length = L × 100  (pixels per metre)
 
 ---
 
+## Workspace Boundary
+
+The simulation draws a **dashed blue circle** in the SVG viewport centred on the robot base. This circle represents the **maximum reachable radius** of the arm:
+
+```
+Maximum Reach = 2L  (metres)
+```
+
+The circle and its label (e.g. "Max Reach: 2.00 m") update live as the Linkage Extension slider is adjusted. Any point inside the circle is potentially reachable; points outside are not.
+
+---
+
 ## Base Torque
 
 The **Base Torque (τ)** is the rotational force exerted at the robot's fixed base, caused by the weight of the payload acting at the end-effector's horizontal distance from the base:
@@ -119,7 +131,21 @@ The simulation includes three injectable disturbance conditions to study fault r
 | **Joint Friction** | Reduces accuracy score by 25% |
 | **Payload Center Shift** | Reduces stability by 30% |
 
-Disturbances can be combined to simulate compound fault scenarios. All disturbances are cleared using the **Clear External Disturbances** button.
+Each disturbance button **toggles** — clicking once activates the fault (button glows red), clicking again deactivates it. Disturbances can be combined to simulate compound fault scenarios. All disturbances are cleared simultaneously using the **Clear External Disturbances** button.
+
+---
+
+## Target Zone and Pick-and-Place Operation
+
+The SVG viewport contains a **Target Zone** — a coloured rectangle representing a pick-and-place destination the arm must reach. The simulation tracks the distance between the Tool Center Point (TCP) and the target centre in real time, producing three visual states:
+
+| State | Distance to Target | Observation |
+|---|---|---|
+| Far | > 70 px | Target zone is red with a cross (✕) |
+| Getting Close | ≤ 70 px | Target zone turns orange |
+| Reached | ≤ 28 px | Target zone turns green, gripper jaws close, "TARGET REACHED!" badge appears |
+
+The target zone is reachable at approximately **θ₁ ≈ 20°, θ₂ ≈ 40°, L = 1.0 m**.
 
 ---
 
@@ -159,6 +185,21 @@ The simulation provides two layers of real-time angle feedback:
 
 ---
 
+## System Advisor
+
+The **System Advisor** panel (left column, below Disturbance Models) provides real-time contextual feedback about the arm's operating state. Messages are colour-coded by severity:
+
+| Label | Colour | Meaning |
+|---|---|---|
+| [OK] | Green | System is operating normally |
+| [INFO] / [TARGET] / [NEAR] | Blue | Informational guidance |
+| [WARN] / [ACC] / [TORQ] / [LOAD] | Orange | Caution — parameter approaching limit |
+| [CRIT] / [SING] / [FAULT] | Red | Critical condition requiring immediate attention |
+
+The advisor checks: target proximity, system stability, base torque, singularity risk, active faults, payload level, and linkage extension on every update cycle.
+
+---
+
 ## Observation Log
 
 The **Lab Observation Log** allows students to capture discrete data points during an experiment session. Each recorded entry stores:
@@ -170,10 +211,10 @@ The **Lab Observation Log** allows students to capture discrete data points duri
 - End-effector Y position (metres)
 - System Stability (%)
 
-Entries appear in reverse chronological order and persist until the notebook is cleared.
+Entries are listed in **chronological order** (oldest first, newest at the bottom). The complete log can be exported as a CSV file using the **EXPORT CSV** button for use in lab reports.
 
 ---
 
 ## Conclusion
 
-The two-link planar robotic arm simulation demonstrates core principles of industrial robotics including forward kinematics, torque analysis, stability monitoring, singularity detection, and disturbance response. Understanding these principles provides the foundation for designing, programming, and maintaining robotic systems in Industry 4.0 smart manufacturing environments.
+The two-link planar robotic arm simulation demonstrates core principles of industrial robotics including forward kinematics, torque analysis, stability monitoring, singularity detection, disturbance response, and pick-and-place targeting. Understanding these principles provides the foundation for designing, programming, and maintaining robotic systems in Industry 4.0 smart manufacturing environments.

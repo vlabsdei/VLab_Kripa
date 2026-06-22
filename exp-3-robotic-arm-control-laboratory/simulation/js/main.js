@@ -39,12 +39,14 @@ const overlayT2 = document.getElementById("overlayT2");
 const canvas = document.getElementById("oscilloscope");
 const canvasContainer = document.getElementById("canvasContainer");
 const ctx = canvas.getContext("2d");
+const advisorBody = document.getElementById("advisorBody");
 
 // State
 let currentT1 = 45;
 let currentT2 = 45;
 let tracePoints = [];
 let oscData = [];
+let logData = [];
 let animationFrameId = null;
 let activeFaults = { overload: false, friction: false, payloadShift: false };
 let runCount = 1;
@@ -61,10 +63,33 @@ payload.addEventListener("input", () => syncInputs(payload, payloadNum));
 payloadNum.addEventListener("input", () => syncInputs(payloadNum, payload));
 
 // Faults (Disturbance Models)
-document.getElementById("faultOverload").addEventListener("click", () => { activeFaults.overload = true; updateLiveState(); });
-document.getElementById("faultFriction").addEventListener("click", () => { activeFaults.friction = true; updateLiveState(); });
-document.getElementById("faultPayload").addEventListener("click", () => { activeFaults.payloadShift = true; updateLiveState(); });
-document.getElementById("clearFaults").addEventListener("click", () => { activeFaults = { overload: false, friction: false, payloadShift: false }; updateLiveState(); });
+const faultOverloadBtn = document.getElementById("faultOverload");
+const faultFrictionBtn = document.getElementById("faultFriction");
+const faultPayloadBtn  = document.getElementById("faultPayload");
+const clearFaultsBtn   = document.getElementById("clearFaults");
+
+function updateFaultButtons() {
+    faultOverloadBtn.classList.toggle("active", activeFaults.overload);
+    faultFrictionBtn.classList.toggle("active", activeFaults.friction);
+    faultPayloadBtn.classList.toggle("active",  activeFaults.payloadShift);
+}
+
+faultOverloadBtn.addEventListener("click", () => {
+    activeFaults.overload = !activeFaults.overload;
+    updateFaultButtons(); updateLiveState();
+});
+faultFrictionBtn.addEventListener("click", () => {
+    activeFaults.friction = !activeFaults.friction;
+    updateFaultButtons(); updateLiveState();
+});
+faultPayloadBtn.addEventListener("click", () => {
+    activeFaults.payloadShift = !activeFaults.payloadShift;
+    updateFaultButtons(); updateLiveState();
+});
+clearFaultsBtn.addEventListener("click", () => {
+    activeFaults = { overload: false, friction: false, payloadShift: false };
+    updateFaultButtons(); updateLiveState();
+});
 
 // Advanced Physics & Forward Kinematics Engine
 function calculatePhysics(t1, t2, L, p) {
@@ -143,8 +168,9 @@ function updateLiveState() {
     // Live Trace Update
     const rad1 = t1 * Math.PI / 180;
     const rad2 = t2 * Math.PI / 180;
-    const ex = 400 + L*100*Math.cos(rad1) + L*100*Math.cos(rad1+rad2);
-    const ey = 150 - L*100*Math.sin(rad1) - L*100*Math.sin(rad1+rad2);
+    const l_px = L * 100;
+    const ex = 400 + l_px*Math.cos(rad1) + l_px*Math.cos(rad1+rad2);
+    const ey = 150 - l_px*Math.sin(rad1) - l_px*Math.sin(rad1+rad2);
     
     const currentPoint = `${ex},${ey}`;
     const lastPoint = tracePoints[tracePoints.length - 1];
@@ -153,6 +179,133 @@ function updateLiveState() {
         if(tracePoints.length > 100) tracePoints.shift();
         pathTrace.setAttribute("d", "M " + tracePoints.join(" L "));
     }
+
+    // ── Target Zone Proximity Detection ──────────────────────────────────
+    // TCP is the red dot at end of gripper (15px past end of link2)
+    const tcpX = 400 + l_px*Math.cos(rad1) + (l_px + 15)*Math.cos(rad1 + rad2);
+    const tcpY = 150 - l_px*Math.sin(rad1) - (l_px + 15)*Math.sin(rad1 + rad2);
+    const targetCX = 547, targetCY = 3; // centre of target zone rect
+    const dist = Math.sqrt((tcpX - targetCX)**2 + (tcpY - targetCY)**2);
+
+    const tRect   = document.getElementById("targetRect");
+    const tIcon   = document.getElementById("targetIcon");
+    const tLabelA = document.getElementById("targetLabelA");
+    const tLabelB = document.getElementById("targetLabelB");
+    const rOverlay = document.getElementById("reachOverlay");
+    const gTop    = document.getElementById("gripperTop");
+    const gBot    = document.getElementById("gripperBot");
+
+    if (dist < 28) {
+        // ✅ REACHED — green, gripper closes, badge shows
+        tRect.setAttribute("fill", "#e6f4ea");
+        tRect.setAttribute("stroke", "#137333");
+        tIcon.setAttribute("fill", "#137333");
+        tIcon.textContent = "✓";
+        tLabelA.setAttribute("fill", "#137333");
+        tLabelB.setAttribute("fill", "#137333");
+        rOverlay.setAttribute("opacity", "1");
+        gTop.setAttribute("d", "M 0 -4 L 15 -4 L 15 0 L 0 0 Z");
+        gBot.setAttribute("d", "M 0 4 L 15 4 L 15 0 L 0 0 Z");
+    } else if (dist < 70) {
+        // 🟠 CLOSE — orange "getting warm" state
+        tRect.setAttribute("fill", "#fff3e0");
+        tRect.setAttribute("stroke", "#f57c00");
+        tIcon.setAttribute("fill", "#f57c00");
+        tIcon.textContent = "✕";
+        tLabelA.setAttribute("fill", "#f57c00");
+        tLabelB.setAttribute("fill", "#f57c00");
+        rOverlay.setAttribute("opacity", "0");
+        gTop.setAttribute("d", "M 0 -10 L 15 -10 L 15 -2 L 0 -2 Z");
+        gBot.setAttribute("d", "M 0 10 L 15 10 L 15 2 L 0 2 Z");
+    } else {
+        // 🔴 FAR — default red state
+        tRect.setAttribute("fill", "#fce8e6");
+        tRect.setAttribute("stroke", "#ea4335");
+        tIcon.setAttribute("fill", "#ea4335");
+        tIcon.textContent = "✕";
+        tLabelA.setAttribute("fill", "#ea4335");
+        tLabelB.setAttribute("fill", "#ea4335");
+        rOverlay.setAttribute("opacity", "0");
+        gTop.setAttribute("d", "M 0 -10 L 15 -10 L 15 -2 L 0 -2 Z");
+        gBot.setAttribute("d", "M 0 10 L 15 10 L 15 2 L 0 2 Z");
+    }
+
+    // Render advisor messages
+    renderAdvisor(generateAdvisorMessages(phys, t1, t2, L, p, dist));
+}
+
+// ── System Advisor ────────────────────────────────────────────────────────
+function generateAdvisorMessages(phys, t1, t2, L, p, targetDist) {
+    const msgs = [];
+
+    // 1. Target zone feedback
+    if (targetDist < 28) {
+        msgs.push({ level: 'success', icon: '[TARGET]', text: 'Target zone reached! Gripper engaged — pick operation successful.' });
+    } else if (targetDist < 70) {
+        msgs.push({ level: 'info', icon: '[NEAR]', text: `Getting close to target! Distance: ${targetDist.toFixed(0)} px. Try θ₁ ≈ 20°, θ₂ ≈ 40°, L = 1.0 m.` });
+    } else {
+        msgs.push({ level: 'info', icon: '[TARGET]', text: `Target is ${targetDist.toFixed(0)} px away. Aim for θ₁ ≈ 20°, θ₂ ≈ 40°, L = 1.0 m to reach it.` });
+    }
+
+    // 2. Stability feedback
+    if (phys.stability < 20) {
+        msgs.push({ level: 'danger', icon: '[CRIT]', text: `Critical instability (${phys.stability.toFixed(1)}%)! Reduce payload or reposition arm immediately.` });
+    } else if (phys.stability < 50) {
+        msgs.push({ level: 'warn', icon: '[WARN]', text: `Low stability (${phys.stability.toFixed(1)}%) — robot vibrating. Reduce payload or torque.` });
+    } else if (phys.stability >= 80) {
+        msgs.push({ level: 'success', icon: '[OK]', text: `Stability nominal (${phys.stability.toFixed(1)}%). System operating safely.` });
+    }
+
+    // 3. Torque feedback
+    if (phys.torque > 30) {
+        msgs.push({ level: 'danger', icon: '[CRIT]', text: `High base torque (${phys.torque.toFixed(1)} Nm) — structural overload risk.` });
+    } else if (phys.torque > 12) {
+        msgs.push({ level: 'warn', icon: '[TORQ]', text: `Elevated torque (${phys.torque.toFixed(1)} Nm). Monitor motor load carefully.` });
+    }
+
+    // 4. Singularity / accuracy feedback
+    if (Math.abs(t2 - 90) > 75) {
+        msgs.push({ level: 'danger', icon: '[SING]', text: `Singularity risk: θ₂ = ${t2.toFixed(1)}° (near 0° or 180°). Arm losing a degree of freedom!` });
+    } else if (phys.accuracy < 70) {
+        msgs.push({ level: 'warn', icon: '[ACC]', text: `Low accuracy (${phys.accuracy.toFixed(1)}%). Move θ₂ closer to 90° for better performance.` });
+    } else if (phys.accuracy >= 90) {
+        msgs.push({ level: 'success', icon: '[ACC]', text: `Excellent accuracy (${phys.accuracy.toFixed(1)}%). θ₂ near optimal 90°.` });
+    }
+
+    // 5. Active faults summary
+    const faultNames = [];
+    if (activeFaults.overload)     faultNames.push('Motor Overload');
+    if (activeFaults.friction)     faultNames.push('Joint Friction');
+    if (activeFaults.payloadShift) faultNames.push('Payload Shift');
+    if (faultNames.length > 0) {
+        msgs.push({ level: 'danger', icon: '[FAULT]', text: `Active fault(s): ${faultNames.join(', ')}. Click each again or use Clear to remove.` });
+    }
+
+    // 6. Heavy payload tip
+    if (p > 7) {
+        msgs.push({ level: 'warn', icon: '[LOAD]', text: `Heavy payload (${p.toFixed(1)} kg) amplifies torque and reduces stability significantly.` });
+    }
+
+    // 7. Large linkage tip
+    if (L >= 1.8) {
+        msgs.push({ level: 'info', icon: '[INFO]', text: `Large linkage (L = ${L.toFixed(1)} m). Max workspace radius is ${(2 * L).toFixed(1)} m.` });
+    }
+
+    // Default: all nominal
+    if (msgs.length <= 1 && targetDist >= 70 && phys.stability >= 80 && phys.accuracy >= 80 && faultNames.length === 0) {
+        msgs.push({ level: 'success', icon: '[OK]', text: 'All systems nominal. Adjust sliders, inject disturbances, or try reaching the target zone.' });
+    }
+
+    return msgs;
+}
+
+function renderAdvisor(msgs) {
+    advisorBody.innerHTML = msgs.map(m =>
+        `<div class="advisor-msg ${m.level}">
+            <span class="adv-icon">${m.icon}</span>
+            <span class="adv-text">${m.text}</span>
+        </div>`
+    ).join('');
 }
 
 function updateRobotVisuals(t1, t2, L) {
@@ -170,23 +323,45 @@ function updateRobotVisuals(t1, t2, L) {
     const y1 = 150 - l1_px * Math.sin(rad1);
     
     link2Group.setAttribute("transform", `translate(${x1}, ${y1}) rotate(${-(t1 + t2)})`);
+
+    // Update workspace boundary circle (radius = 2L in pixels)
+    const boundaryR = 2 * l1_px;
+    const workspaceBoundary = document.getElementById("workspaceBoundary");
+    const workspaceLabel    = document.getElementById("workspaceLabel");
+    workspaceBoundary.setAttribute("r", boundaryR);
+    // Position label at top of circle
+    workspaceLabel.setAttribute("x", 400 + boundaryR * 0.68);
+    workspaceLabel.setAttribute("y", 150 - boundaryR * 0.68);
+    workspaceLabel.textContent = `Max Reach: ${(2 * L).toFixed(2)} m`;
 }
 
 function drawOscilloscope() {
     canvas.width = canvasContainer.clientWidth;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // Light background
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Subtle grid lines
+    ctx.strokeStyle = "rgba(196,181,253,0.35)"; ctx.lineWidth = 1;
+    for (let i = 1; i < 4; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, canvas.height * i / 4);
+        ctx.lineTo(canvas.width, canvas.height * i / 4);
+        ctx.stroke();
+    }
+
     if(oscData.length < 2) return;
 
-    // Trace T1
-    ctx.beginPath(); ctx.strokeStyle = "#1a73e8"; ctx.lineWidth = 1.5;
+    // Trace T1 — indigo
+    ctx.beginPath(); ctx.strokeStyle = "#4f46e5"; ctx.lineWidth = 2;
     for(let i=0; i<oscData.length; i++) {
         let x = canvas.width - (oscData.length - i) * (canvas.width/200);
         let y = canvas.height - (Math.max(0, Math.min(180, oscData[i].t1)) / 180 * canvas.height);
         if(i===0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
     } ctx.stroke();
 
-    // Trace T2
-    ctx.beginPath(); ctx.strokeStyle = "#137333"; ctx.lineWidth = 1.5;
+    // Trace T2 — emerald
+    ctx.beginPath(); ctx.strokeStyle = "#059669"; ctx.lineWidth = 2;
     for(let i=0; i<oscData.length; i++) {
         let x = canvas.width - (oscData.length - i) * (canvas.width/200);
         let y = canvas.height - (Math.max(0, Math.min(180, oscData[i].t2)) / 180 * canvas.height);
@@ -242,21 +417,52 @@ recordBtn.addEventListener("click", () => {
     if (emptyRow) emptyRow.remove();
     
     const p = calculatePhysics(currentT1, currentT2, Number(armLength.value), Number(payload.value));
+    const entry = {
+        id: `#${runCount}`,
+        t1: currentT1.toFixed(1),
+        t2: currentT2.toFixed(1),
+        x:  p.x.toFixed(2),
+        y:  p.y.toFixed(2),
+        stab: p.stability.toFixed(1)
+    };
+    logData.push(entry);
     const row = document.createElement("tr");
     row.innerHTML = `
-        <td>#${runCount++}</td>
-        <td>${currentT1.toFixed(1)}</td>
-        <td>${currentT2.toFixed(1)}</td>
-        <td style="color:#1a73e8; font-weight:bold;">${p.x.toFixed(2)}</td>
-        <td style="color:#1a73e8; font-weight:bold;">${p.y.toFixed(2)}</td>
-        <td class="${p.stability < 50 ? 'metric-val alert' : ''}">${p.stability.toFixed(1)}%</td>
+        <td>${entry.id}</td>
+        <td>${entry.t1}</td>
+        <td>${entry.t2}</td>
+        <td style="color:#1a73e8; font-weight:bold;">${entry.x}</td>
+        <td style="color:#1a73e8; font-weight:bold;">${entry.y}</td>
+        <td class="${p.stability < 50 ? 'metric-val alert' : ''}">${entry.stab}%</td>
     `;
-    logTable.insertBefore(row, logTable.firstChild);
+    logTable.appendChild(row);
+    runCount++;
 });
 
 clearLogBtn.addEventListener("click", () => {
-    logTable.innerHTML = `<tr id="emptyRow"><td colspan="6" style="padding: 32px; font-style:italic; color:#7a9cb8;">Observation notebook empty.</td></tr>`;
+    logTable.innerHTML = `<tr id="emptyRow"><td colspan="6" style="padding: 32px; font-style:italic; color:#1e293b;">Observation notebook empty — record your first data point.</td></tr>`;
     runCount = 1;
+    logData = [];
+});
+
+// CSV Export
+document.getElementById("csvBtn").addEventListener("click", () => {
+    if (logData.length === 0) {
+        alert("No observations recorded yet. Record at least one data point first.");
+        return;
+    }
+    const headers = ["ID","θ1 (°)","θ2 (°)","X (m)","Y (m)","Stability (%)"];
+    const rows = logData.map(d => [
+        d.id, d.t1, d.t2, d.x, d.y, d.stab
+    ]);
+    const csvContent = [headers, ...rows].map(r => r.join(",")).join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement("a");
+    a.href     = url;
+    a.download = `robotic_arm_observations_${new Date().toISOString().slice(0,10)}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
 });
 
 resetBtn.addEventListener("click", () => {
@@ -265,8 +471,9 @@ resetBtn.addEventListener("click", () => {
     armLength.value = 1; lengthNum.value = 1;
     payload.value = 2; payloadNum.value = 2;
     activeFaults = { overload: false, friction: false, payloadShift: false };
+    updateFaultButtons();
     tracePoints = []; pathTrace.setAttribute("d", "");
-    oscData = []; 
+    oscData = [];
     updateLiveState();
 });
 

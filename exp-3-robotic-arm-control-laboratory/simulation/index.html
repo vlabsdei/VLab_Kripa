@@ -69,7 +69,7 @@
         </div>
 
         <div class="academic-panel">
-            <div class="panel-header" style="color: #cc0000; background: #fdf2f2;">2. Disturbance Models</div>
+            <div class="panel-header">2. Disturbance Models</div>
             <div class="panel-body">
                 <button class="btn-disturb" id="faultOverload">[!] Inject Motor Overload</button>
                 <button class="btn-disturb" id="faultFriction">[!] Induce Joint Friction</button>
@@ -77,20 +77,25 @@
                 <button class="btn-clear-disturb" id="clearFaults">Clear External Disturbances</button>
             </div>
         </div>
+
+        <div class="academic-panel panel-grow">
+            <div class="panel-header">System Advisor</div>
+            <div id="advisorBody" class="panel-body-scroll"></div>
+        </div>
     </div>
 
     <!-- CENTER COLUMN: SIMULATION -->
     <div class="column-center">
-        <div class="academic-panel" style="display:flex; flex-direction:column; flex-grow:1;">
+        <div class="academic-panel panel-grow" style="display:flex; flex-direction:column;">
             <div class="panel-header">3. Forward Kinematics Simulation Viewport</div>
             <div class="viewport-container" id="robotContainer">
                 <svg id="robotSvg" width="100%" height="100%" viewBox="-100 -300 1000 600" preserveAspectRatio="xMidYMid meet">
                     <defs>
                         <pattern id="millimeter-grid" width="20" height="20" patternUnits="userSpaceOnUse">
-                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e8eaed" stroke-width="1"/>
+                        <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e8eeff" stroke-width="1"/>
                         </pattern>
                         <pattern id="centimeter-grid" width="100" height="100" patternUnits="userSpaceOnUse">
-                            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#dadce0" stroke-width="1"/>
+                        <path d="M 100 0 L 0 0 0 100" fill="none" stroke="#d8ddff" stroke-width="1"/>
                         </pattern>
                     </defs>
                     
@@ -98,46 +103,61 @@
                     <rect x="-100" y="-300" width="1000" height="600" fill="url(#centimeter-grid)" />
                     
                     <!-- Axes -->
-                    <line x1="-100" y1="200" x2="900" y2="200" stroke="#80868b" stroke-width="2"/> <!-- X Axis (Ground) -->
-                    <line x1="400" y1="-300" x2="400" y2="300" stroke="#80868b" stroke-width="2" stroke-dasharray="4"/> <!-- Y Axis Center -->
-                    <text x="410" y="-280" font-family="JetBrains Mono" font-size="12" fill="#5f6368">+Y Axis</text>
-                    <text x="850" y="190" font-family="JetBrains Mono" font-size="12" fill="#5f6368">+X Axis</text>
+                    <line x1="-100" y1="200" x2="900" y2="200" stroke="#94a3b8" stroke-width="1.5"/> <!-- X Axis (Ground) -->
+                    <line x1="400" y1="-300" x2="400" y2="300" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="4"/> <!-- Y Axis Center -->
+                    <text x="410" y="-280" font-family="JetBrains Mono" font-size="12" fill="#94a3b8">+Y Axis</text>
+                    <text x="850" y="190" font-family="JetBrains Mono" font-size="12" fill="#94a3b8">+X Axis</text>
                     
-                    <!-- Target -->
-                    <rect x="650" y="180" width="40" height="20" fill="#fce8e6" stroke="#ea4335" stroke-width="2"/>
+                    <!-- Target Zone (reachable at ~θ₁=20°, θ₂=40°, L=1.0) -->
+                    <g id="targetGroup">
+                        <rect id="targetRect" x="522" y="-18" width="50" height="40" fill="#fee2e2" stroke="#ef4444" stroke-width="2" rx="3"/>
+                        <text id="targetLabelA" x="547" y="-23" font-family="JetBrains Mono" font-size="9" fill="#dc2626" text-anchor="middle" font-weight="700">TARGET</text>
+                        <text id="targetLabelB" x="547" y="-33" font-family="JetBrains Mono" font-size="9" fill="#dc2626" text-anchor="middle" font-weight="700">ZONE</text>
+                        <text id="targetIcon" x="547" y="12" font-family="JetBrains Mono" font-size="20" fill="#ef4444" text-anchor="middle">✕</text>
+                    </g>
+
+                    <!-- Reach Success Overlay Badge (hidden by default) -->
+                    <g id="reachOverlay" opacity="0" style="transition: opacity 0.3s;">
+                        <rect x="270" y="-285" width="250" height="38" rx="7" fill="rgba(236,253,245,0.97)" stroke="#10b981" stroke-width="1.5"/>
+                        <text x="395" y="-261" font-family="JetBrains Mono" font-size="13" fill="#065f46" text-anchor="middle" font-weight="700">✓ TARGET REACHED!</text>
+                    </g>
+
+                    <!-- Workspace Boundary Circle -->
+                    <circle id="workspaceBoundary" cx="400" cy="150" r="200" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-dasharray="8 5" opacity="0.35"/>
+                    <text id="workspaceLabel" x="600" y="-40" font-family="JetBrains Mono" font-size="10" fill="#6366f1" opacity="0.65">Max Reach: 2.00 m</text>
 
                     <!-- Live Angle Readout Overlay -->
                     <g id="angleOverlay" transform="translate(-80, -285)">
-                        <rect x="0" y="0" width="190" height="58" rx="6" fill="rgba(0,51,102,0.88)" stroke="#3b82f6" stroke-width="1"/>
-                        <text x="10" y="18" font-family="JetBrains Mono" font-size="11" fill="#93c5fd" font-weight="700">LIVE JOINT ANGLES</text>
-                        <text id="overlayT1" x="10" y="36" font-family="JetBrains Mono" font-size="13" fill="#60a5fa">θ₁ = 45.0°</text>
-                        <text id="overlayT2" x="10" y="54" font-family="JetBrains Mono" font-size="13" fill="#4ade80">θ₂ = 45.0°</text>
+                        <rect x="0" y="0" width="190" height="58" rx="6" fill="rgba(255,255,255,0.92)" stroke="#c4b5fd" stroke-width="1.5"/>
+                        <text x="10" y="18" font-family="JetBrains Mono" font-size="11" fill="#7c3aed" font-weight="700">LIVE JOINT ANGLES</text>
+                        <text id="overlayT1" x="10" y="36" font-family="JetBrains Mono" font-size="13" fill="#2563eb">θ₁ = 45.0°</text>
+                        <text id="overlayT2" x="10" y="54" font-family="JetBrains Mono" font-size="13" fill="#059669">θ₂ = 45.0°</text>
                     </g>
                     
                     <!-- Trace -->
-                    <path id="pathTrace" d="" fill="none" stroke="#1a73e8" stroke-width="2"/>
+                    <path id="pathTrace" d="" fill="none" stroke="#6366f1" stroke-width="2" opacity="0.7"/>
 
                     <!-- Robot Assembly (wrapped so JS can apply vibration class) -->
                     <g id="fullRobot">
-                        <!-- Robot Base X=400 Y=200 -->
-                        <path d="M 360 200 L 380 150 L 420 150 L 440 200 Z" fill="#9aa0a6" stroke="#5f6368" stroke-width="2"/>
+                        <!-- Robot Base -->
+                        <path d="M 360 200 L 380 150 L 420 150 L 440 200 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="2"/>
 
                         <!-- Link 1 -->
                         <g id="link1Group" transform="translate(400, 150) rotate(0)">
-                            <rect id="link1Body" x="-10" y="-10" width="100" height="20" rx="4" fill="#d2e3fc" stroke="#1a73e8" stroke-width="2"/>
-                            <circle cx="0" cy="0" r="8" fill="#1a73e8"/>
+                            <rect id="link1Body" x="-10" y="-10" width="100" height="20" rx="4" fill="#dbeafe" stroke="#3b82f6" stroke-width="2"/>
+                            <circle cx="0" cy="0" r="8" fill="#2563eb"/>
                         </g>
 
                         <!-- Link 2 -->
                         <g id="link2Group" transform="translate(500, 150) rotate(0)">
-                            <rect id="link2Body" x="-8" y="-8" width="100" height="16" rx="4" fill="#ceead6" stroke="#137333" stroke-width="2"/>
-                            <circle cx="0" cy="0" r="6" fill="#137333"/>
+                            <rect id="link2Body" x="-8" y="-8" width="100" height="16" rx="4" fill="#dcfce7" stroke="#22c55e" stroke-width="2"/>
+                            <circle cx="0" cy="0" r="6" fill="#16a34a"/>
 
                             <!-- End Effector -->
                             <g id="gripperGroup" transform="translate(100, 0)">
-                                <path d="M 0 -10 L 15 -10 L 15 -2 L 0 -2 Z" fill="#fbbc04" stroke="#ea8600"/>
-                                <path d="M 0 10 L 15 10 L 15 2 L 0 2 Z" fill="#fbbc04" stroke="#ea8600"/>
-                                <circle cx="15" cy="0" r="3" fill="#ea4335"/> <!-- Tool Center Point (TCP) -->
+                                <path id="gripperTop" d="M 0 -10 L 15 -10 L 15 -2 L 0 -2 Z" fill="#fde68a" stroke="#d97706" style="transition: d 0.15s;"/>
+                                <path id="gripperBot" d="M 0 10 L 15 10 L 15 2 L 0 2 Z" fill="#fde68a" stroke="#d97706" style="transition: d 0.15s;"/>
+                                <circle cx="15" cy="0" r="3" fill="#ef4444"/> <!-- TCP -->
                             </g>
                         </g>
                     </g>
@@ -149,10 +169,10 @@
             <div class="panel-header">4. Real-Time Telemetry Plotter</div>
             <div class="panel-body" style="padding: 8px;">
                 <div class="plotter-container" id="canvasContainer">
-                    <canvas id="oscilloscope" height="180" style="width: 100%; display: block;"></canvas>
+                    <canvas id="oscilloscope" height="140" style="width: 100%; display: block;"></canvas>
                 </div>
-                <div style="display:flex; justify-content:center; gap:24px; margin-top:8px; font-size:12px; font-weight:700;">
-                    <span style="color:#1a73e8;">● θ₁ Kinematic Trace</span> <span style="color:#137333;">● θ₂ Kinematic Trace</span>
+                <div style="display:flex; justify-content:center; gap:20px; margin-top:5px; font-size:11px; font-weight:700;">
+                    <span style="color:#4f46e5;">&#9632; θ₁ Kinematic Trace</span> <span style="color:#059669;">&#9632; θ₂ Kinematic Trace</span>
                 </div>
             </div>
         </div>
@@ -184,8 +204,8 @@
                         <div class="metric-label">Base Torque (τ)</div>
                         <div class="metric-val" id="valTorque">0.00 Nm</div>
                     </div>
-                    <!-- Accuracy -->
-                    <div class="metric-box" style="grid-column: span 2;">
+                    <!-- Accuracy: spans full width on 2-col, natural on 1-col -->
+                    <div class="metric-box metric-box-full" id="metricAccuracy">
                         <div class="metric-label">Singularity Risk / Accuracy Score</div>
                         <div class="metric-val" id="valAcc">100.0%</div>
                     </div>
@@ -193,12 +213,13 @@
             </div>
         </div>
 
-        <div class="academic-panel" style="display:flex; flex-direction:column; flex-grow:1;">
+        <div class="academic-panel panel-grow" style="display:flex; flex-direction:column;">
             <div class="panel-header">6. Lab Observation Log</div>
-            <div class="panel-body" style="display:flex; flex-direction:column; flex-grow:1; padding:12px;">
+            <div class="panel-body log-panel-body">
                 <div class="table-actions">
                     <button id="recordBtn" class="btn-log">RECORD DATA POINT</button>
                     <button id="clearLogBtn" class="btn-log-clear">CLEAR NOTEBOOK</button>
+                    <button id="csvBtn" class="btn-csv">EXPORT CSV</button>
                 </div>
                 <div class="table-container">
                     <table id="dataTable">
@@ -213,7 +234,7 @@
                             </tr>
                         </thead>
                         <tbody id="logTable">
-                            <tr id="emptyRow"><td colspan="6" style="padding: 32px; font-style:italic; color:#7a9cb8;">Observation notebook empty.</td></tr>
+                            <tr id="emptyRow"><td colspan="6" style="padding: 28px; font-style:italic; color:#1e293b; text-align:center;">Observation notebook empty — record your first data point.</td></tr>
                         </tbody>
                     </table>
                 </div>
