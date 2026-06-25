@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>
+Smart Warehouse Management Simulator
+</title>
+
+<link rel="stylesheet" href="css/main.css?v=2">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <header class="top-header">
+
+        <div class="brand-section">
+
+            <div class="brand-logo">
+
+                <i class="fa-solid fa-warehouse"></i>
+
+            </div>
+
+            <div>
+
+                <h1>
+                    Smart Warehouse Management Simulator
+                </h1>
+
+                <p>
+                    Industry 4.0 Digital Twin Laboratory
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </header>
+
+    <!-- ========================================= -->
+    <!-- KPI SECTION -->
+    <!-- ========================================= -->
+
+    <section class="kpi-section">
+
+        <div class="kpi-card storage">
+
+            <div class="kpi-icon">
+
+                <i class="fa-solid fa-boxes-stacked"></i>
+
+            </div>
+
+            <div class="kpi-content">
+
+                <span>
+                    Storage Utilization
+                </span>
+
+                <h2 id="storageUtilization">
+                    0%
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="kpi-card orders">
+
+            <div class="kpi-icon">
+
+                <i class="fa-solid fa-cart-flatbed"></i>
+
+            </div>
+
+            <div class="kpi-content">
+
+                <span>
+                    Incoming Orders
+                </span>
+
+                <h2 id="incomingOrdersValue">
+                    0
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="kpi-card robots">
+
+            <div class="kpi-icon">
+
+                <i class="fa-solid fa-robot"></i>
+
+            </div>
+
+            <div class="kpi-content">
+
+                <span>
+                    AGV Utilization
+                </span>
+
+                <h2 id="robotUtilization">
+                    0%
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="kpi-card processing">
+
+            <div class="kpi-icon">
+
+                <i class="fa-solid fa-stopwatch"></i>
+
+            </div>
+
+            <div class="kpi-content">
+
+                <span>
+                    Processing Time
+                </span>
+
+                <h2 id="processingTime">
+                    0 min
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="kpi-card congestion">
+
+            <div class="kpi-icon">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+            </div>
+
+            <div class="kpi-content">
+
+                <span>
+                    Congestion Index
+                </span>
+
+                <h2 id="congestionIndex">
+                    Low
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="kpi-card health">
+
+            <div class="kpi-icon">
+
+                <i class="fa-solid fa-heart-pulse"></i>
+
+            </div>
+
+            <div class="kpi-content">
+
+                <span>
+                    Inventory Health
+                </span>
+
+                <h2 id="inventoryHealth">
+                    Healthy
+                </h2>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    
+
+    <section class="main-layout">
+
+
+<aside class="control-panel">
+
+    <div class="panel-title">
+
+        <i class="fa-solid fa-sliders"></i>
+
+        <h2>
+            Warehouse Controls
+        </h2>
+
+    </div>
+
+    <div class="control-group">
+
+        <label>
+
+            Storage Capacity
+
+            <span id="capacityValue">
+                500
+            </span>
+
+        </label>
+
+        <input
+        type="range"
+        id="capacity"
+        min="100"
+        max="1000"
+        value="500">
+
+    </div>
+
+    <div class="control-group">
+
+        <label>
+
+            Incoming Orders
+
+            <span id="ordersValue">
+                200
+            </span>
+
+        </label>
+
+        <input
+        type="range"
+        id="orders"
+        min="0"
+        max="1000"
+        value="200">
+
+    </div>
+
+    <div class="control-group">
+
+        <label>
+
+            AGV Speed
+
+            <span id="speedValue">
+                5
+            </span>
+
+        </label>
+
+        <input
+        type="range"
+        id="speed"
+        min="1"
+        max="10"
+        value="5">
+
+    </div>
+
+    <div class="control-group">
+
+        <label>
+
+            Inventory Threshold
+
+            <span id="thresholdValue">
+                100
+            </span>
+
+        </label>
+
+        <input
+        type="range"
+        id="threshold"
+        min="50"
+        max="500"
+        value="100">
+
+    </div>
+
+    <button id="runBtn">
+
+        <i class="fa-solid fa-play"></i>
+
+        Run Simulation
+
+    </button>
+
+    <button id="resetBtn">
+
+        <i class="fa-solid fa-rotate-left"></i>
+
+        Reset
+
+    </button>
+
+</aside>
+
+
+<main class="digital-twin-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <h2>
+
+                <i class="fa-solid fa-cube"></i>
+
+                Warehouse Digital Twin
+
+            </h2>
+
+            <p>
+                Real-Time Warehouse Visualization
+            </p>
+
+        </div>
+
+        <div class="live-badge">
+
+            <span class="pulse"></span>
+
+            LIVE
+
+        </div>
+
+    </div>
+
+    <div class="warehouse-wrapper">
+
+        <img
+        src="images/warehouse-floor.png"
+        alt="Warehouse Layout"
+        class="warehouse-image">
+
+        <!-- RACK A -->
+
+        <div class="rack-card rack-a">
+
+            <i class="fa-solid fa-box"></i>
+
+            <span>
+                Rack A
+            </span>
+
+            <strong id="rackAValue">
+                0%
+            </strong>
+
+        </div>
+
+        <!-- RACK B -->
+
+        <div class="rack-card rack-b">
+
+            <i class="fa-solid fa-box"></i>
+
+            <span>
+                Rack B
+            </span>
+
+            <strong id="rackBValue">
+                0%
+            </strong>
+
+        </div>
+
+        <!-- RACK C -->
+
+        <div class="rack-card rack-c">
+
+            <i class="fa-solid fa-box"></i>
+
+            <span>
+                Rack C
+            </span>
+
+            <strong id="rackCValue">
+                0%
+            </strong>
+
+        </div>
+
+        <!-- RACK D -->
+
+        <div class="rack-card rack-d">
+
+            <i class="fa-solid fa-box"></i>
+
+            <span>
+                Rack D
+            </span>
+
+            <strong id="rackDValue">
+                0%
+            </strong>
+
+        </div>
+
+        <!-- AGV STATUS -->
+
+        <div class="agv-widget">
+
+            <div class="agv-icon">
+
+                <i class="fa-solid fa-robot"></i>
+
+            </div>
+
+            <div>
+
+                <small>
+                    AGV STATUS
+                </small>
+
+                <strong id="agvLive">
+                    IDLE
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+   
+
+    <div class="analytics-row">
+
+        <div class="analytics-card">
+
+            <div class="analytics-icon">
+
+                <i class="fa-solid fa-chart-line"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Warehouse Efficiency
+                </span>
+
+                <h3 id="efficiency">
+                    100%
+                </h3>
+
+            </div>
+
+        </div>
+
+        <div class="analytics-card">
+
+            <div class="analytics-icon">
+
+                <i class="fa-solid fa-truck-ramp-box"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Pending Orders
+                </span>
+
+                <h3 id="pendingOrders">
+                    0
+                </h3>
+
+            </div>
+
+        </div>
+
+        <div class="analytics-card">
+
+            <div class="analytics-icon">
+
+                <i class="fa-solid fa-shield-heart"></i>
+
+            </div>
+
+            <div>
+
+                <span>
+                    Storage Health
+                </span>
+
+                <h3 id="storageHealth">
+                    Optimal
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+<aside class="operations-panel">
+
+    <div class="panel-title">
+
+        <i class="fa-solid fa-tower-broadcast"></i>
+
+        <h2>
+            Operations Center
+        </h2>
+
+    </div>
+
+    <div class="status-tile">
+
+        <span>AGV Status</span>
+
+        <div id="agvStatus" class="status-pill green">
+            Idle
+        </div>
+
+    </div>
+
+    <div class="status-tile">
+
+        <span>Rack Alert</span>
+
+        <div id="rackAlert" class="status-pill blue">
+            Normal
+        </div>
+
+    </div>
+
+    <div class="status-tile">
+
+        <span>Inventory Alert</span>
+
+        <div id="inventoryAlert" class="status-pill green">
+            Healthy
+        </div>
+
+    </div>
+
+    <div class="status-tile">
+
+        <span>Congestion Risk</span>
+
+        <div id="riskStatus" class="status-pill yellow">
+            Low
+        </div>
+
+    </div>
+
+    <div class="status-tile">
+
+        <span>Warehouse State</span>
+
+        <div id="warehouseState" class="status-pill blue">
+            Ready
+        </div>
+
+    </div>
+
+</aside>
+
+
+    <section class="insights-grid">
+
+    
+        <div class="recommendation-panel">
+
+            <div class="panel-title">
+
+                <i class="fa-solid fa-lightbulb"></i>
+
+                <h2>
+                    Smart Recommendations
+                </h2>
+
+            </div>
+
+            <div
+            id="observation"
+            class="recommendation-content">
+
+                Configure warehouse parameters and run the simulation to receive intelligent warehouse recommendations.
+
+            </div>
+
+        </div>
+
+        <!-- HEATMAP -->
+
+        <div class="heatmap-panel">
+
+            <div class="panel-title">
+
+                <i class="fa-solid fa-fire"></i>
+
+                <h2>
+                    Congestion Heatmap
+                </h2>
+
+            </div>
+
+            <div class="heatmap-grid">
+
+                <div
+                id="zone1"
+                class="heat-card">
+
+                    <h4>Zone A</h4>
+
+                    <span>Storage</span>
+
+                </div>
+
+                <div
+                id="zone2"
+                class="heat-card">
+
+                    <h4>Zone B</h4>
+
+                    <span>Picking</span>
+
+                </div>
+
+                <div
+                id="zone3"
+                class="heat-card">
+
+                    <h4>Zone C</h4>
+
+                    <span>Packaging</span>
+
+                </div>
+
+                <div
+                id="zone4"
+                class="heat-card">
+
+                    <h4>Zone D</h4>
+
+                    <span>Dispatch</span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+
+<section class="log-section">
+
+    <div class="panel-title">
+
+        <i class="fa-solid fa-clipboard-list"></i>
+
+        <h2>
+            Warehouse Operation Log
+        </h2>
+
+    </div>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>Run #</th>
+
+                    <th>Capacity</th>
+
+                    <th>Orders</th>
+
+                    <th>Utilization</th>
+
+                    <th>Robot Usage</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody id="logTable">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+</div>
+
+<script src="js/main.js"></script>
+
+</body>
+
+</html>

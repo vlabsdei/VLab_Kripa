@@ -1,0 +1,102 @@
+[
+  {
+    "question": "What is the primary purpose of a Smart Warehouse Management System?",
+    "options": [
+      "To increase manual paperwork",
+      "To automate and optimize warehouse operations",
+      "To reduce warehouse storage capacity",
+      "To replace inventory tracking completely"
+    ],
+    "answer": "To automate and optimize warehouse operations"
+  },
+  {
+    "question": "Which Industry 4.0 technology is commonly used for automated material transportation in warehouses?",
+    "options": [
+      "PLC",
+      "AGV",
+      "CNC Machine",
+      "3D Printer"
+    ],
+    "answer": "AGV"
+  },
+  {
+    "question": "What does AGV stand for?",
+    "options": [
+      "Automatic Goods Vehicle",
+      "Automated Guided Vehicle",
+      "Advanced Guided Vehicle",
+      "Automated Ground Vehicle"
+    ],
+    "answer": "Automated Guided Vehicle"
+  },
+  {
+    "question": "What is storage utilization?",
+    "options": [
+      "Amount of energy consumed",
+      "Percentage of warehouse space being used",
+      "Number of robots in operation",
+      "Number of incoming orders"
+    ],
+    "answer": "Percentage of warehouse space being used"
+  },
+  {
+    "question": "Which parameter helps determine when inventory replenishment is required?",
+    "options": [
+      "Robot Speed",
+      "Warehouse Efficiency",
+      "Inventory Threshold",
+      "Storage Capacity"
+    ],
+    "answer": "Inventory Threshold"
+  },
+  {
+    "question": "What is the main objective of inventory management?",
+    "options": [
+      "Increase congestion",
+      "Reduce warehouse visibility",
+      "Maintain product availability and optimize stock levels",
+      "Eliminate automation"
+    ],
+    "answer": "Maintain product availability and optimize stock levels"
+  },
+  {
+    "question": "What is warehouse congestion?",
+    "options": [
+      "Excessive warehouse workload affecting operations",
+      "A warehouse software error",
+      "A robot malfunction",
+      "A storage rack failure"
+    ],
+    "answer": "Excessive warehouse workload affecting operations"
+  },
+  {
+    "question": "Which KPI measures the effectiveness of warehouse robots?",
+    "options": [
+      "Storage Utilization",
+      "Inventory Health",
+      "Robot Utilization",
+      "Order Capacity"
+    ],
+    "answer": "Robot Utilization"
+  },
+  {
+    "question": "What is a Digital Twin in Industry 4.0?",
+    "options": [
+      "A warehouse blueprint",
+      "A duplicate warehouse building",
+      "A virtual representation of a physical system",
+      "A robot control device"
+    ],
+    "answer": "A virtual representation of a physical system"
+  },
+  {
+    "question": "Why are smart warehouses important?",
+    "options": [
+      "They increase manual work",
+      "They reduce operational efficiency",
+      "They improve automation, visibility, and logistics performance",
+      "They eliminate inventory management"
+    ],
+    "answer": "They improve automation, visibility, and logistics performance"
+  }
+]

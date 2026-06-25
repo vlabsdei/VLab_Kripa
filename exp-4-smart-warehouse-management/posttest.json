@@ -1,0 +1,102 @@
+[
+  {
+    "question": "A warehouse has a total capacity of 1000 units and currently stores 800 units. What is the storage utilization?",
+    "options": [
+      "60%",
+      "70%",
+      "80%",
+      "90%"
+    ],
+    "answer": "80%"
+  },
+  {
+    "question": "What is the primary benefit of using AGVs in smart warehouses?",
+    "options": [
+      "Increased manual labor",
+      "Faster and automated material transportation",
+      "Reduced inventory visibility",
+      "Higher warehouse congestion"
+    ],
+    "answer": "Faster and automated material transportation"
+  },
+  {
+    "question": "If incoming orders increase significantly while storage capacity remains constant, what is the most likely outcome?",
+    "options": [
+      "Reduced congestion",
+      "Improved inventory health",
+      "Increased warehouse congestion",
+      "Lower robot utilization"
+    ],
+    "answer": "Increased warehouse congestion"
+  },
+  {
+    "question": "Which KPI indicates how effectively warehouse robots are being used?",
+    "options": [
+      "Inventory Health",
+      "Storage Utilization",
+      "Robot Utilization",
+      "Warehouse Capacity"
+    ],
+    "answer": "Robot Utilization"
+  },
+  {
+    "question": "What happens when inventory levels fall below the inventory threshold?",
+    "options": [
+      "Warehouse shutdown",
+      "Replenishment action is triggered",
+      "Storage utilization becomes zero",
+      "Robot utilization decreases automatically"
+    ],
+    "answer": "Replenishment action is triggered"
+  },
+  {
+    "question": "Which Industry 4.0 technology creates a virtual representation of warehouse operations?",
+    "options": [
+      "RFID",
+      "AGV",
+      "Digital Twin",
+      "PLC"
+    ],
+    "answer": "Digital Twin"
+  },
+  {
+    "question": "A warehouse reports a robot utilization of 95%. What does this indicate?",
+    "options": [
+      "The robot is mostly idle",
+      "The robot is heavily engaged in operations",
+      "The robot is malfunctioning",
+      "Inventory levels are low"
+    ],
+    "answer": "The robot is heavily engaged in operations"
+  },
+  {
+    "question": "Which factor can help reduce warehouse processing time?",
+    "options": [
+      "Increasing robot speed",
+      "Reducing automation",
+      "Increasing congestion",
+      "Lowering storage utilization"
+    ],
+    "answer": "Increasing robot speed"
+  },
+  {
+    "question": "Why is inventory health important in warehouse management?",
+    "options": [
+      "It measures building maintenance",
+      "It indicates stock availability and inventory balance",
+      "It measures robot battery life",
+      "It determines warehouse size"
+    ],
+    "answer": "It indicates stock availability and inventory balance"
+  },
+  {
+    "question": "What is the main objective of a Smart Warehouse Management System?",
+    "options": [
+      "Increase manual operations",
+      "Reduce warehouse visibility",
+      "Optimize storage, inventory, and logistics operations",
+      "Eliminate inventory tracking"
+    ],
+    "answer": "Optimize storage, inventory, and logistics operations"
+  }
+]
