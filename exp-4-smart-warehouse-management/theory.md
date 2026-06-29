@@ -235,7 +235,6 @@ Smart warehouse systems are widely used in:
 - Automotive supply chains
 - Food and beverage warehouses
 - Third-party logistics providers (3PL)
-
 Organizations such as Amazon, Walmart, Flipkart, and DHL use smart warehouse technologies to manage large-scale logistics operations efficiently.
 
 ---
@@ -246,8 +245,102 @@ After completing this experiment, learners will be able to:
 
 - Understand smart warehouse architecture.
 - Analyze storage utilization and inventory management.
-- Evaluate warehouse performance using KPIs.
-- Understand AGV-based material handling systems.
-- Monitor warehouse congestion and operational efficiency.
-- Apply Industry 4.0 concepts in warehouse automation.
-- Interpret digital twin analytics for warehouse optimization.
+- Evaluate AGV fleet performance and routing optimization.
+- Understand Digital Twin technology and congestion heatmaps.
+
+## 14. Simulation Calculation Engine
+
+The warehouse simulator utilizes real-time mathematical models to calculate various KPIs based on the configured parameters. All values are capped at 100% where applicable.
+
+### 1. Storage Utilization (%)
+Calculates how much of the warehouse capacity is currently occupied by incoming orders.
+
+**Formula:**
+
+\[
+Storage\ Utilization = \min\!\Bigl(100,\ \frac{Incoming\ Orders}{Storage\ Capacity} \times 100\Bigr)
+\]
+
+### 2. AGV Processing Time (minutes)
+Estimates the time required to process and transport all incoming orders based on the size and speed of the AGV fleet, as well as the travel efficiency of the routing algorithm.
+
+**Formula:**
+
+\[
+Processing\ Time = \frac{Incoming\ Orders}{Fleet\ Size \times AGV\ Speed \times 20} \times M_{algo}
+\]
+
+Where:
+- $M_{algo} = 0.80$ for Nearest Neighbor (reduces travel time by 20%)
+- $M_{algo} = 0.90$ for Balanced Load (reduces congestion delays by 10%)
+- $M_{algo} = 1.00$ for FIFO (baseline travel time)
+
+### 3. AGV Utilization (%)
+Measures the workload placed on the Automated Guided Vehicle (AGV) fleet relative to their fleet size and operational speed.
+
+**Formula:**
+
+\[
+AGV\ Utilization = \min\!\Bigl(100,\ \frac{Incoming\ Orders}{Fleet\ Size \times AGV\ Speed \times 10}\Bigr)
+\]
+
+### 4. Overall Efficiency Score (%)
+A derived metric that indicates the overall health of the warehouse operation. It starts at 100% and applies penalties based on storage and fleet bottlenecks, while adding bonuses for advanced routing.
+
+**Formula:**
+
+\[
+Efficiency = \max\!\Bigl(40,\ \min\!\bigl(100,\ 100 - (Utilization \times 0.3) - P_{agv} - P_{time} + B_{algo}\bigr)\Bigr)
+\]
+
+Where:
+- $P_{agv} = 12$ if AGV Utilization > 80%, otherwise 0
+- $P_{time} = 8$ if Processing Time > 5 minutes, otherwise 0
+- $B_{algo}$ is the routing bonus: $+5\%$ for Nearest Neighbor, $+3\%$ for Balanced Load, and $+0\%$ for FIFO
+- The efficiency score is capped at 100% and has a floor of 40%
+
+### 5. Pending Orders
+Estimates the backlog of orders that cannot be fulfilled immediately by the current active AGV fleet.
+
+**Formula:**
+
+\[
+Pending\ Orders = \max\!\bigl(0,\ Incoming\ Orders - Fleet\ Size \times AGV\ Speed \times 60\bigr)
+\]
+
+### 6. Congestion Index
+A categorical indicator derived from storage utilization that classifies the level of warehouse congestion.
+
+| Storage Utilization | Congestion Level |
+|---------------------|-----------------|
+| Below 60% | Low |
+| 60% to 84% | Medium |
+| 85% and above | High |
+
+### 7. Inventory Health
+Indicates whether current stock levels are adequate relative to the configured inventory threshold. In the simulation UI, this health status is reflected via messages in the **Smart Recommendations** and **Live Calculation Trace** panels:
+
+| Condition | Health Status (UI Indicators) |
+|-----------|--------------|
+| Incoming Orders >= Inventory Threshold | Healthy (No stock warnings) |
+| Incoming Orders < Inventory Threshold | Low Stock ("Low Stock Alert" warning in recommendations and trace) |
+
+### 8. Rack Zone Distribution
+The warehouse contains four physical rack zones (A, B, C, D) in the SVG layout that are filled proportionally based on overall storage utilization.
+
+| Rack Zone | Fill Percentage |
+|-----------|----------------|
+| Zone A | Storage Utilization |
+| Zone B | Storage Utilization x 0.90 |
+| Zone C | Storage Utilization x 0.75 |
+| Zone D | Storage Utilization x 0.60 |
+
+### 9. Congestion Heatmap Zone Distribution
+The congestion heatmap displays the activity levels across four key functional areas. Zones A and B scale with storage utilization, while the activity-driven packaging and dispatch areas (Zones C and D) scale with AGV utilization:
+
+| Heatmap Zone | Functional Area | Activity Level Percentage |
+|--------------|-----------------|---------------------------|
+| Zone A | Storage | Storage Utilization |
+| Zone B | Picking | Storage Utilization x 0.90 |
+| Zone C | Packaging | AGV Utilization x 0.80 |
+| Zone D | Dispatch | AGV Utilization x 0.60 |

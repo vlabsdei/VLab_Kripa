@@ -1,102 +1,175 @@
-[
-  {
-    "question": "What is the primary purpose of a Smart Warehouse Management System?",
-    "options": [
-      "To increase manual paperwork",
-      "To automate and optimize warehouse operations",
-      "To reduce warehouse storage capacity",
-      "To replace inventory tracking completely"
-    ],
-    "answer": "To automate and optimize warehouse operations"
-  },
-  {
-    "question": "Which Industry 4.0 technology is commonly used for automated material transportation in warehouses?",
-    "options": [
-      "PLC",
-      "AGV",
-      "CNC Machine",
-      "3D Printer"
-    ],
-    "answer": "AGV"
-  },
-  {
-    "question": "What does AGV stand for?",
-    "options": [
-      "Automatic Goods Vehicle",
-      "Automated Guided Vehicle",
-      "Advanced Guided Vehicle",
-      "Automated Ground Vehicle"
-    ],
-    "answer": "Automated Guided Vehicle"
-  },
-  {
-    "question": "What is storage utilization?",
-    "options": [
-      "Amount of energy consumed",
-      "Percentage of warehouse space being used",
-      "Number of robots in operation",
-      "Number of incoming orders"
-    ],
-    "answer": "Percentage of warehouse space being used"
-  },
-  {
-    "question": "Which parameter helps determine when inventory replenishment is required?",
-    "options": [
-      "Robot Speed",
-      "Warehouse Efficiency",
-      "Inventory Threshold",
-      "Storage Capacity"
-    ],
-    "answer": "Inventory Threshold"
-  },
-  {
-    "question": "What is the main objective of inventory management?",
-    "options": [
-      "Increase congestion",
-      "Reduce warehouse visibility",
-      "Maintain product availability and optimize stock levels",
-      "Eliminate automation"
-    ],
-    "answer": "Maintain product availability and optimize stock levels"
-  },
-  {
-    "question": "What is warehouse congestion?",
-    "options": [
-      "Excessive warehouse workload affecting operations",
-      "A warehouse software error",
-      "A robot malfunction",
-      "A storage rack failure"
-    ],
-    "answer": "Excessive warehouse workload affecting operations"
-  },
-  {
-    "question": "Which KPI measures the effectiveness of warehouse robots?",
-    "options": [
-      "Storage Utilization",
-      "Inventory Health",
-      "Robot Utilization",
-      "Order Capacity"
-    ],
-    "answer": "Robot Utilization"
-  },
-  {
-    "question": "What is a Digital Twin in Industry 4.0?",
-    "options": [
-      "A warehouse blueprint",
-      "A duplicate warehouse building",
-      "A virtual representation of a physical system",
-      "A robot control device"
-    ],
-    "answer": "A virtual representation of a physical system"
-  },
-  {
-    "question": "Why are smart warehouses important?",
-    "options": [
-      "They increase manual work",
-      "They reduce operational efficiency",
-      "They improve automation, visibility, and logistics performance",
-      "They eliminate inventory management"
-    ],
-    "answer": "They improve automation, visibility, and logistics performance"
-  }
-]
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the primary purpose of a Smart Warehouse Management System?",
+      "answers": {
+        "a": "To increase manual paperwork",
+        "b": "To automate and optimize warehouse operations",
+        "c": "To reduce warehouse storage capacity",
+        "d": "To replace inventory tracking completely"
+      },
+      "explanations": {
+        "a": "Smart systems aim to digitize and reduce paperwork.",
+        "b": "Automation and optimization are the core pillars of smart warehousing.",
+        "c": "Smart systems optimize rather than reduce capacity.",
+        "d": "Inventory tracking is enhanced, not replaced."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which Industry 4.0 technology is commonly used for automated material transportation in warehouses?",
+      "answers": {
+        "a": "PLC",
+        "b": "AGV",
+        "c": "CNC Machine",
+        "d": "3D Printer"
+      },
+      "explanations": {
+        "a": "PLCs control machines but don't transport materials directly.",
+        "b": "Automated Guided Vehicles (AGVs) transport materials without manual intervention.",
+        "c": "CNC machines are used for subtractive manufacturing.",
+        "d": "3D printers are used for additive manufacturing."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What does AGV stand for?",
+      "answers": {
+        "a": "Automatic Goods Vehicle",
+        "b": "Automated Guided Vehicle",
+        "c": "Advanced Guided Vehicle",
+        "d": "Automated Ground Vehicle"
+      },
+      "explanations": {
+        "a": "The standard Industry 4.0 terminology is Automated Guided Vehicle.",
+        "b": "AGV stands for Automated Guided Vehicle.",
+        "c": "It is referred to as 'Guided', not 'Advanced'.",
+        "d": "It is referred to as 'Vehicle', not 'Ground'."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is storage utilization?",
+      "answers": {
+        "a": "Amount of energy consumed",
+        "b": "Percentage of warehouse space being used",
+        "c": "Number of robots in operation",
+        "d": "Number of incoming orders"
+      },
+      "explanations": {
+        "a": "Energy consumption is measured separately.",
+        "b": "Storage utilization represents the percentage of total storage capacity filled.",
+        "c": "Robot fleet size is a hardware metric, not space utilization.",
+        "d": "Incoming orders represent demand load."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which parameter helps determine when inventory replenishment is required?",
+      "answers": {
+        "a": "Robot Speed",
+        "b": "Warehouse Efficiency",
+        "c": "Inventory Threshold",
+        "d": "Storage Capacity"
+      },
+      "explanations": {
+        "a": "Robot speed affects transport time.",
+        "b": "Warehouse efficiency is a system-wide KPI.",
+        "c": "The inventory threshold triggers reorders when stock falls below a set limit.",
+        "d": "Storage capacity is the total space limit."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the primary function of a Warehouse Management System (WMS)?",
+      "answers": {
+        "a": "Manufacturing products",
+        "b": "Controlling and optimizing warehouse operations",
+        "c": "Managing employee payroll",
+        "d": "Processing customer payments"
+      },
+      "explanations": {
+        "a": "Manufacturing is done by production systems.",
+        "b": "A WMS is software that controls and optimizes warehouse operations like inventory tracking and storage allocation.",
+        "c": "Payroll is managed by HR systems.",
+        "d": "Payments are processed by financial systems."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which technology provides a virtual representation of a physical warehouse system?",
+      "answers": {
+        "a": "Digital Twin",
+        "b": "Block Chain",
+        "c": "3D Printing",
+        "d": "Virtual Reality"
+      },
+      "explanations": {
+        "a": "A Digital Twin is a virtual representation of a physical system used for real-time monitoring and simulation.",
+        "b": "Blockchain is for secure data recording.",
+        "c": "3D printing is for additive manufacturing.",
+        "d": "VR is for immersive experiences."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "How is Storage Utilization calculated?",
+      "answers": {
+        "a": "(Total Storage / Used Storage) * 100",
+        "b": "(Used Storage / Total Storage) * 100",
+        "c": "Total Storage - Used Storage",
+        "d": "Used Storage + Total Storage"
+      },
+      "explanations": {
+        "a": "The formula is inverted.",
+        "b": "Storage utilization is the percentage of total storage that is currently occupied.",
+        "c": "This calculates available space.",
+        "d": "This simply adds the two values."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the definition of Safety Stock?",
+      "answers": {
+        "a": "Stock that is damaged and unsafe to use",
+        "b": "Inventory that is kept in a secure vault",
+        "c": "Extra inventory maintained to prevent stockouts during unexpected demand",
+        "d": "Stock that has passed safety inspections"
+      },
+      "explanations": {
+        "a": "Safety stock relates to quantity, not physical safety of the items.",
+        "b": "It is not about physical security.",
+        "c": "Safety stock provides a buffer against supply chain uncertainties and demand spikes.",
+        "d": "It refers to reserve quantities, not safety standards."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "How does the Nearest Neighbor routing algorithm affect AGV travel time in the simulation?",
+      "answers": {
+        "a": "It increases travel time by 10%",
+        "b": "It reduces travel time by 20%",
+        "c": "It has no effect on travel time",
+        "d": "It reduces congestion delays by 10%"
+      },
+      "explanations": {
+        "a": "It reduces, not increases time.",
+        "b": "The Nearest Neighbor algorithm applies a multiplier of 0.80, effectively reducing travel time by 20%.",
+        "c": "It definitely affects travel time.",
+        "d": "Balanced Load reduces congestion delays, not Nearest Neighbor."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    }
+  ]
+}

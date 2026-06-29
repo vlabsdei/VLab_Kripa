@@ -1,718 +1,600 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>
-Smart Warehouse Management Simulator
-</title>
-
-<link rel="stylesheet" href="css/main.css?v=2">
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Warehouse Management Simulator</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts for premium look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
 
 <div class="dashboard">
-
-    <header class="top-header">
-
-        <div class="brand-section">
-
-            <div class="brand-logo">
-
-                <i class="fa-solid fa-warehouse"></i>
-
-            </div>
-
-            <div>
-
-                <h1>
-                    Smart Warehouse Management Simulator
-                </h1>
-
-                <p>
-                    Industry 4.0 Digital Twin Laboratory
-                </p>
-
-            </div>
-
-        </div>
-
-
-    </header>
-
     <!-- ========================================= -->
-    <!-- KPI SECTION -->
+    <!-- MAIN GRID LAYOUT -->
     <!-- ========================================= -->
-
-    <section class="kpi-section">
-
-        <div class="kpi-card storage">
-
-            <div class="kpi-icon">
-
-                <i class="fa-solid fa-boxes-stacked"></i>
-
-            </div>
-
-            <div class="kpi-content">
-
-                <span>
-                    Storage Utilization
-                </span>
-
-                <h2 id="storageUtilization">
-                    0%
-                </h2>
-
-            </div>
-
-        </div>
-
-        <div class="kpi-card orders">
-
-            <div class="kpi-icon">
-
-                <i class="fa-solid fa-cart-flatbed"></i>
-
-            </div>
-
-            <div class="kpi-content">
-
-                <span>
-                    Incoming Orders
-                </span>
-
-                <h2 id="incomingOrdersValue">
-                    0
-                </h2>
-
-            </div>
-
-        </div>
-
-        <div class="kpi-card robots">
-
-            <div class="kpi-icon">
-
-                <i class="fa-solid fa-robot"></i>
-
-            </div>
-
-            <div class="kpi-content">
-
-                <span>
-                    AGV Utilization
-                </span>
-
-                <h2 id="robotUtilization">
-                    0%
-                </h2>
-
-            </div>
-
-        </div>
-
-        <div class="kpi-card processing">
-
-            <div class="kpi-icon">
-
-                <i class="fa-solid fa-stopwatch"></i>
-
-            </div>
-
-            <div class="kpi-content">
-
-                <span>
-                    Processing Time
-                </span>
-
-                <h2 id="processingTime">
-                    0 min
-                </h2>
-
-            </div>
-
-        </div>
-
-        <div class="kpi-card congestion">
-
-            <div class="kpi-icon">
-
-                <i class="fa-solid fa-triangle-exclamation"></i>
-
-            </div>
-
-            <div class="kpi-content">
-
-                <span>
-                    Congestion Index
-                </span>
-
-                <h2 id="congestionIndex">
-                    Low
-                </h2>
-
-            </div>
-
-        </div>
-
-        <div class="kpi-card health">
-
-            <div class="kpi-icon">
-
-                <i class="fa-solid fa-heart-pulse"></i>
-
-            </div>
-
-            <div class="kpi-content">
-
-                <span>
-                    Inventory Health
-                </span>
-
-                <h2 id="inventoryHealth">
-                    Healthy
-                </h2>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    
-
     <section class="main-layout">
 
-
-<aside class="control-panel">
-
-    <div class="panel-title">
-
-        <i class="fa-solid fa-sliders"></i>
-
-        <h2>
-            Warehouse Controls
-        </h2>
-
-    </div>
-
-    <div class="control-group">
-
-        <label>
-
-            Storage Capacity
-
-            <span id="capacityValue">
-                500
-            </span>
-
-        </label>
-
-        <input
-        type="range"
-        id="capacity"
-        min="100"
-        max="1000"
-        value="500">
-
-    </div>
-
-    <div class="control-group">
-
-        <label>
-
-            Incoming Orders
-
-            <span id="ordersValue">
-                200
-            </span>
-
-        </label>
-
-        <input
-        type="range"
-        id="orders"
-        min="0"
-        max="1000"
-        value="200">
-
-    </div>
-
-    <div class="control-group">
-
-        <label>
-
-            AGV Speed
-
-            <span id="speedValue">
-                5
-            </span>
-
-        </label>
-
-        <input
-        type="range"
-        id="speed"
-        min="1"
-        max="10"
-        value="5">
-
-    </div>
-
-    <div class="control-group">
-
-        <label>
-
-            Inventory Threshold
-
-            <span id="thresholdValue">
-                100
-            </span>
-
-        </label>
-
-        <input
-        type="range"
-        id="threshold"
-        min="50"
-        max="500"
-        value="100">
-
-    </div>
-
-    <button id="runBtn">
-
-        <i class="fa-solid fa-play"></i>
-
-        Run Simulation
-
-    </button>
-
-    <button id="resetBtn">
-
-        <i class="fa-solid fa-rotate-left"></i>
-
-        Reset
-
-    </button>
-
-</aside>
-
-
-<main class="digital-twin-section">
-
-    <div class="section-header">
-
-        <div>
-
-            <h2>
-
-                <i class="fa-solid fa-cube"></i>
-
-                Warehouse Digital Twin
-
-            </h2>
-
-            <p>
-                Real-Time Warehouse Visualization
-            </p>
-
-        </div>
-
-        <div class="live-badge">
-
-            <span class="pulse"></span>
-
-            LIVE
-
-        </div>
-
-    </div>
-
-    <div class="warehouse-wrapper">
-
-        <img
-        src="images/warehouse-floor.png"
-        alt="Warehouse Layout"
-        class="warehouse-image">
-
-        <!-- RACK A -->
-
-        <div class="rack-card rack-a">
-
-            <i class="fa-solid fa-box"></i>
-
-            <span>
-                Rack A
-            </span>
-
-            <strong id="rackAValue">
-                0%
-            </strong>
-
-        </div>
-
-        <!-- RACK B -->
-
-        <div class="rack-card rack-b">
-
-            <i class="fa-solid fa-box"></i>
-
-            <span>
-                Rack B
-            </span>
-
-            <strong id="rackBValue">
-                0%
-            </strong>
-
-        </div>
-
-        <!-- RACK C -->
-
-        <div class="rack-card rack-c">
-
-            <i class="fa-solid fa-box"></i>
-
-            <span>
-                Rack C
-            </span>
-
-            <strong id="rackCValue">
-                0%
-            </strong>
-
-        </div>
-
-        <!-- RACK D -->
-
-        <div class="rack-card rack-d">
-
-            <i class="fa-solid fa-box"></i>
-
-            <span>
-                Rack D
-            </span>
-
-            <strong id="rackDValue">
-                0%
-            </strong>
-
-        </div>
-
-        <!-- AGV STATUS -->
-
-        <div class="agv-widget">
-
-            <div class="agv-icon">
-
-                <i class="fa-solid fa-robot"></i>
-
-            </div>
-
-            <div>
-
-                <small>
-                    AGV STATUS
-                </small>
-
-                <strong id="agvLive">
-                    IDLE
-                </strong>
-
-            </div>
-
-        </div>
-
-    </div>
-
-   
-
-    <div class="analytics-row">
-
-        <div class="analytics-card">
-
-            <div class="analytics-icon">
-
-                <i class="fa-solid fa-chart-line"></i>
-
-            </div>
-
-            <div>
-
-                <span>
-                    Warehouse Efficiency
-                </span>
-
-                <h3 id="efficiency">
-                    100%
-                </h3>
-
-            </div>
-
-        </div>
-
-        <div class="analytics-card">
-
-            <div class="analytics-icon">
-
-                <i class="fa-solid fa-truck-ramp-box"></i>
-
-            </div>
-
-            <div>
-
-                <span>
-                    Pending Orders
-                </span>
-
-                <h3 id="pendingOrders">
-                    0
-                </h3>
-
-            </div>
-
-        </div>
-
-        <div class="analytics-card">
-
-            <div class="analytics-icon">
-
-                <i class="fa-solid fa-shield-heart"></i>
-
-            </div>
-
-            <div>
-
-                <span>
-                    Storage Health
-                </span>
-
-                <h3 id="storageHealth">
-                    Optimal
-                </h3>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</main>
-
-<aside class="operations-panel">
-
-    <div class="panel-title">
-
-        <i class="fa-solid fa-tower-broadcast"></i>
-
-        <h2>
-            Operations Center
-        </h2>
-
-    </div>
-
-    <div class="status-tile">
-
-        <span>AGV Status</span>
-
-        <div id="agvStatus" class="status-pill green">
-            Idle
-        </div>
-
-    </div>
-
-    <div class="status-tile">
-
-        <span>Rack Alert</span>
-
-        <div id="rackAlert" class="status-pill blue">
-            Normal
-        </div>
-
-    </div>
-
-    <div class="status-tile">
-
-        <span>Inventory Alert</span>
-
-        <div id="inventoryAlert" class="status-pill green">
-            Healthy
-        </div>
-
-    </div>
-
-    <div class="status-tile">
-
-        <span>Congestion Risk</span>
-
-        <div id="riskStatus" class="status-pill yellow">
-            Low
-        </div>
-
-    </div>
-
-    <div class="status-tile">
-
-        <span>Warehouse State</span>
-
-        <div id="warehouseState" class="status-pill blue">
-            Ready
-        </div>
-
-    </div>
-
-</aside>
-
-
-    <section class="insights-grid">
-
-    
-        <div class="recommendation-panel">
-
+        <!-- LEFT SIDEBAR: CONTROLS -->
+        <aside class="control-panel">
             <div class="panel-title">
-
-                <i class="fa-solid fa-lightbulb"></i>
-
-                <h2>
-                    Smart Recommendations
-                </h2>
-
+                <i class="fa-solid fa-sliders"></i>
+                <h2>Warehouse Controls</h2>
             </div>
 
-            <div
-            id="observation"
-            class="recommendation-content">
-
-                Configure warehouse parameters and run the simulation to receive intelligent warehouse recommendations.
-
+            <div class="control-group">
+                <label for="capacity">
+                    Storage Capacity
+                    <span id="capacityValue" class="value-badge">500</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="capacity" min="100" max="1000" step="50" value="500">
+                    <span class="range-hint">100 - 1000 units</span>
+                </div>
             </div>
 
-        </div>
+            <div class="control-group">
+                <label for="orders">
+                    Incoming Orders
+                    <span id="ordersValue" class="value-badge">200</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="orders" min="0" max="1000" step="50" value="200">
+                    <span class="range-hint">0 - 1000 orders</span>
+                </div>
+            </div>
 
-        <!-- HEATMAP -->
+            <div class="control-group">
+                <label for="speed">
+                    AGV Speed
+                    <span id="speedValue" class="value-badge">5</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="speed" min="1" max="10" step="1" value="5">
+                    <span class="range-hint">1 - 10 m/s</span>
+                </div>
+            </div>
 
-        <div class="heatmap-panel">
+            <div class="control-group">
+                <label for="fleet">
+                    AGV Fleet Size
+                    <span id="fleetValue" class="value-badge">1</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="fleet" min="1" max="5" step="1" value="1">
+                    <span class="range-hint">1 - 5 vehicles</span>
+                </div>
+            </div>
 
+            <div class="control-group">
+                <label for="algorithm">
+                    Routing Algorithm
+                </label>
+                <select id="algorithm" class="select-control">
+                    <option value="fifo">FIFO (Baseline)</option>
+                    <option value="nearest">Nearest Neighbor (Time Opt)</option>
+                    <option value="balanced">Balanced Load (Congestion Opt)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="threshold">
+                    Inventory Threshold
+                    <span id="thresholdValue" class="value-badge">100</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="threshold" min="50" max="500" step="10" value="100">
+                    <span class="range-hint">50 - 500 units</span>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button id="runBtn" class="btn btn-primary">
+                    <i class="fa-solid fa-play"></i> Run Simulation
+                </button>
+                <button id="resetBtn" class="btn btn-secondary">
+                    <i class="fa-solid fa-rotate-left"></i> Reset
+                </button>
+                <button id="exportCsvBtn" class="btn btn-outline">
+                    <i class="fa-solid fa-file-csv"></i> Export CSV
+                </button>
+            </div>
+
+            <!-- System Status Indicator -->
+            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px;">
+                <span style="font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">System Status</span>
+                <div class="status-indicator" style="justify-content: center; width: 100%; padding: 10px; font-size: 13px;">
+                    <span class="pulse-dot green" id="headerStatusDot"></span>
+                    <span id="headerStatusText">NORMAL (Optimal)</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CENTER: INTERACTIVE DIGITAL TWIN -->
+        <main class="digital-twin-section">
+            <div class="section-header">
+                <div>
+                    <h2><i class="fa-solid fa-cube"></i> Warehouse Digital Twin</h2>
+                    <p>Real-Time Interactive SVG Simulation</p>
+                </div>
+                <div class="live-badge">
+                    <span class="pulse"></span> LIVE
+                </div>
+            </div>
+
+            <div class="warehouse-wrapper">
+                <!-- SVG WAREHOUSE FLOOR PLAN -->
+                <svg id="warehouseSvg" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <!-- Blueprint grid pattern -->
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e8edf5" stroke-width="0.5"/>
+                        </pattern>
+                        <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+                            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#f0f3f9" stroke-width="0.3"/>
+                        </pattern>
+                        <!-- Glow filter for active elements -->
+                        <filter id="glow-active" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="3" result="blur"/>
+                            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+                        </filter>
+                        <filter id="glow-green" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="2" result="blur"/>
+                            <feFlood flood-color="#22c55e" flood-opacity="0.3" result="color"/>
+                            <feComposite in="color" in2="blur" operator="in" result="glow"/>
+                            <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+                        </filter>
+                        <!-- Conveyor belt pattern -->
+                        <pattern id="conveyorPattern" width="12" height="6" patternUnits="userSpaceOnUse">
+                            <rect width="12" height="6" fill="#94a3b8"/>
+                            <line x1="0" y1="3" x2="12" y2="3" stroke="#b0bec5" stroke-width="0.5"/>
+                        </pattern>
+                        <!-- Drop shadow -->
+                        <filter id="dropShadow" x="-5%" y="-5%" width="110%" height="120%">
+                            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.08"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Background fills -->
+                    <rect width="800" height="480" fill="#fafbfe" rx="8"/>
+                    <rect width="800" height="480" fill="url(#smallGrid)" rx="8"/>
+                    <rect width="800" height="480" fill="url(#grid)" rx="8"/>
+
+                    <!-- Warehouse boundary -->
+                    <rect x="15" y="15" width="770" height="450" fill="none" stroke="#c8d3e3" stroke-width="1.5" stroke-dasharray="6 3" rx="6"/>
+
+                    <!-- Floor zone shading -->
+                    <rect x="30" y="170" width="120" height="140" fill="#eff6ff" fill-opacity="0.5" rx="4"/>
+                    <rect x="650" y="170" width="120" height="140" fill="#fef2f2" fill-opacity="0.5" rx="4"/>
+                    <rect x="430" y="170" width="140" height="140" fill="#faf5ff" fill-opacity="0.5" rx="4"/>
+
+                    <!-- ===== INBOUND DOCK ===== -->
+                    <g id="svgInboundDock" class="svg-zone" filter="url(#dropShadow)">
+                        <!-- Dock bay -->
+                        <rect x="35" y="175" width="110" height="130" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="2"/>
+                        <!-- Dock stripe -->
+                        <rect x="35" y="175" width="110" height="24" rx="8" fill="#3b82f6"/>
+                        <rect x="35" y="191" width="110" height="8" fill="#3b82f6"/>
+                        <text x="90" y="192" class="svg-zone-title" text-anchor="middle" fill="#ffffff">INBOUND DOCK</text>
+                        <!-- Loading bay lines -->
+                        <line x1="50" y1="210" x2="130" y2="210" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 2"/>
+                        <line x1="50" y1="230" x2="130" y2="230" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 2"/>
+                        <!-- Truck SVG -->
+                        <g transform="translate(55, 240)">
+                            <!-- Truck body -->
+                            <rect x="0" y="0" width="50" height="28" rx="3" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+                            <!-- Truck cabin -->
+                            <rect x="-18" y="4" width="20" height="20" rx="2" fill="#64748b"/>
+                            <rect x="-14" y="7" width="10" height="8" rx="1" fill="#93c5fd"/>
+                            <!-- Wheels -->
+                            <circle cx="8" cy="30" r="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                            <circle cx="8" cy="30" r="2" fill="#94a3b8"/>
+                            <circle cx="38" cy="30" r="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                            <circle cx="38" cy="30" r="2" fill="#94a3b8"/>
+                        </g>
+                        <!-- Incoming package stack -->
+                        <g id="inboundPackages">
+                            <rect x="110" y="250" width="18" height="18" fill="#f59e0b" rx="2" stroke="#d97706" stroke-width="0.5"/>
+                            <rect x="110" y="270" width="18" height="18" fill="#fb923c" rx="2" stroke="#ea580c" stroke-width="0.5"/>
+                            <rect x="90" y="270" width="18" height="18" fill="#fbbf24" rx="2" stroke="#d97706" stroke-width="0.5"/>
+                        </g>
+                    </g>
+
+                    <!-- ===== OUTBOUND DOCK ===== -->
+                    <g id="svgOutboundDock" class="svg-zone" filter="url(#dropShadow)">
+                        <rect x="655" y="175" width="110" height="130" rx="8" fill="#ffffff" stroke="#ef4444" stroke-width="2"/>
+                        <rect x="655" y="175" width="110" height="24" rx="8" fill="#ef4444"/>
+                        <rect x="655" y="191" width="110" height="8" fill="#ef4444"/>
+                        <text x="710" y="192" class="svg-zone-title" text-anchor="middle" fill="#ffffff">OUTBOUND DOCK</text>
+                        <line x1="670" y1="210" x2="750" y2="210" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 2"/>
+                        <line x1="670" y1="230" x2="750" y2="230" stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3 2"/>
+                        <!-- Outbound truck -->
+                        <g transform="translate(680, 240)">
+                            <rect x="0" y="0" width="50" height="28" rx="3" fill="#fecaca" stroke="#fca5a5" stroke-width="1"/>
+                            <rect x="48" y="4" width="20" height="20" rx="2" fill="#dc2626"/>
+                            <rect x="52" y="7" width="10" height="8" rx="1" fill="#fca5a5"/>
+                            <circle cx="8" cy="30" r="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                            <circle cx="8" cy="30" r="2" fill="#94a3b8"/>
+                            <circle cx="38" cy="30" r="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                            <circle cx="38" cy="30" r="2" fill="#94a3b8"/>
+                        </g>
+                    </g>
+
+                    <!-- ===== PACKAGING / QC STATION ===== -->
+                    <g id="svgPackagingStation" class="svg-zone" filter="url(#dropShadow)">
+                        <rect x="435" y="175" width="130" height="130" rx="8" fill="#ffffff" stroke="#a855f7" stroke-width="2"/>
+                        <rect x="435" y="175" width="130" height="24" rx="8" fill="#a855f7"/>
+                        <rect x="435" y="191" width="130" height="8" fill="#a855f7"/>
+                        <text x="500" y="192" class="svg-zone-title" text-anchor="middle" fill="#ffffff">PACKAGING / QC</text>
+                        <!-- QC scanner -->
+                        <rect x="460" y="215" width="30" height="40" rx="3" fill="#f3e8ff" stroke="#c084fc" stroke-width="1"/>
+                        <rect x="465" y="220" width="20" height="12" rx="1" fill="#ddd6fe"/>
+                        <circle cx="475" cy="243" r="4" fill="#a855f7"/>
+                        <!-- Packaging table -->
+                        <rect x="505" y="215" width="45" height="40" rx="3" fill="#faf5ff" stroke="#c084fc" stroke-width="1"/>
+                        <!-- Box being packed -->
+                        <rect x="515" y="225" width="15" height="15" fill="#d97706" rx="2" stroke="#b45309" stroke-width="0.5"/>
+                        <line x1="515" y1="232" x2="530" y2="232" stroke="#92400e" stroke-width="0.5"/>
+                        <!-- Conveyor rollers inside -->
+                        <g>
+                            <line x1="450" y1="275" x2="550" y2="275" stroke="#cbd5e1" stroke-width="5" stroke-linecap="round"/>
+                            <line x1="455" y1="275" x2="455" y2="275" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="470" y1="275" x2="470" y2="275" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="485" y1="275" x2="485" y2="275" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="500" y1="275" x2="500" y2="275" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="515" y1="275" x2="515" y2="275" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="530" y1="275" x2="530" y2="275" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                            <line x1="545" y1="275" x2="545" y2="275" stroke="#94a3b8" stroke-width="3" stroke-linecap="round"/>
+                        </g>
+                    </g>
+
+                    <!-- ===== RACK A (TOP LEFT) ===== -->
+                    <g id="svgRackA" class="svg-zone" filter="url(#dropShadow)">
+                        <rect x="180" y="30" width="190" height="110" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+                        <!-- Rack header -->
+                        <rect x="180" y="30" width="190" height="22" rx="8" fill="#334155"/>
+                        <rect x="180" y="44" width="190" height="8" fill="#334155"/>
+                        <text x="275" y="46" class="svg-zone-title" text-anchor="middle" fill="#ffffff">RACK A — STORAGE</text>
+                        <!-- Shelf rows -->
+                        <g transform="translate(190, 58)">
+                            <rect x="0" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="42" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="84" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="126" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <!-- Shelf items (small boxes) -->
+                            <rect x="4" y="4" width="10" height="10" fill="#93c5fd" rx="1" opacity="0.6"/>
+                            <rect x="16" y="4" width="10" height="10" fill="#a5b4fc" rx="1" opacity="0.6"/>
+                            <rect x="46" y="4" width="10" height="10" fill="#86efac" rx="1" opacity="0.6"/>
+                            <rect x="88" y="4" width="10" height="10" fill="#fde68a" rx="1" opacity="0.6"/>
+                            <rect x="100" y="4" width="10" height="10" fill="#fca5a5" rx="1" opacity="0.6"/>
+                            <rect x="130" y="4" width="10" height="10" fill="#c4b5fd" rx="1" opacity="0.6"/>
+                        </g>
+                        <!-- Fill bar (bottom) -->
+                        <rect x="190" y="120" width="170" height="6" fill="#e2e8f0" rx="3"/>
+                        <rect id="svgRackAFill" x="190" y="120" width="0" height="6" fill="#22c55e" rx="3"/>
+                        <text id="svgRackAPct" x="275" y="115" class="svg-pct-text" text-anchor="middle">0%</text>
+                    </g>
+
+                    <!-- ===== RACK B (TOP RIGHT) ===== -->
+                    <g id="svgRackB" class="svg-zone" filter="url(#dropShadow)">
+                        <rect x="430" y="30" width="190" height="110" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+                        <rect x="430" y="30" width="190" height="22" rx="8" fill="#334155"/>
+                        <rect x="430" y="44" width="190" height="8" fill="#334155"/>
+                        <text x="525" y="46" class="svg-zone-title" text-anchor="middle" fill="#ffffff">RACK B — STORAGE</text>
+                        <g transform="translate(440, 58)">
+                            <rect x="0" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="42" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="84" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="126" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="4" y="4" width="10" height="10" fill="#fde68a" rx="1" opacity="0.6"/>
+                            <rect x="46" y="4" width="10" height="10" fill="#93c5fd" rx="1" opacity="0.6"/>
+                            <rect x="58" y="4" width="10" height="10" fill="#86efac" rx="1" opacity="0.6"/>
+                            <rect x="88" y="4" width="10" height="10" fill="#fca5a5" rx="1" opacity="0.6"/>
+                            <rect x="130" y="4" width="10" height="10" fill="#a5b4fc" rx="1" opacity="0.6"/>
+                            <rect x="142" y="4" width="10" height="10" fill="#fde68a" rx="1" opacity="0.6"/>
+                        </g>
+                        <rect x="440" y="120" width="170" height="6" fill="#e2e8f0" rx="3"/>
+                        <rect id="svgRackBFill" x="440" y="120" width="0" height="6" fill="#22c55e" rx="3"/>
+                        <text id="svgRackBPct" x="525" y="115" class="svg-pct-text" text-anchor="middle">0%</text>
+                    </g>
+
+                    <!-- ===== RACK C (BOTTOM LEFT) ===== -->
+                    <g id="svgRackC" class="svg-zone" filter="url(#dropShadow)">
+                        <rect x="180" y="340" width="190" height="110" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+                        <rect x="180" y="340" width="190" height="22" rx="8" fill="#334155"/>
+                        <rect x="180" y="354" width="190" height="8" fill="#334155"/>
+                        <text x="275" y="356" class="svg-zone-title" text-anchor="middle" fill="#ffffff">RACK C — STORAGE</text>
+                        <g transform="translate(190, 368)">
+                            <rect x="0" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="42" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="84" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="126" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="4" y="4" width="10" height="10" fill="#86efac" rx="1" opacity="0.6"/>
+                            <rect x="16" y="4" width="10" height="10" fill="#fde68a" rx="1" opacity="0.6"/>
+                            <rect x="46" y="4" width="10" height="10" fill="#fca5a5" rx="1" opacity="0.6"/>
+                            <rect x="88" y="4" width="10" height="10" fill="#c4b5fd" rx="1" opacity="0.6"/>
+                            <rect x="130" y="4" width="10" height="10" fill="#93c5fd" rx="1" opacity="0.6"/>
+                        </g>
+                        <rect x="190" y="430" width="170" height="6" fill="#e2e8f0" rx="3"/>
+                        <rect id="svgRackCFill" x="190" y="430" width="0" height="6" fill="#22c55e" rx="3"/>
+                        <text id="svgRackCPct" x="275" y="425" class="svg-pct-text" text-anchor="middle">0%</text>
+                    </g>
+
+                    <!-- ===== RACK D (BOTTOM RIGHT) ===== -->
+                    <g id="svgRackD" class="svg-zone" filter="url(#dropShadow)">
+                        <rect x="430" y="340" width="190" height="110" rx="8" fill="#ffffff" stroke="#64748b" stroke-width="1.5"/>
+                        <rect x="430" y="340" width="190" height="22" rx="8" fill="#334155"/>
+                        <rect x="430" y="354" width="190" height="8" fill="#334155"/>
+                        <text x="525" y="356" class="svg-zone-title" text-anchor="middle" fill="#ffffff">RACK D — STORAGE</text>
+                        <g transform="translate(440, 368)">
+                            <rect x="0" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="42" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="84" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="126" y="0" width="38" height="28" rx="3" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="0.8"/>
+                            <rect x="4" y="4" width="10" height="10" fill="#fde68a" rx="1" opacity="0.6"/>
+                            <rect x="46" y="4" width="10" height="10" fill="#86efac" rx="1" opacity="0.6"/>
+                            <rect x="88" y="4" width="10" height="10" fill="#93c5fd" rx="1" opacity="0.6"/>
+                            <rect x="100" y="4" width="10" height="10" fill="#fca5a5" rx="1" opacity="0.6"/>
+                            <rect x="130" y="4" width="10" height="10" fill="#c4b5fd" rx="1" opacity="0.6"/>
+                            <rect x="142" y="4" width="10" height="10" fill="#a5b4fc" rx="1" opacity="0.6"/>
+                        </g>
+                        <rect x="440" y="430" width="170" height="6" fill="#e2e8f0" rx="3"/>
+                        <rect id="svgRackDFill" x="440" y="430" width="0" height="6" fill="#22c55e" rx="3"/>
+                        <text id="svgRackDPct" x="525" y="425" class="svg-pct-text" text-anchor="middle">0%</text>
+                    </g>
+
+                    <!-- ===== CONVEYOR SYSTEM ===== -->
+                    <g id="conveyorSystem">
+                        <!-- Main belt: Inbound → Packaging → Outbound (stays within boundaries) -->
+                        <path d="M 145 240 L 435 240" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round"/>
+                        <path d="M 145 240 L 435 240" fill="none" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="8 5" stroke-linecap="round" id="conveyorMovingBelt"/>
+                        <!-- Packaging to Outbound -->
+                        <path d="M 565 240 L 655 240" fill="none" stroke="#94a3b8" stroke-width="7" stroke-linecap="round"/>
+                        <path d="M 565 240 L 655 240" fill="none" stroke="#cbd5e1" stroke-width="3" stroke-dasharray="8 5" stroke-linecap="round" id="conveyorMovingBelt2"/>
+                        <!-- Direction arrows on belt -->
+                        <polygon points="300,234 310,240 300,246" fill="#64748b" opacity="0.4"/>
+                        <polygon points="610,234 620,240 610,246" fill="#64748b" opacity="0.4"/>
+                    </g>
+
+                    <!-- Packages on conveyor -->
+                    <g id="conveyorPackages">
+                        <rect id="conveyorBox1" x="200" y="232" width="14" height="14" fill="#f59e0b" rx="2" stroke="#d97706" stroke-width="0.5"/>
+                        <rect id="conveyorBox2" x="340" y="232" width="14" height="14" fill="#fb923c" rx="2" stroke="#ea580c" stroke-width="0.5"/>
+                        <rect id="conveyorBox3" x="620" y="232" width="14" height="14" fill="#fbbf24" rx="2" stroke="#d97706" stroke-width="0.5"/>
+                    </g>
+
+                    <!-- ===== AGV TRAVEL PATH GUIDE LINES (contained within boundary) ===== -->
+                    <g id="agvPaths" opacity="0.3">
+                        <!-- Horizontal center lane -->
+                        <path d="M 145 240 L 655 240" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+                        <!-- Vertical lane to top racks -->
+                        <path d="M 275 140 L 275 340" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+                        <!-- Vertical lane to right racks -->
+                        <path d="M 525 140 L 525 340" fill="none" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 3"/>
+                    </g>
+
+                    <!-- ===== OPERATIONS CENTER (mini control room) ===== -->
+                    <g transform="translate(670, 38)" filter="url(#dropShadow)">
+                        <rect x="0" y="0" width="90" height="60" rx="6" fill="#ffffff" stroke="#10b981" stroke-width="1.5"/>
+                        <rect x="0" y="0" width="90" height="16" rx="6" fill="#10b981"/>
+                        <rect x="0" y="10" width="90" height="6" fill="#10b981"/>
+                        <text x="45" y="12" class="svg-zone-title" text-anchor="middle" fill="#ffffff" font-size="7">OPS CENTER</text>
+                        <!-- Screens -->
+                        <rect x="8" y="24" width="22" height="14" rx="2" fill="#0f172a"/>
+                        <rect x="10" y="26" width="18" height="10" rx="1" fill="#1e293b"/>
+                        <rect x="34" y="24" width="22" height="14" rx="2" fill="#0f172a"/>
+                        <rect x="36" y="26" width="18" height="10" rx="1" fill="#1e293b"/>
+                        <rect x="60" y="24" width="22" height="14" rx="2" fill="#0f172a"/>
+                        <rect x="62" y="26" width="18" height="10" rx="1" fill="#1e293b"/>
+                        <!-- Desk -->
+                        <rect x="8" y="46" width="74" height="6" rx="2" fill="#e2e8f0"/>
+                    </g>
+
+                    <!-- ===== AGV ROBOT ===== -->
+                    <g id="svgAGV" transform="translate(90, 240)" display="none">
+                        <!-- Shadow -->
+                        <ellipse cx="0" cy="16" rx="14" ry="4" fill="#000" opacity="0.06"/>
+                        <!-- Robot body -->
+                        <rect x="-16" y="-14" width="32" height="28" rx="5" fill="#1e293b" stroke="#3b82f6" stroke-width="2" id="agvBase"/>
+                        <!-- Top plate -->
+                        <rect x="-12" y="-12" width="24" height="6" rx="2" fill="#334155"/>
+                        <!-- Wheels -->
+                        <rect x="-18" y="-10" width="4" height="7" rx="1.5" fill="#475569"/>
+                        <rect x="14" y="-10" width="4" height="7" rx="1.5" fill="#475569"/>
+                        <rect x="-18" y="4" width="4" height="7" rx="1.5" fill="#475569"/>
+                        <rect x="14" y="4" width="4" height="7" rx="1.5" fill="#475569"/>
+                        <!-- Direction arrow -->
+                        <polygon points="0,-8 5,-3 -5,-3" fill="#38bdf8" id="agvArrow"/>
+                        <!-- LED status -->
+                        <circle cx="0" cy="2" r="4" fill="#22c55e" id="agvStatusLED" filter="url(#glow-active)"/>
+                        <!-- Cargo -->
+                        <rect id="agvCargo" x="-7" y="-7" width="14" height="14" fill="#d97706" rx="2" display="none" opacity="0.85"/>
+                    </g>
+
+                    <!-- ===== FLOOR LABELS ===== -->
+                    <text x="90" y="168" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Outfit', sans-serif" font-weight="600">RECEIVING</text>
+                    <text x="710" y="168" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Outfit', sans-serif" font-weight="600">SHIPPING</text>
+                    <text x="500" y="168" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Outfit', sans-serif" font-weight="600">PROCESSING</text>
+                    <text x="275" y="160" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Outfit', sans-serif" font-weight="600">STORAGE ZONE A/C</text>
+                    <text x="525" y="160" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Outfit', sans-serif" font-weight="600">STORAGE ZONE B/D</text>
+                </svg>
+            </div>
+
+            <!-- ANALYTICS CARDS (Mini row) -->
+            <div class="analytics-row">
+                <div class="analytics-card">
+                    <div class="analytics-icon"><i class="fa-solid fa-chart-line"></i></div>
+                    <div>
+                        <span>Warehouse Efficiency</span>
+                        <h3 id="efficiency">100%</h3>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                    <div>
+                        <span>Pending Orders</span>
+                        <h3 id="pendingOrders">0</h3>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon"><i class="fa-solid fa-shield-heart"></i></div>
+                    <div>
+                        <span>Storage Health</span>
+                        <h3 id="storageHealth">Optimal</h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- RIGHT PANEL: OBSERVATIONS & DIAGNOSTICS -->
+        <aside class="operations-panel">
             <div class="panel-title">
-
-                <i class="fa-solid fa-fire"></i>
-
-                <h2>
-                    Congestion Heatmap
-                </h2>
-
+                <i class="fa-solid fa-chart-pie"></i>
+                <h2>Observations & Diagnostics</h2>
             </div>
 
-            <div class="heatmap-grid">
+            <!-- SCROLLABLE CONTENT AREA -->
+            <div class="operations-scrollable">
 
-                <div
-                id="zone1"
-                class="heat-card">
-
-                    <h4>Zone A</h4>
-
-                    <span>Storage</span>
-
+                <!-- CORE EFFICIENCY GAUGE -->
+                <div class="gauge-card">
+                    <h4>Core Operations Efficiency</h4>
+                    <div class="efficiency-gauge-container">
+                        <svg width="110" height="110" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="50" fill="none" stroke="#f1f5f9" stroke-width="10"/>
+                            <circle cx="60" cy="60" r="50" fill="none" stroke="#22c55e" stroke-width="10" 
+                                    stroke-dasharray="314.16" stroke-dashoffset="0" id="gaugeProgressRing" stroke-linecap="round"
+                                    transform="rotate(-90 60 60)"/>
+                            <text x="60" y="62" text-anchor="middle" font-weight="bold" font-size="16" id="gaugePctText" fill="#0f172a">100%</text>
+                            <text x="60" y="78" text-anchor="middle" font-size="9" fill="#64748b" font-weight="bold">SYSTEM</text>
+                        </svg>
+                    </div>
                 </div>
 
-                <div
-                id="zone2"
-                class="heat-card">
-
-                    <h4>Zone B</h4>
-
-                    <span>Picking</span>
-
+                <!-- LIVE INFERRED VALUES -->
+                <div class="inferred-card">
+                    <h4>Inferred Values</h4>
+                    <div class="inferred-grid">
+                        <div class="inferred-item">
+                            <span>Storage Util</span>
+                            <strong id="inferredStorage">0%</strong>
+                        </div>
+                        <div class="inferred-item">
+                            <span>AGV Util</span>
+                            <strong id="inferredAGV">0%</strong>
+                        </div>
+                        <div class="inferred-item">
+                            <span>Processing Time</span>
+                            <strong id="inferredTime">0 min</strong>
+                        </div>
+                        <div class="inferred-item">
+                            <span>Pending Orders</span>
+                            <strong id="inferredPending">0</strong>
+                        </div>
+                    </div>
                 </div>
 
-                <div
-                id="zone3"
-                class="heat-card">
-
-                    <h4>Zone C</h4>
-
-                    <span>Packaging</span>
-
+                <!-- CONGESTION HEATMAP -->
+                <div class="heatmap-card">
+                    <h4>Congestion Heatmap</h4>
+                    <div class="heatmap-grid">
+                        <div id="zone1" class="heat-card">
+                            <span>Zone A</span>
+                            <strong id="zoneAVal">0%</strong>
+                        </div>
+                        <div id="zone2" class="heat-card">
+                            <span>Zone B</span>
+                            <strong id="zoneBVal">0%</strong>
+                        </div>
+                        <div id="zone3" class="heat-card">
+                            <span>Zone C</span>
+                            <strong id="zoneCVal">0%</strong>
+                        </div>
+                        <div id="zone4" class="heat-card">
+                            <span>Zone D</span>
+                            <strong id="zoneDVal">0%</strong>
+                        </div>
+                    </div>
                 </div>
 
-                <div
-                id="zone4"
-                class="heat-card">
-
-                    <h4>Zone D</h4>
-
-                    <span>Dispatch</span>
-
+                <!-- SMART RECOMMENDATIONS -->
+                <div class="recommendations-card">
+                    <h4><i class="fa-solid fa-lightbulb"></i> Smart Recommendations</h4>
+                    <div id="observation" class="recommendation-content">
+                        Configure warehouse parameters and run the simulation to receive intelligent recommendations.
+                    </div>
                 </div>
 
+                <!-- LIVE CALCULATION TRACE -->
+                <div class="trace-card">
+                    <h4>Live Calculation Trace</h4>
+                    <div class="trace-terminal" id="traceTerminal">
+                        <div class="trace-line">> System initialized. Awaiting parameters.</div>
+                    </div>
+                </div>
             </div>
-
-        </div>
-
+        </aside>
     </section>
 
-</section>
+    <!-- ========================================= -->
+    <!-- LOWER SECTION: KPI Trend + Log Table -->
+    <!-- ========================================= -->
+    <section class="insights-grid">
+        <!-- TREND ANALYSIS CHART -->
+        <div class="chart-panel">
+            <div class="panel-title">
+                <i class="fa-solid fa-chart-area"></i>
+                <h2>KPI Trend Analysis</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="kpiTrendChart"></canvas>
+            </div>
+        </div>
 
-<section class="log-section">
-
-    <div class="panel-title">
-
-        <i class="fa-solid fa-clipboard-list"></i>
-
-        <h2>
-            Warehouse Operation Log
-        </h2>
-
-    </div>
-
-    <div class="table-wrapper">
-
-        <table>
-
-            <thead>
-
-                <tr>
-
-                    <th>Run #</th>
-
-                    <th>Capacity</th>
-
-                    <th>Orders</th>
-
-                    <th>Utilization</th>
-
-                    <th>Robot Usage</th>
-
-                    <th>Status</th>
-
-                </tr>
-
-            </thead>
-
-            <tbody id="logTable">
-
-            </tbody>
-
-        </table>
-
-    </div>
-
-</section>
-
+        <!-- LOG TABLE -->
+        <div class="log-panel">
+            <div class="panel-title-row">
+                <div class="panel-title">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    <h2>Operation Log</h2>
+                </div>
+                <button id="exportCsvBtnBottom" class="btn btn-outline btn-sm">
+                    <i class="fa-solid fa-file-csv"></i> Export
+                </button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                             <th>Run</th>
+                             <th>Cap</th>
+                             <th>Ord</th>
+                             <th>Spd</th>
+                             <th>Flt</th>
+                             <th>Algo</th>
+                             <th>Thr</th>
+                             <th>S.Util</th>
+                             <th>AGV</th>
+                             <th>Time</th>
+                             <th>η</th>
+                             <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTable">
+                        <!-- Dynamic rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
 </div>
 
 <script src="js/main.js"></script>
-
 </body>
-
 </html>

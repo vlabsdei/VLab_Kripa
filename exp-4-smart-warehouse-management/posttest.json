@@ -1,102 +1,175 @@
-[
-  {
-    "question": "A warehouse has a total capacity of 1000 units and currently stores 800 units. What is the storage utilization?",
-    "options": [
-      "60%",
-      "70%",
-      "80%",
-      "90%"
-    ],
-    "answer": "80%"
-  },
-  {
-    "question": "What is the primary benefit of using AGVs in smart warehouses?",
-    "options": [
-      "Increased manual labor",
-      "Faster and automated material transportation",
-      "Reduced inventory visibility",
-      "Higher warehouse congestion"
-    ],
-    "answer": "Faster and automated material transportation"
-  },
-  {
-    "question": "If incoming orders increase significantly while storage capacity remains constant, what is the most likely outcome?",
-    "options": [
-      "Reduced congestion",
-      "Improved inventory health",
-      "Increased warehouse congestion",
-      "Lower robot utilization"
-    ],
-    "answer": "Increased warehouse congestion"
-  },
-  {
-    "question": "Which KPI indicates how effectively warehouse robots are being used?",
-    "options": [
-      "Inventory Health",
-      "Storage Utilization",
-      "Robot Utilization",
-      "Warehouse Capacity"
-    ],
-    "answer": "Robot Utilization"
-  },
-  {
-    "question": "What happens when inventory levels fall below the inventory threshold?",
-    "options": [
-      "Warehouse shutdown",
-      "Replenishment action is triggered",
-      "Storage utilization becomes zero",
-      "Robot utilization decreases automatically"
-    ],
-    "answer": "Replenishment action is triggered"
-  },
-  {
-    "question": "Which Industry 4.0 technology creates a virtual representation of warehouse operations?",
-    "options": [
-      "RFID",
-      "AGV",
-      "Digital Twin",
-      "PLC"
-    ],
-    "answer": "Digital Twin"
-  },
-  {
-    "question": "A warehouse reports a robot utilization of 95%. What does this indicate?",
-    "options": [
-      "The robot is mostly idle",
-      "The robot is heavily engaged in operations",
-      "The robot is malfunctioning",
-      "Inventory levels are low"
-    ],
-    "answer": "The robot is heavily engaged in operations"
-  },
-  {
-    "question": "Which factor can help reduce warehouse processing time?",
-    "options": [
-      "Increasing robot speed",
-      "Reducing automation",
-      "Increasing congestion",
-      "Lowering storage utilization"
-    ],
-    "answer": "Increasing robot speed"
-  },
-  {
-    "question": "Why is inventory health important in warehouse management?",
-    "options": [
-      "It measures building maintenance",
-      "It indicates stock availability and inventory balance",
-      "It measures robot battery life",
-      "It determines warehouse size"
-    ],
-    "answer": "It indicates stock availability and inventory balance"
-  },
-  {
-    "question": "What is the main objective of a Smart Warehouse Management System?",
-    "options": [
-      "Increase manual operations",
-      "Reduce warehouse visibility",
-      "Optimize storage, inventory, and logistics operations",
-      "Eliminate inventory tracking"
-    ],
-    "answer": "Optimize storage, inventory, and logistics operations"
-  }
-]
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "A warehouse has a total capacity of 1000 units and currently stores 800 units. What is the storage utilization?",
+      "answers": {
+        "a": "60%",
+        "b": "70%",
+        "c": "80%",
+        "d": "90%"
+      },
+      "explanations": {
+        "a": "600 out of 1000 would be 60%.",
+        "b": "700 out of 1000 would be 70%.",
+        "c": "Storage Utilization = (800 / 1000) * 100 = 80%.",
+        "d": "900 out of 1000 would be 90%."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the primary benefit of using AGVs in smart warehouses?",
+      "answers": {
+        "a": "Increased manual labor",
+        "b": "Faster and automated material transportation",
+        "c": "Reduced inventory visibility",
+        "d": "Higher warehouse congestion"
+      },
+      "explanations": {
+        "a": "AGVs reduce manual labor through automation.",
+        "b": "AGVs automate the transportation of goods, reducing cycle times.",
+        "c": "Digital twin integration improves inventory visibility.",
+        "d": "Smart routing reduces congestion."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "If incoming orders increase significantly while storage capacity remains constant, what is the most likely outcome?",
+      "answers": {
+        "a": "Reduced congestion",
+        "b": "Improved inventory health",
+        "c": "Increased warehouse congestion",
+        "d": "Lower robot utilization"
+      },
+      "explanations": {
+        "a": "Congestion would increase, not reduce.",
+        "b": "High orders may strain stock availability.",
+        "c": "Unloading and storing more items leads to higher congestion risks.",
+        "d": "Robot utilization will rise to handle the workload."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which KPI indicates how effectively warehouse robots are being used?",
+      "answers": {
+        "a": "Inventory Health",
+        "b": "Storage Utilization",
+        "c": "Robot (AGV) Utilization",
+        "d": "Warehouse Capacity"
+      },
+      "explanations": {
+        "a": "Inventory health measures stock safety levels.",
+        "b": "Storage utilization measures space usage.",
+        "c": "Robot utilization measures the active workload percentage of the AGVs.",
+        "d": "Warehouse capacity is the size limit."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What happens when inventory levels fall below the inventory threshold?",
+      "answers": {
+        "a": "Warehouse shutdown",
+        "b": "Replenishment action is triggered",
+        "c": "Storage utilization becomes zero",
+        "d": "Robot utilization decreases automatically"
+      },
+      "explanations": {
+        "a": "The warehouse stays operational.",
+        "b": "Rereaching the threshold triggers inventory replenishment to avoid stockouts.",
+        "c": "Utilization drops but does not immediately become zero.",
+        "d": "Robot utilization may increase to process replenishment."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "In the simulation, what penalty is applied to the Efficiency Score if AGV Utilization exceeds 80%?",
+      "answers": {
+        "a": "0%",
+        "b": "8%",
+        "c": "12%",
+        "d": "20%"
+      },
+      "explanations": {
+        "a": "A penalty is applied.",
+        "b": "8% is the penalty for high processing time.",
+        "c": "A 12% penalty (P_agv) is applied when AGV utilization exceeds the 80% threshold.",
+        "d": "12% is the correct penalty."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "What is the baseline multiplier (M_algo) for Processing Time when using the FIFO routing algorithm?",
+      "answers": {
+        "a": "0.80",
+        "b": "0.90",
+        "c": "1.00",
+        "d": "1.10"
+      },
+      "explanations": {
+        "a": "0.80 is for Nearest Neighbor.",
+        "b": "0.90 is for Balanced Load.",
+        "c": "FIFO is the baseline routing algorithm, thus it uses a multiplier of 1.00.",
+        "d": "No algorithm increases the base time by 10%."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "According to the simulation's Congestion Index, what level of congestion is experienced if Storage Utilization is at 88%?",
+      "answers": {
+        "a": "Low",
+        "b": "Medium",
+        "c": "High",
+        "d": "Critical"
+      },
+      "explanations": {
+        "a": "Low is below 60%.",
+        "b": "Medium is 60% to 84%.",
+        "c": "Any storage utilization 85% and above is classified as High congestion.",
+        "d": "Critical is not a defined level in this index."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "How is the number of Pending Orders calculated in the simulation engine?",
+      "answers": {
+        "a": "Incoming Orders - (Fleet Size * AGV Speed * 60)",
+        "b": "Incoming Orders / (Fleet Size * AGV Speed * 20)",
+        "c": "Incoming Orders - Storage Capacity",
+        "d": "(Incoming Orders * AGV Speed) / 60"
+      },
+      "explanations": {
+        "a": "Pending orders reflect the backlog that cannot be fulfilled by the fleet within the given timeframe.",
+        "b": "This formula relates to processing time.",
+        "c": "This calculates excess storage, not pending orders.",
+        "d": "This is an incorrect calculation."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "What efficiency bonus (B_algo) is added to the Overall Efficiency Score when using the Balanced Load routing algorithm?",
+      "answers": {
+        "a": "+0%",
+        "b": "+3%",
+        "c": "+5%",
+        "d": "+10%"
+      },
+      "explanations": {
+        "a": "+0% is for FIFO.",
+        "b": "Balanced Load provides a +3% efficiency bonus by reducing congestion delays.",
+        "c": "+5% is for Nearest Neighbor.",
+        "d": "No algorithm provides a +10% bonus."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    }
+  ]
+}
