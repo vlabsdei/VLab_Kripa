@@ -1,0 +1,115 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "Predictive maintenance is based on:",
+      "answers": {
+        "a": "Real-time machine condition monitoring",
+        "b": "Random inspections",
+        "c": "Monthly shutdown",
+        "d": "Manual calculations only"
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which parameter indicates bearing wear most effectively?",
+      "answers": {
+        "a": "Vibration",
+        "b": "Color",
+        "c": "Light",
+        "d": "Humidity"
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Low lubrication causes:",
+      "answers": {
+        "a": "Reduced friction",
+        "b": "Higher wear and overheating",
+        "c": "Lower temperature",
+        "d": "Improved efficiency"
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "A healthy machine generally has:",
+      "answers": {
+        "a": "High temperature",
+        "b": "High vibration",
+        "c": "Stable operating conditions",
+        "d": "Zero lubrication"
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Predictive maintenance reduces:",
+      "answers": {
+        "a": "Unexpected failures",
+        "b": "Machine life",
+        "c": "Automation",
+        "d": "Safety"
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Failure probability increases when:",
+      "answers": {
+        "a": "Temperature rises",
+        "b": "Vibration rises",
+        "c": "Operating hours increase",
+        "d": "All of the above"
+      },
+      "correctAnswer": "d",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Predictive maintenance mainly belongs to:",
+      "answers": {
+        "a": "Industry 4.0",
+        "b": "Agriculture",
+        "c": "Civil Engineering",
+        "d": "Marine Biology"
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Machine health is improved by:",
+      "answers": {
+        "a": "Proper lubrication",
+        "b": "Ignoring maintenance",
+        "c": "Increasing vibration",
+        "d": "Overheating"
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Industrial IoT sensors are used for:",
+      "answers": {
+        "a": "Condition monitoring",
+        "b": "Playing music",
+        "c": "Internet browsing",
+        "d": "Typing documents"
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "The primary output of this experiment is:",
+      "answers": {
+        "a": "Machine health and failure probability",
+        "b": "Robot navigation",
+        "c": "Warehouse capacity",
+        "d": "Camera resolution"
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    }
+  ]
+}

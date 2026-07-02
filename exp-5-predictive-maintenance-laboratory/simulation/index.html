@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictive Maintenance Simulator</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="dashboard">
+
+    <section class="main-layout">
+
+        <!-- LEFT SIDEBAR: CONTROLS -->
+        <aside class="control-panel">
+            <div class="panel-title">
+                <i class="fa-solid fa-sliders"></i>
+                <h2>Machine Controls</h2>
+            </div>
+
+            <div class="control-group">
+                <label for="tempSlider">
+                    Motor Temperature (°C)
+                    <span id="tempValue" class="value-badge">20</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="tempSlider" min="20" max="150" step="1" value="20">
+                    <span class="range-hint">20 - 150 °C</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="vibSlider">
+                    Vibration Frequency (Hz)
+                    <span id="vibValue" class="value-badge">0</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="vibSlider" min="0" max="100" step="1" value="0">
+                    <span class="range-hint">0 - 100 Hz</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="hoursSlider">
+                    Operating Hours
+                    <span id="hoursValue" class="value-badge">0</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="hoursSlider" min="0" max="10000" step="100" value="0">
+                    <span class="range-hint">0 - 10,000 hrs</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="lubeSlider">
+                    Lubrication Level (%)
+                    <span id="lubeValue" class="value-badge">100</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="lubeSlider" min="0" max="100" step="1" value="100">
+                    <span class="range-hint">0 - 100 %</span>
+                </div>
+            </div>
+
+            <div class="btn-group" style="display: flex; flex-direction: row; flex-wrap: wrap; gap: 8px;">
+                <button id="runBtn" class="btn btn-primary" style="flex: 1; min-width: 110px; margin: 0;">
+                    <i class="fa-solid fa-play"></i> Run
+                </button>
+                <button id="pauseBtn" class="btn btn-warning" style="flex: 1; min-width: 110px; margin: 0;" disabled>
+                    <i class="fa-solid fa-pause"></i> Pause
+                </button>
+                <button id="logBtn" class="btn btn-info" style="flex: 1; min-width: 110px; margin: 0; background-color: #0ea5e9; color: white;">
+                    <i class="fa-solid fa-clipboard-check"></i> Record Data
+                </button>
+                <button id="resetBtn" class="btn btn-secondary" style="flex: 1; min-width: 110px; margin: 0;">
+                    <i class="fa-solid fa-rotate-left"></i> Reset
+                </button>
+                <button id="exportCsvBtn" class="btn btn-outline" style="flex: 1 1 100%; margin: 0;">
+                    <i class="fa-solid fa-file-csv"></i> Export CSV
+                </button>
+            </div>
+
+            <!-- Maintenance Actions -->
+            <div class="maint-section">
+                <div class="maint-title">MAINTENANCE ACTIONS</div>
+                <div class="maint-action-row">
+                    <span>Lubricate System</span>
+                    <button class="btn-action" data-action="lubricate">Apply</button>
+                </div>
+                <div class="maint-action-row">
+                    <span>Full Overhaul</span>
+                    <button class="btn-action" data-action="overhaul">Apply</button>
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div style="margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 8px;">
+                <span style="font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px;">System Status</span>
+                <div class="status-indicator" style="justify-content: center; width: 100%; padding: 10px; font-size: 13px;">
+                    <span class="pulse-dot green" id="headerStatusDot"></span>
+                    <span id="headerStatusText">NORMAL</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CENTER: INTERACTIVE DIGITAL TWIN -->
+        <main class="digital-twin-section">
+            <div class="section-header">
+                <div>
+                    <h2><i class="fa-solid fa-microchip"></i> Machine Digital Twin</h2>
+                    <p>Real-Time Interactive SVG Simulation</p>
+                </div>
+                <div class="live-badge" id="liveBadge">
+                    <span class="pulse"></span> OFFLINE
+                </div>
+            </div>
+
+            <div class="warehouse-wrapper">
+                <svg id="machineSvg" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid meet">
+                    <defs>
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#e8edf5" stroke-width="0.5"/>
+                        </pattern>
+                        <pattern id="smallGrid" width="10" height="10" patternUnits="userSpaceOnUse">
+                            <path d="M 10 0 L 0 0 0 10" fill="none" stroke="#f0f3f9" stroke-width="0.3"/>
+                        </pattern>
+                        <filter id="glow-heat" x="-40%" y="-40%" width="180%" height="180%">
+                            <feGaussianBlur stdDeviation="6" result="blur"/>
+                            <feFlood flood-color="#ef4444" flood-opacity="0.4" result="color"/>
+                            <feComposite in="color" in2="blur" operator="in" result="glow"/>
+                            <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+                        </filter>
+                        <filter id="dropShadow" x="-5%" y="-5%" width="110%" height="120%">
+                            <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.08"/>
+                        </filter>
+                        <filter id="glow-green" x="-30%" y="-30%" width="160%" height="160%">
+                            <feGaussianBlur stdDeviation="4" result="blur"/>
+                            <feFlood flood-color="#10b981" flood-opacity="0.5" result="color"/>
+                            <feComposite in="color" in2="blur" operator="in" result="glow"/>
+                            <feComposite in="SourceGraphic" in2="glow" operator="over"/>
+                        </filter>
+                    </defs>
+
+                    <!-- Backgrounds -->
+                    <rect width="800" height="480" fill="#fafbfe" rx="8"/>
+                    <rect width="800" height="480" fill="url(#smallGrid)" rx="8"/>
+                    <rect width="800" height="480" fill="url(#grid)" rx="8"/>
+                    <rect x="15" y="15" width="770" height="450" fill="none" stroke="#c8d3e3" stroke-width="1.5" stroke-dasharray="6 3" rx="6"/>
+
+                    <!-- Zone labels -->
+                    <text x="200" y="35" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif" font-weight="600">MOTOR ASSEMBLY</text>
+                    <text x="470" y="35" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif" font-weight="600">PUMP ASSEMBLY</text>
+                    <text x="710" y="35" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="'Outfit',sans-serif" font-weight="600">MONITORING</text>
+
+                    <!-- Floor platform -->
+                    <rect x="30" y="380" width="590" height="12" fill="#cbd5e1" rx="3"/>
+
+                    <!-- ===== MOTOR BLOCK ===== -->
+                    <g id="motorBlock" filter="url(#dropShadow)">
+                        <rect x="80" y="340" width="200" height="40" fill="#334155" rx="4"/>
+                        <!-- Motor body: fill changes from cool blue→hot red via JS -->
+                        <rect id="motorBody" x="80" y="160" width="200" height="180" fill="#1e293b" rx="10"/>
+                        <!-- Heat glow overlay -->
+                        <rect id="motorHeatOverlay" x="80" y="160" width="200" height="180" fill="#ef4444" rx="10" opacity="0" filter="url(#glow-heat)"/>
+                        <!-- Cooling ribs -->
+                        <line x1="105" y1="185" x2="105" y2="340" stroke="#0f172a" stroke-width="5"/>
+                        <line x1="125" y1="185" x2="125" y2="340" stroke="#0f172a" stroke-width="5"/>
+                        <line x1="145" y1="185" x2="145" y2="340" stroke="#0f172a" stroke-width="5"/>
+                        <line x1="165" y1="185" x2="165" y2="340" stroke="#0f172a" stroke-width="5"/>
+                        <line x1="185" y1="185" x2="185" y2="340" stroke="#0f172a" stroke-width="5"/>
+                        <line x1="205" y1="185" x2="205" y2="340" stroke="#0f172a" stroke-width="5"/>
+                        <line x1="225" y1="185" x2="225" y2="340" stroke="#0f172a" stroke-width="5"/>
+                        <line x1="245" y1="185" x2="245" y2="340" stroke="#0f172a" stroke-width="5"/>
+                        <!-- Motor face circle -->
+                        <circle id="motorFace" cx="180" cy="255" r="55" fill="#0f172a" stroke="#475569" stroke-width="3"/>
+                        <!-- Spinning Fan -->
+                        <g id="motorFan" style="transform-origin: 180px 255px;">
+                            <circle cx="180" cy="255" r="8" fill="#3b82f6"/>
+                            <path d="M 180 255 L 175 215 A 42 42 0 0 1 195 220 Z" fill="#60a5fa" opacity="0.9"/>
+                            <path d="M 180 255 L 220 250 A 42 42 0 0 1 215 270 Z" fill="#60a5fa" opacity="0.9"/>
+                            <path d="M 180 255 L 185 295 A 42 42 0 0 1 165 290 Z" fill="#60a5fa" opacity="0.9"/>
+                            <path d="M 180 255 L 140 260 A 42 42 0 0 1 145 240 Z" fill="#60a5fa" opacity="0.9"/>
+                        </g>
+                        <!-- Motor label -->
+                        <rect x="80" y="160" width="200" height="24" rx="10" fill="#3b82f6"/>
+                        <rect x="80" y="176" width="200" height="8" fill="#3b82f6"/>
+                        <text x="180" y="178" text-anchor="middle" fill="white" font-size="8" font-family="'Outfit',sans-serif" font-weight="700">ELECTRIC MOTOR</text>
+                        <!-- Live temp display on motor -->
+                        <rect x="95" y="322" width="90" height="16" fill="#0f172a" rx="3"/>
+                        <text id="svgTempVal" x="140" y="334" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="monospace">T: 20°C</text>
+                    </g>
+
+                    <!-- ===== DRIVE SHAFT ===== -->
+                    <g id="driveShaft">
+                        <rect x="280" y="245" width="100" height="20" fill="#94a3b8" stroke="#64748b" stroke-width="1.5"/>
+                        <g id="coupling" style="transform-origin: 330px 255px;">
+                            <rect x="312" y="235" width="36" height="40" fill="#f59e0b" rx="5" stroke="#d97706" stroke-width="1.5"/>
+                            <rect x="322" y="233" width="16" height="44" fill="#fbbf24" rx="3"/>
+                            <line x1="312" y1="255" x2="348" y2="255" stroke="#92400e" stroke-width="2"/>
+                            <line x1="330" y1="235" x2="330" y2="275" stroke="#92400e" stroke-width="2"/>
+                        </g>
+                    </g>
+
+                    <!-- ===== PUMP BLOCK ===== -->
+                    <g id="pumpBlock" filter="url(#dropShadow)">
+                        <rect x="390" y="335" width="160" height="45" fill="#334155" rx="4"/>
+                        <circle id="pumpOuter" cx="470" cy="255" r="78" fill="#1e293b" stroke="#3b82f6" stroke-width="4"/>
+                        <circle cx="470" cy="255" r="52" fill="#0f172a"/>
+                        <!-- Spinning Impeller -->
+                        <g id="pumpImpeller" style="transform-origin: 470px 255px;">
+                            <circle cx="470" cy="255" r="12" fill="#cbd5e1"/>
+                            <path d="M 470 255 L 460 200 A 52 52 0 0 1 485 203 Z" fill="#60a5fa"/>
+                            <path d="M 470 255 L 522 245 A 52 52 0 0 1 519 270 Z" fill="#60a5fa"/>
+                            <path d="M 470 255 L 480 308 A 52 52 0 0 1 455 305 Z" fill="#60a5fa"/>
+                            <path d="M 470 255 L 418 265 A 52 52 0 0 1 421 240 Z" fill="#60a5fa"/>
+                        </g>
+                        <!-- Pump label -->
+                        <rect x="390" y="177" width="160" height="24" rx="10" fill="#3b82f6"/>
+                        <rect x="390" y="193" width="160" height="8" fill="#3b82f6"/>
+                        <text x="470" y="193" text-anchor="middle" fill="white" font-size="8" font-family="'Outfit',sans-serif" font-weight="700">CENTRIFUGAL PUMP</text>
+                        <rect x="380" y="248" width="10" height="14" fill="#64748b"/>
+                        <!-- Live vib display -->
+                        <rect x="400" y="322" width="90" height="16" fill="#0f172a" rx="3"/>
+                        <text id="svgVibVal" x="445" y="334" text-anchor="middle" fill="#38bdf8" font-size="9" font-family="monospace">V: 0Hz</text>
+                    </g>
+
+                    <!-- ===== PIPE SYSTEM ===== -->
+                    <g id="pipeSystem">
+                        <path d="M 470 177 L 470 70 L 680 70 L 680 370" fill="none" stroke="#cbd5e1" stroke-width="26" stroke-linejoin="round"/>
+                        <path d="M 470 177 L 470 70 L 680 70 L 680 370" fill="none" stroke="#94a3b8" stroke-width="28" stroke-linejoin="round" opacity="0.15"/>
+                        <!-- Animated fluid - color shifts with lube -->
+                        <path id="fluidFlow" d="M 470 177 L 470 70 L 680 70 L 680 370" fill="none" stroke="#60a5fa" stroke-width="12" stroke-linejoin="round" stroke-dasharray="22 22"/>
+                        <rect x="454" y="63" width="32" height="14" fill="#64748b" rx="3"/>
+                        <rect x="666" y="63" width="28" height="14" fill="#64748b" rx="3"/>
+                        <rect x="666" y="362" width="28" height="14" fill="#64748b" rx="3"/>
+                        <!-- Advanced pressure gauge -->
+                        <circle cx="680" cy="205" r="24" fill="white" stroke="#94a3b8" stroke-width="2"/>
+                        <circle cx="680" cy="205" r="18" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+                        <!-- Color arc zones (Radius 16, centered at 680, 205) -->
+                        <path d="M 668.7 193.7 A 16 16 0 0 1 676.3 189.4" fill="none" stroke="#10b981" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M 676.3 189.4 A 16 16 0 0 1 682.5 189.2" fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
+                        <path d="M 682.5 189.2 A 16 16 0 0 1 691.3 193.7" fill="none" stroke="#ef4444" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="680" y1="205" x2="688" y2="197" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" id="pressureNeedle"/>
+                        <circle cx="680" cy="205" r="3" fill="#334155"/>
+                        <text x="680" y="222" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="monospace" font-weight="bold">PRESS</text>
+                    </g>
+
+                    <!-- ===== VIBRATION WAVEFORM ===== -->
+                    <g transform="translate(30, 395)">
+                        <rect width="340" height="52" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+                        <text x="8" y="12" fill="#38bdf8" font-size="7" font-family="monospace" font-weight="bold">VIBRATION WAVEFORM</text>
+                        <line x1="10" y1="35" x2="330" y2="35" stroke="#1e293b" stroke-width="0.8"/>
+                        <polyline id="vibWaveform" points="" fill="none" stroke="#3b82f6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </g>
+
+                    <!-- ===== LUBE INDICATOR ===== -->
+                    <g transform="translate(383, 395)">
+                        <rect width="200" height="52" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+                        <text x="8" y="12" fill="#38bdf8" font-size="7" font-family="monospace" font-weight="bold">LUBRICATION LEVEL</text>
+                        <rect x="8" y="20" width="184" height="14" rx="3" fill="#1e293b"/>
+                        <rect id="lubeBar" x="8" y="20" width="184" height="14" rx="3" fill="#10b981"/>
+                        <text id="lubePct" x="100" y="31" text-anchor="middle" fill="white" font-size="8" font-family="monospace" font-weight="bold">100%</text>
+                        <text x="8" y="46" fill="#475569" font-size="7" font-family="monospace">LOW</text>
+                        <text x="192" y="46" text-anchor="end" fill="#475569" font-size="7" font-family="monospace">HIGH</text>
+                    </g>
+
+                    <!-- ===== HEALTH BAR ===== -->
+                    <g transform="translate(596, 395)">
+                        <rect width="167" height="52" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+                        <text x="8" y="12" fill="#38bdf8" font-size="7" font-family="monospace" font-weight="bold">SYSTEM HEALTH</text>
+                        <rect x="8" y="20" width="151" height="14" rx="3" fill="#1e293b"/>
+                        <rect id="healthBar" x="8" y="20" width="151" height="14" rx="3" fill="#22c55e"/>
+                        <text id="svgHealthPct" x="84" y="31" text-anchor="middle" fill="white" font-size="8" font-family="monospace" font-weight="bold">100%</text>
+                    </g>
+
+                    <!-- ===== SENSOR NODES ===== -->
+                    <g id="sensors">
+                        <path d="M 280 225 L 320 225 L 320 120 L 360 120" fill="none" stroke="#f97316" stroke-width="1.5" stroke-dasharray="4 3"/>
+                        <rect x="360" y="107" width="52" height="26" fill="#f97316" rx="5"/>
+                        <text x="386" y="120" text-anchor="middle" fill="white" font-size="9" font-family="monospace" font-weight="bold">TMP</text>
+                        <text id="svgTempTag" x="386" y="130" text-anchor="middle" fill="white" font-size="7" font-family="monospace">20°C</text>
+                        <circle cx="280" cy="225" r="5" fill="#f97316" id="ledTemp" class="sensor-led"/>
+
+                        <path d="M 330 235 L 330 140 L 430 140" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 3"/>
+                        <rect x="430" y="127" width="52" height="26" fill="#ef4444" rx="5"/>
+                        <text x="456" y="140" text-anchor="middle" fill="white" font-size="9" font-family="monospace" font-weight="bold">VIB</text>
+                        <text id="svgVibTag" x="456" y="150" text-anchor="middle" fill="white" font-size="7" font-family="monospace">0Hz</text>
+                        <circle cx="330" cy="235" r="5" fill="#ef4444" id="ledVib" class="sensor-led"/>
+                    </g>
+
+                    <!-- ===== MONITORING BOX ===== -->
+                    <g transform="translate(620, 55)" filter="url(#dropShadow)">
+                        <rect x="0" y="0" width="135" height="100" rx="8" fill="white" stroke="#10b981" stroke-width="2"/>
+                        <rect x="0" y="0" width="135" height="22" rx="8" fill="#10b981"/>
+                        <rect x="0" y="14" width="135" height="8" fill="#10b981"/>
+                        <text x="67" y="14" text-anchor="middle" fill="white" font-size="8" font-family="'Outfit',sans-serif" font-weight="700">MONITORING PANEL</text>
+                        <rect x="10" y="28" width="34" height="20" rx="3" fill="#0f172a"/>
+                        <rect x="12" y="30" width="30" height="14" rx="1" fill="#1e293b"/>
+                        <rect x="50" y="28" width="34" height="20" rx="3" fill="#0f172a"/>
+                        <rect x="52" y="30" width="30" height="14" rx="1" fill="#1e293b"/>
+                        <rect x="90" y="28" width="34" height="20" rx="3" fill="#0f172a"/>
+                        <rect x="92" y="30" width="30" height="14" rx="1" fill="#1e293b"/>
+                        <!-- Risk bar -->
+                        <rect x="10" y="56" width="115" height="10" rx="3" fill="#1e293b"/>
+                        <rect id="monitorRiskBar" x="10" y="56" width="0" height="10" rx="3" fill="#22c55e"/>
+                        <text id="monitorRiskPct" x="67" y="80" text-anchor="middle" fill="#64748b" font-size="8" font-family="monospace">RISK: 0.0%</text>
+                        <text id="monitorHealthTxt" x="67" y="93" text-anchor="middle" fill="#10b981" font-size="8" font-family="monospace" font-weight="bold">HEALTH: 100%</text>
+                    </g>
+
+                    <path d="M 380 255 L 392 255" fill="none" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+                </svg>
+            </div>
+
+            <!-- Analytics Row -->
+            <div class="analytics-row">
+                <div class="analytics-card">
+                    <div class="analytics-icon"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <div>
+                        <span>Machine Health</span>
+                        <h3 id="anaHealth">100%</h3>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    <div>
+                        <span>Failure Probability</span>
+                        <h3 id="anaRisk">0%</h3>
+                    </div>
+                </div>
+                <div class="analytics-card">
+                    <div class="analytics-icon"><i class="fa-solid fa-wrench"></i></div>
+                    <div>
+                        <span>Maintenance Score</span>
+                        <h3 id="anaMaintScore">12.50</h3>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- RIGHT PANEL: OBSERVATIONS & DIAGNOSTICS -->
+        <aside class="operations-panel">
+            <div class="panel-title">
+                <i class="fa-solid fa-chart-pie"></i>
+                <h2>Observations & Diagnostics</h2>
+            </div>
+
+            <div class="operations-scrollable">
+
+                <!-- HEALTH GAUGE -->
+                <div class="gauge-card">
+                    <h4>Core System Health</h4>
+                    <div class="efficiency-gauge-container">
+                        <svg width="110" height="110" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="50" fill="none" stroke="#f1f5f9" stroke-width="10"/>
+                            <circle cx="60" cy="60" r="50" fill="none" stroke="#22c55e" stroke-width="10"
+                                    stroke-dasharray="314.16" stroke-dashoffset="0" id="gaugeProgressRing" stroke-linecap="round"
+                                    transform="rotate(-90 60 60)"/>
+                            <text x="60" y="62" text-anchor="middle" font-weight="bold" font-size="16" id="gaugePctText" fill="#0f172a">100%</text>
+                            <text x="60" y="78" text-anchor="middle" font-size="9" fill="#64748b" font-weight="bold">SYSTEM</text>
+                        </svg>
+                    </div>
+                </div>
+
+                <!-- LIVE INFERRED VALUES -->
+                <div class="inferred-card">
+                    <h4>Inferred Values</h4>
+                    <div class="inferred-grid">
+                        <div class="inferred-item">
+                            <span>Maint. Score</span>
+                            <strong id="inferredScore">12.50</strong>
+                        </div>
+                        <div class="inferred-item">
+                            <span>Failure Risk</span>
+                            <strong id="inferredRisk">0%</strong>
+                        </div>
+                        <div class="inferred-item">
+                            <span>Temperature</span>
+                            <strong id="inferredTemp">20°C</strong>
+                        </div>
+                        <div class="inferred-item">
+                            <span>Vibration</span>
+                            <strong id="inferredVib">0 Hz</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CONDITION ZONES -->
+                <div class="heatmap-card">
+                    <h4>Condition Monitor</h4>
+                    <div class="heatmap-grid">
+                        <div id="zoneTemp" class="heat-card">
+                            <span>Thermal</span>
+                            <strong id="zoneTempVal">Normal</strong>
+                        </div>
+                        <div id="zoneVib" class="heat-card">
+                            <span>Vibration</span>
+                            <strong id="zoneVibVal">Normal</strong>
+                        </div>
+                        <div id="zoneLube" class="heat-card">
+                            <span>Lubrication</span>
+                            <strong id="zoneLubeVal">Good</strong>
+                        </div>
+                        <div id="zoneWear" class="heat-card">
+                            <span>Overall Wear</span>
+                            <strong id="zoneWearVal">Low</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMART RECOMMENDATIONS -->
+                <div class="recommendations-card">
+                    <h4><i class="fa-solid fa-lightbulb"></i> AI Recommendations</h4>
+                    <div id="observation" class="recommendation-content">
+                        Configure machine parameters and run the simulation to receive intelligent maintenance recommendations.
+                    </div>
+                </div>
+
+                <!-- LIVE CALCULATION TRACE -->
+                <div class="trace-card">
+                    <h4>Live Calculation Trace</h4>
+                    <div class="trace-terminal" id="traceTerminal">
+                        <div class="trace-line">> System initialized. Awaiting parameters.</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </section>
+
+    <!-- LOWER SECTION: KPI TREND + LOG TABLE -->
+    <section class="insights-grid">
+        <!-- TREND ANALYSIS CHART -->
+        <div class="chart-panel">
+            <div class="panel-title">
+                <i class="fa-solid fa-chart-area"></i>
+                <h2>KPI Trend Analysis</h2>
+            </div>
+            <div class="chart-container">
+                <canvas id="kpiTrendChart"></canvas>
+            </div>
+        </div>
+
+        <!-- LOG TABLE -->
+        <div class="log-panel">
+            <div class="panel-title-row">
+                <div class="panel-title">
+                    <i class="fa-solid fa-clipboard-list"></i>
+                    <h2>Operation Log</h2>
+                </div>
+                <button id="exportCsvBtnBottom" class="btn btn-outline btn-sm">
+                    <i class="fa-solid fa-file-csv"></i> Export
+                </button>
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Run</th>
+                            <th>Temp</th>
+                            <th>Vib</th>
+                            <th>Hours</th>
+                            <th>Lube</th>
+                            <th>Score</th>
+                            <th>Risk</th>
+                            <th>Health</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logTable">
+                        <!-- Dynamic rows -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the main objective of predictive maintenance?",
+      "answers": {
+        "a": "Repair machines only after failure",
+        "b": "Predict failures before they occur",
+        "c": "Increase production cost",
+        "d": "Replace machines daily"
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which sensor is primarily used to detect overheating in machines?",
+      "answers": {
+        "a": "Temperature Sensor",
+        "b": "Light Sensor",
+        "c": "Gas Sensor",
+        "d": "Humidity Sensor"
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "High vibration generally indicates:",
+      "answers": {
+        "a": "Healthy machine",
+        "b": "Mechanical imbalance or wear",
+        "c": "Battery charging",
+        "d": "Network failure"
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Lubrication mainly reduces:",
+      "answers": {
+        "a": "Voltage",
+        "b": "Friction",
+        "c": "Pressure",
+        "d": "Humidity"
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Operating hours represent:",
+      "answers": {
+        "a": "Machine running time",
+        "b": "Storage capacity",
+        "c": "Robot speed",
+        "d": "Power factor"
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which Industry 4.0 technology enables predictive maintenance?",
+      "answers": {
+        "a": "Industrial IoT",
+        "b": "Fax Machine",
+        "c": "CRT Display",
+        "d": "Mechanical Timer"
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Machine health decreases when:",
+      "answers": {
+        "a": "Temperature increases",
+        "b": "Lubrication improves",
+        "c": "Maintenance is performed",
+        "d": "Sensors are calibrated"
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Predictive maintenance primarily improves:",
+      "answers": {
+        "a": "Machine reliability",
+        "b": "Internet speed",
+        "c": "Screen brightness",
+        "d": "Printer quality"
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which parameter directly affects failure probability?",
+      "answers": {
+        "a": "Temperature",
+        "b": "Vibration",
+        "c": "Operating Hours",
+        "d": "All of the above"
+      },
+      "correctAnswer": "d",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Predictive maintenance helps reduce:",
+      "answers": {
+        "a": "Unexpected downtime",
+        "b": "Machine efficiency",
+        "c": "Automation",
+        "d": "Sensor accuracy"
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    }
+  ]
+}
