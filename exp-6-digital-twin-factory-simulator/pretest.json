@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is a Digital Twin?",
+      "answers": {
+        "a": "A virtual representation of a physical system",
+        "b": "A physical duplicate of a machine",
+        "c": "A warehouse storage rack",
+        "d": "A manufacturing robot"
+      },
+      "explanations": {
+        "a": "Correct. A Digital Twin is a virtual model of a physical asset or process that stays synchronized with real-world data.",
+        "b": "Incorrect. It is not a physical copy; it exists digitally.",
+        "c": "Incorrect. A storage rack is only one component that may be represented in a Digital Twin.",
+        "d": "Incorrect. A robot can be monitored by a Digital Twin but is not itself a Digital Twin."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Industry 4.0 primarily emphasizes?",
+      "answers": {
+        "a": "Manual production",
+        "b": "Smart connected manufacturing",
+        "c": "Steam-powered machines",
+        "d": "Paper-based records"
+      },
+      "explanations": {
+        "a": "Incorrect. Industry 4.0 reduces manual intervention through automation.",
+        "b": "Correct. Industry 4.0 integrates IoT, AI, automation, and connected manufacturing.",
+        "c": "Incorrect. Steam-powered machines belong to the First Industrial Revolution.",
+        "d": "Incorrect. Industry 4.0 focuses on digital systems rather than paper records."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which device supplies real-time data to a Digital Twin?",
+      "answers": {
+        "a": "PLC cable",
+        "b": "IoT Sensor",
+        "c": "Keyboard",
+        "d": "Printer"
+      },
+      "explanations": {
+        "a": "Incorrect. A cable only transmits signals and does not measure data.",
+        "b": "Correct. IoT sensors continuously collect and send operational data.",
+        "c": "Incorrect. A keyboard is only an input device for users.",
+        "d": "Incorrect. A printer produces hard copies and does not collect sensor data."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Storage utilization measures?",
+      "answers": {
+        "a": "Occupied storage percentage",
+        "b": "Warehouse temperature",
+        "c": "Battery level",
+        "d": "Number of employees"
+      },
+      "explanations": {
+        "a": "Correct. It indicates how much of the available storage space is being used.",
+        "b": "Incorrect. Temperature is monitored separately.",
+        "c": "Incorrect. Battery level is unrelated to storage utilization.",
+        "d": "Incorrect. Workforce size does not define storage utilization."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "AGV stands for?",
+      "answers": {
+        "a": "Automated Guided Vehicle",
+        "b": "Automatic Grid Vehicle",
+        "c": "Advanced Gear Vehicle",
+        "d": "Auto General Van"
+      },
+      "explanations": {
+        "a": "Correct. AGV stands for Automated Guided Vehicle.",
+        "b": "Incorrect. This is not the standard industrial term.",
+        "c": "Incorrect. This expansion is incorrect.",
+        "d": "Incorrect. This is not used in Industry 4.0."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "High downtime generally causes?",
+      "answers": {
+        "a": "Higher efficiency",
+        "b": "Lower production",
+        "c": "More storage capacity",
+        "d": "Only lower energy use"
+      },
+      "explanations": {
+        "a": "Incorrect. Downtime reduces efficiency.",
+        "b": "Correct. When machines stop, production output decreases.",
+        "c": "Incorrect. Downtime does not increase storage capacity.",
+        "d": "Incorrect. Downtime affects productivity more than just energy use."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Power usage is measured in?",
+      "answers": {
+        "a": "kg",
+        "b": "kW",
+        "c": "m",
+        "d": "Hz"
+      },
+      "explanations": {
+        "a": "Incorrect. kg measures mass.",
+        "b": "Correct. Industrial power consumption is measured in kilowatts (kW).",
+        "c": "Incorrect. m measures length.",
+        "d": "Incorrect. Hz measures frequency."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Congestion heatmap helps identify?",
+      "answers": {
+        "a": "Busy warehouse zones",
+        "b": "Employee names",
+        "c": "Invoices",
+        "d": "Passwords"
+      },
+      "explanations": {
+        "a": "Correct. It visually highlights areas with different congestion levels.",
+        "b": "Incorrect. It is not used for personnel information.",
+        "c": "Incorrect. Invoices are unrelated to congestion analysis.",
+        "d": "Incorrect. Passwords have no relation to warehouse heatmaps."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Inventory threshold is used to?",
+      "answers": {
+        "a": "Trigger replenishment",
+        "b": "Increase AGV speed",
+        "c": "Measure voltage",
+        "d": "Count workers"
+      },
+      "explanations": {
+        "a": "Correct. It defines the minimum stock level before replenishment is needed.",
+        "b": "Incorrect. AGV speed is controlled separately.",
+        "c": "Incorrect. Voltage is an electrical parameter.",
+        "d": "Incorrect. Inventory thresholds are unrelated to workforce counting."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Main benefit of Digital Twin technology?",
+      "answers": {
+        "a": "Real-time monitoring and optimization",
+        "b": "Increase paperwork",
+        "c": "Reduce sensor usage",
+        "d": "Replace physical factories"
+      },
+      "explanations": {
+        "a": "Correct. Digital Twins improve monitoring, analysis, and operational optimization.",
+        "b": "Incorrect. The goal is digitalization, not more paperwork.",
+        "c": "Incorrect. Digital Twins depend on sensor data rather than reducing sensors.",
+        "d": "Incorrect. They complement physical factories instead of replacing them."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    }
+  ]
+}

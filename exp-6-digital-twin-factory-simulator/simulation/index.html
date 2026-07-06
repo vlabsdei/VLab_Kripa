@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Twin Factory Simulator | Experiment 6</title>
+    <meta name="description" content="Digital Twin Factory Simulator for SmartFactory 4.0 Virtual Lab - Experiment 6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div class="dashboard">
+
+    <!-- ===== MAIN 3-COLUMN LAYOUT ===== -->
+    <section class="main-layout">
+
+        <!-- ═══════════════════════════════════
+             LEFT: FACTORY CONTROLS (SLIDERS)
+        ═══════════════════════════════════ -->
+        <aside class="control-panel">
+            <div class="panel-title">
+                <i class="fa-solid fa-sliders"></i>
+                <h2>Factory Controls</h2>
+            </div>
+
+            <div class="control-group">
+                <label for="machineSlider">
+                    Machine Count
+                    <span id="machineValue" class="value-badge">12</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="machineSlider" min="1" max="50" step="1" value="12">
+                    <span class="range-hint">1 – 50 machines</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="prodSlider">
+                    Production Rate (u/hr)
+                    <span id="prodValue" class="value-badge">450</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="prodSlider" min="10" max="1000" step="10" value="450">
+                    <span class="range-hint">10 – 1000 units/hr</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="powerSlider">
+                    Power Usage (kW)
+                    <span id="powerValue" class="value-badge">250</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="powerSlider" min="10" max="500" step="10" value="250">
+                    <span class="range-hint">10 – 500 kW</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label for="downtimeSlider">
+                    Downtime Probability (%)
+                    <span id="downtimeValue" class="value-badge">10</span>
+                </label>
+                <div class="slider-wrapper">
+                    <input type="range" id="downtimeSlider" min="0" max="100" step="1" value="10">
+                    <span class="range-hint">0 – 100 %</span>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="btn-group">
+                <button id="runBtn" class="btn btn-primary">
+                    <i class="fa-solid fa-play"></i> Run Simulation
+                </button>
+                <button id="pauseBtn" class="btn btn-warning" disabled>
+                    <i class="fa-solid fa-pause"></i> Pause
+                </button>
+                <button id="logBtn" class="btn btn-info">
+                    <i class="fa-solid fa-clipboard-check"></i> Record Data
+                </button>
+                <button id="resetBtn" class="btn btn-secondary">
+                    <i class="fa-solid fa-rotate-left"></i> Reset
+                </button>
+                <button id="exportCsvBtn" class="btn btn-outline" style="flex: 1 1 100%;">
+                    <i class="fa-solid fa-file-csv"></i> Export CSV
+                </button>
+            </div>
+
+            <!-- Interventions -->
+            <div class="maint-section">
+                <div class="maint-title">INTERVENTIONS</div>
+                <div class="maint-action-row">
+                    <span>Schedule Maintenance</span>
+                    <button class="btn-action" data-action="maintenance">Apply</button>
+                </div>
+                <div class="maint-action-row">
+                    <span>Optimize Power</span>
+                    <button class="btn-action" data-action="optimize">Apply</button>
+                </div>
+            </div>
+
+            <!-- System Status -->
+            <div class="system-status-box">
+                <span class="sys-label">System Status</span>
+                <div class="status-indicator">
+                    <span class="pulse-dot green" id="statusDot"></span>
+                    <span id="statusText">OFFLINE</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ═══════════════════════════════════
+             CENTER: LIVE SVG DIGITAL TWIN
+        ═══════════════════════════════════ -->
+        <main class="twin-section">
+            <div class="section-header">
+                <div>
+                    <h2><i class="fa-solid fa-industry"></i> Factory Digital Twin</h2>
+                    <p>Real-time live SVG simulation</p>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <span id="factoryBadge" class="status-chip chip-green">OPERATIONAL</span>
+                    <div class="live-badge" id="liveBadge">
+                        <span class="pulse"></span> OFFLINE
+                    </div>
+                </div>
+            </div>
+
+            <!-- SVG TABS -->
+            <div class="svg-tabs">
+                <button class="svg-tab active" data-tab="all" onclick="switchTab(this)">
+                    <i class="fa-solid fa-gears"></i> Machines
+                </button>
+                <button class="svg-tab" data-tab="conveyor" onclick="switchTab(this)">
+                    <i class="fa-solid fa-right-left"></i> Conveyor
+                </button>
+                <button class="svg-tab" data-tab="agv" onclick="switchTab(this)">
+                    <i class="fa-solid fa-truck-fast"></i> AGVs
+                </button>
+                <button class="svg-tab" data-tab="sensors" onclick="switchTab(this)">
+                    <i class="fa-solid fa-wifi"></i> Sensors
+                </button>
+                <button class="svg-tab" data-tab="power" onclick="switchTab(this)">
+                    <i class="fa-solid fa-bolt"></i> Power Grid
+                </button>
+                <button class="svg-tab" data-tab="storage" onclick="switchTab(this)">
+                    <i class="fa-solid fa-warehouse"></i> Storage
+                </button>
+            </div>
+
+            <!-- FACTORY SVG -->
+            <div class="factory-svg-wrap">
+            <svg id="factorySvg" viewBox="0 0 900 440" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+                <defs>
+                    <pattern id="floorGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                        <path d="M40,0L0,0 0,40" fill="none" stroke="rgba(0,0,0,0.04)" stroke-width="1"/>
+                    </pattern>
+                    <filter id="glowBlue" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                    <filter id="glowGreen" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="4" result="blur"/>
+                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                    <filter id="glowAmber" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="blur"/>
+                        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+                    </filter>
+                    <linearGradient id="beltGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#334155"/>
+                        <stop offset="50%" stop-color="#475569"/>
+                        <stop offset="100%" stop-color="#334155"/>
+                    </linearGradient>
+                    <pattern id="safetyStripe" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                        <rect width="7" height="14" fill="#fbbf24" opacity="0.75"/>
+                        <rect x="7" width="7" height="14" fill="#1e293b" opacity="0.4"/>
+                    </pattern>
+                </defs>
+
+                <!-- FLOOR -->
+                <rect width="900" height="440" fill="#ffffff" rx="12"/>
+                <rect width="900" height="440" fill="url(#floorGrid)" rx="12"/>
+
+                <!-- ── ZONE LABELS ── -->
+                <!-- Zone A: Assembly -->
+                <rect x="15" y="15" width="255" height="185" rx="6" fill="rgba(59,130,246,0.05)" stroke="#3b82f6" stroke-width="1.2" stroke-dasharray="6 3"/>
+                <text x="25" y="34" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#3b82f6">ZONE A — ASSEMBLY</text>
+
+                <!-- Zone B: Machining -->
+                <rect x="285" y="15" width="310" height="185" rx="6" fill="rgba(245,158,11,0.05)" stroke="#f59e0b" stroke-width="1.2" stroke-dasharray="6 3"/>
+                <text x="295" y="34" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#b45309">ZONE B — MACHINING</text>
+
+                <!-- Zone C: Packaging -->
+                <rect x="610" y="15" width="275" height="185" rx="6" fill="rgba(16,185,129,0.05)" stroke="#10b981" stroke-width="1.2" stroke-dasharray="6 3"/>
+                <text x="620" y="34" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#047857">ZONE C — PACKAGING</text>
+
+                <!-- Zone D: Storage & AGV -->
+                <rect x="15" y="215" width="870" height="215" rx="6" fill="rgba(139,92,246,0.04)" stroke="#8b5cf6" stroke-width="1.2" stroke-dasharray="6 3"/>
+                <text x="25" y="234" font-family="Inter,sans-serif" font-size="10.5" font-weight="700" fill="#7c3aed">ZONE D — STORAGE & LOGISTICS (AGV)</text>
+
+                <!-- ══════════════════════════════════════
+                     ZONE A: 3 CNC MACHINES
+                ══════════════════════════════════════ -->
+                <!-- CNC-01 -->
+                <g id="cnc1">
+                    <rect x="30" y="45" width="72" height="55" rx="7" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2"/>
+                    <rect x="37" y="52" width="58" height="40" rx="4" fill="#334155"/>
+                    <rect x="41" y="56" width="50" height="32" rx="3" fill="#bae6fd" opacity="0.3"/>
+                    <line x1="44" y1="63" x2="88" y2="63" stroke="#e0f2fe" stroke-width="1" opacity="0.6"/>
+                    <line x1="44" y1="70" x2="88" y2="70" stroke="#e0f2fe" stroke-width="1" opacity="0.5"/>
+                    <line x1="44" y1="77" x2="74" y2="77" stroke="#e0f2fe" stroke-width="1" opacity="0.6"/>
+                    <g id="spindleGroup1">
+                        <circle cx="66" cy="71" r="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 2"/>
+                        <circle cx="66" cy="71" r="4" fill="#3b82f6"/>
+                    </g>
+                    <circle id="b1" cx="94" cy="47" r="5" fill="#10b981" filter="url(#glowGreen)"/>
+                    <circle id="led1" cx="36" cy="51" r="3" fill="#10b981"/>
+                    <text x="66" y="112" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#64748b">CNC-01</text>
+                </g>
+
+                <!-- CNC-02 -->
+                <g id="cnc2">
+                    <rect x="120" y="45" width="72" height="55" rx="7" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2"/>
+                    <rect x="127" y="52" width="58" height="40" rx="4" fill="#334155"/>
+                    <rect x="131" y="56" width="50" height="32" rx="3" fill="#bae6fd" opacity="0.3"/>
+                    <line x1="134" y1="63" x2="178" y2="63" stroke="#e0f2fe" stroke-width="1" opacity="0.6"/>
+                    <line x1="134" y1="70" x2="178" y2="70" stroke="#e0f2fe" stroke-width="1" opacity="0.5"/>
+                    <line x1="134" y1="77" x2="164" y2="77" stroke="#e0f2fe" stroke-width="1" opacity="0.6"/>
+                    <g id="spindleGroup2">
+                        <circle cx="156" cy="71" r="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 2"/>
+                        <circle cx="156" cy="71" r="4" fill="#3b82f6"/>
+                    </g>
+                    <circle id="b2" cx="184" cy="47" r="5" fill="#10b981" filter="url(#glowGreen)"/>
+                    <circle id="led2" cx="126" cy="51" r="3" fill="#10b981"/>
+                    <text x="156" y="112" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#64748b">CNC-02</text>
+                </g>
+
+                <!-- CNC-03 -->
+                <g id="cnc3">
+                    <rect x="210" y="45" width="72" height="55" rx="7" fill="#e2e8f0" stroke="#cbd5e1" stroke-width="2"/>
+                    <rect x="217" y="52" width="58" height="40" rx="4" fill="#334155"/>
+                    <rect x="221" y="56" width="50" height="32" rx="3" fill="#bae6fd" opacity="0.3"/>
+                    <line x1="224" y1="63" x2="268" y2="63" stroke="#e0f2fe" stroke-width="1" opacity="0.6"/>
+                    <line x1="224" y1="70" x2="268" y2="70" stroke="#e0f2fe" stroke-width="1" opacity="0.5"/>
+                    <line x1="224" y1="77" x2="254" y2="77" stroke="#e0f2fe" stroke-width="1" opacity="0.6"/>
+                    <g id="spindleGroup3">
+                        <circle cx="246" cy="71" r="10" fill="#ffffff" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="3 2"/>
+                        <circle cx="246" cy="71" r="4" fill="#3b82f6"/>
+                    </g>
+                    <circle id="b3" cx="274" cy="47" r="5" fill="#10b981" filter="url(#glowGreen)"/>
+                    <circle id="led3" cx="216" cy="51" r="3" fill="#10b981"/>
+                    <text x="246" y="112" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#64748b">CNC-03</text>
+                </g>
+
+                <!-- ══════════════════════════════════════
+                     ZONE B: 2 ROBOTIC ARMS
+                ══════════════════════════════════════ -->
+                <!-- Robot 1 -->
+                <g id="robot1">
+                    <rect x="310" y="110" width="54" height="34" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+                    <rect x="320" y="96" width="34" height="16" rx="4" fill="#cbd5e1"/>
+                    <line id="ra1" x1="337" y1="96" x2="337" y2="58" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+                    <line id="ra1b" x1="337" y1="58" x2="362" y2="66" stroke="#64748b" stroke-width="6" stroke-linecap="round"/>
+                    <circle cx="337" cy="96" r="7" fill="#3b82f6" stroke="#fff" stroke-width="2"/>
+                    <circle cx="337" cy="58" r="5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+                    <circle id="tool1" cx="362" cy="66" r="5" fill="#f59e0b"/>
+                    <circle id="b4" cx="356" cy="115" r="5" fill="#10b981" filter="url(#glowGreen)"/>
+                    <text x="337" y="158" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#94a3b8">ROB-01</text>
+                </g>
+
+                <!-- Robot 2 -->
+                <g id="robot2">
+                    <rect x="450" y="110" width="54" height="34" rx="5" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2"/>
+                    <rect x="460" y="96" width="34" height="16" rx="4" fill="#cbd5e1"/>
+                    <line id="ra2" x1="477" y1="96" x2="477" y2="58" stroke="#94a3b8" stroke-width="8" stroke-linecap="round"/>
+                    <line id="ra2b" x1="477" y1="58" x2="452" y2="66" stroke="#64748b" stroke-width="6" stroke-linecap="round"/>
+                    <circle cx="477" cy="96" r="7" fill="#3b82f6" stroke="#fff" stroke-width="2"/>
+                    <circle cx="477" cy="58" r="5" fill="#3b82f6" stroke="#fff" stroke-width="1.5"/>
+                    <circle id="tool2" cx="452" cy="66" r="5" fill="#f59e0b"/>
+                    <circle id="b5" cx="496" cy="115" r="5" fill="#10b981" filter="url(#glowGreen)"/>
+                    <text x="477" y="158" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="800" fill="#94a3b8">ROB-02</text>
+                </g>
+
+                <!-- ══════════════════════════════════════
+                     ZONE C: PACKAGING MACHINES
+                ══════════════════════════════════════ -->
+                <g id="packA">
+                    <rect x="630" y="45" width="75" height="60" rx="7" fill="#0c4a2e" stroke="#10b981" stroke-width="1.8"/>
+                    <rect x="638" y="53" width="59" height="44" rx="4" fill="#064e3b"/>
+                    <!-- Boxes -->
+                    <rect x="646" y="67" width="18" height="16" rx="2" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+                    <rect x="668" y="67" width="18" height="16" rx="2" fill="#f97316" stroke="#c2410c" stroke-width="1"/>
+                    <rect x="646" y="56" width="18" height="10" rx="2" fill="#10b981" opacity="0.8"/>
+                    <circle id="b6" cx="697" cy="50" r="5.5" fill="#22c55e" filter="url(#glowGreen)"/>
+                    <text x="667" y="118" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" font-weight="700" fill="#64748b">PACK-01</text>
+                </g>
+
+                <g id="packB">
+                    <rect x="730" y="45" width="75" height="60" rx="7" fill="#0c4a2e" stroke="#10b981" stroke-width="1.8"/>
+                    <rect x="738" y="53" width="59" height="44" rx="4" fill="#064e3b"/>
+                    <rect x="746" y="67" width="18" height="16" rx="2" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+                    <rect x="768" y="67" width="18" height="16" rx="2" fill="#f97316" stroke="#c2410c" stroke-width="1"/>
+                    <rect x="746" y="56" width="18" height="10" rx="2" fill="#10b981" opacity="0.8"/>
+                    <circle id="b7" cx="797" cy="50" r="5.5" fill="#22c55e" filter="url(#glowGreen)"/>
+                    <text x="767" y="118" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" font-weight="700" fill="#64748b">PACK-02</text>
+                </g>
+
+                <!-- ══════════════════════════════════════
+                     MAIN CONVEYOR BELT (between zones & AGV)
+                ══════════════════════════════════════ -->
+                <!-- Safety stripe border -->
+                <rect x="25" y="163" width="850" height="52" rx="6" fill="url(#safetyStripe)" opacity="0.5"/>
+                <!-- Belt surface -->
+                <rect x="25" y="167" width="850" height="44" rx="5" fill="url(#beltGrad)"/>
+                <!-- Rollers -->
+                <circle cx="37" cy="189" r="14" fill="#475569" stroke="#64748b" stroke-width="1.5"/>
+                <circle cx="37" cy="189" r="7" fill="#334155"/>
+                <circle cx="863" cy="189" r="14" fill="#475569" stroke="#64748b" stroke-width="1.5"/>
+                <circle cx="863" cy="189" r="7" fill="#334155"/>
+                <!-- Belt seam lines (animated) -->
+                <g id="beltSeams">
+                    <line class="seam" x1="110" y1="167" x2="110" y2="211" stroke="#475569" stroke-width="2" opacity="0.5"/>
+                    <line class="seam" x1="220" y1="167" x2="220" y2="211" stroke="#475569" stroke-width="2" opacity="0.5"/>
+                    <line class="seam" x1="330" y1="167" x2="330" y2="211" stroke="#475569" stroke-width="2" opacity="0.5"/>
+                    <line class="seam" x1="440" y1="167" x2="440" y2="211" stroke="#475569" stroke-width="2" opacity="0.5"/>
+                    <line class="seam" x1="550" y1="167" x2="550" y2="211" stroke="#475569" stroke-width="2" opacity="0.5"/>
+                    <line class="seam" x1="660" y1="167" x2="660" y2="211" stroke="#475569" stroke-width="2" opacity="0.5"/>
+                    <line class="seam" x1="770" y1="167" x2="770" y2="211" stroke="#475569" stroke-width="2" opacity="0.5"/>
+                </g>
+                <!-- Products on belt -->
+                <g id="conveyorProducts"></g>
+                <!-- Sensor dots on belt -->
+                <circle id="sensor1" cx="200" cy="162" r="6" fill="#3b82f6" filter="url(#glowBlue)"/>
+                <circle id="sensor2" cx="450" cy="162" r="6" fill="#3b82f6" filter="url(#glowBlue)"/>
+                <circle id="sensor3" cx="700" cy="162" r="6" fill="#3b82f6" filter="url(#glowBlue)"/>
+
+                <!-- ══════════════════════════════════════
+                     ZONE D: AGV TRACKS & VEHICLES
+                ══════════════════════════════════════ -->
+                <!-- Track line -->
+                <path d="M 35 330 Q 220 360 450 350 Q 670 338 865 352" fill="none" stroke="#e2e8f0" stroke-width="5" stroke-dasharray="12 8"/>
+
+                <!-- AGV A -->
+                <g id="agvA">
+                    <rect x="0" y="0" width="60" height="34" rx="7" fill="#1d4ed8" stroke="#3b82f6" stroke-width="1.5"/>
+                    <rect x="6" y="5" width="48" height="24" rx="4" fill="#1e40af"/>
+                    <!-- Screen -->
+                    <rect x="10" y="9" width="22" height="16" rx="2" fill="#93c5fd" opacity="0.45"/>
+                    <!-- Cargo box -->
+                    <rect id="cargA" x="36" y="7" width="16" height="14" rx="2" fill="#fbbf24" stroke="#b45309" stroke-width="1" opacity="1"/>
+                    <!-- Wheels -->
+                    <circle cx="13" cy="34" r="5.5" fill="#0f172a" stroke="#64748b" stroke-width="1.2"/>
+                    <circle cx="47" cy="34" r="5.5" fill="#0f172a" stroke="#64748b" stroke-width="1.2"/>
+                    <!-- LED -->
+                    <circle id="agvALed" cx="5" cy="5" r="3.5" fill="#22c55e"/>
+                    <text x="30" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#64748b">AGV-A</text>
+                </g>
+
+                <!-- AGV B -->
+                <g id="agvB">
+                    <rect x="0" y="0" width="60" height="34" rx="7" fill="#d97706" stroke="#f59e0b" stroke-width="1.5"/>
+                    <rect x="6" y="5" width="48" height="24" rx="4" fill="#b45309"/>
+                    <rect x="10" y="9" width="22" height="16" rx="2" fill="#fde68a" opacity="0.4"/>
+                    <circle cx="13" cy="34" r="5.5" fill="#0f172a" stroke="#64748b" stroke-width="1.2"/>
+                    <circle cx="47" cy="34" r="5.5" fill="#0f172a" stroke="#64748b" stroke-width="1.2"/>
+                    <circle id="agvBLed" cx="5" cy="5" r="3.5" fill="#22c55e"/>
+                    <text x="30" y="52" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" font-weight="700" fill="#64748b">AGV-B</text>
+                </g>
+
+                <!-- STORAGE RACKS (Zone D) -->
+                <g id="rack1">
+                    <rect x="620" y="245" width="90" height="70" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                    <line x1="620" y1="270" x2="710" y2="270" stroke="#334155" stroke-width="2"/>
+                    <line x1="620" y1="288" x2="710" y2="288" stroke="#334155" stroke-width="2"/>
+                    <rect x="630" y="252" width="14" height="14" fill="#fbbf24" rx="2"/>
+                    <rect x="648" y="252" width="14" height="14" fill="#f97316" rx="2"/>
+                    <rect x="666" y="252" width="14" height="14" fill="#3b82f6" rx="2"/>
+                    <rect x="630" y="273" width="14" height="12" fill="#10b981" rx="2"/>
+                    <rect x="648" y="273" width="14" height="12" fill="#8b5cf6" rx="2"/>
+                    <text x="665" y="330" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" font-weight="600" fill="#64748b">RACK-01</text>
+                </g>
+                <g id="rack2">
+                    <rect x="730" y="245" width="90" height="70" rx="5" fill="#1e293b" stroke="#475569" stroke-width="1.5"/>
+                    <line x1="730" y1="270" x2="820" y2="270" stroke="#334155" stroke-width="2"/>
+                    <line x1="730" y1="288" x2="820" y2="288" stroke="#334155" stroke-width="2"/>
+                    <rect x="740" y="252" width="14" height="14" fill="#ef4444" rx="2"/>
+                    <rect x="758" y="252" width="14" height="14" fill="#fbbf24" rx="2"/>
+                    <rect x="776" y="252" width="14" height="14" fill="#22c55e" rx="2"/>
+                    <rect x="740" y="273" width="14" height="12" fill="#3b82f6" rx="2"/>
+                    <rect x="758" y="273" width="14" height="12" fill="#f97316" rx="2"/>
+                    <text x="775" y="330" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" font-weight="600" fill="#64748b">RACK-02</text>
+                </g>
+
+                <!-- POWER GRID overlay (tab: power) -->
+                <g id="powerGrid" class="tab-layer" data-tab="power" style="display:none;">
+                    <line x1="66" y1="45" x2="66" y2="12" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 3" opacity="0.8"/>
+                    <line x1="156" y1="45" x2="156" y2="12" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 3" opacity="0.8"/>
+                    <line x1="246" y1="45" x2="246" y2="12" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 3" opacity="0.8"/>
+                    <line x1="66" y1="12" x2="880" y2="12" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
+                    <line x1="880" y1="12" x2="880" y2="120" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"/>
+                    <circle cx="880" cy="120" r="8" fill="#f59e0b" filter="url(#glowAmber)"/>
+                    <text x="880" y="138" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#f59e0b" font-weight="700">MAIN</text>
+                    <circle cx="66" cy="12" r="4" fill="#f59e0b"/>
+                    <circle cx="156" cy="12" r="4" fill="#f59e0b"/>
+                    <circle cx="246" cy="12" r="4" fill="#f59e0b"/>
+                </g>
+
+                <!-- SENSOR COVERAGE (tab: sensors) -->
+                <g id="sensorLayer" class="tab-layer" data-tab="sensors" style="display:none;">
+                    <circle cx="66" cy="71" r="70" fill="rgba(59,130,246,0.07)" stroke="#3b82f6" stroke-width="1" stroke-dasharray="5 4"/>
+                    <circle cx="156" cy="71" r="70" fill="rgba(59,130,246,0.07)" stroke="#3b82f6" stroke-width="1" stroke-dasharray="5 4"/>
+                    <circle cx="246" cy="71" r="70" fill="rgba(59,130,246,0.07)" stroke="#3b82f6" stroke-width="1" stroke-dasharray="5 4"/>
+                    <circle cx="407" cy="80" r="90" fill="rgba(59,130,246,0.07)" stroke="#3b82f6" stroke-width="1" stroke-dasharray="5 4"/>
+                    <circle cx="700" cy="75" r="80" fill="rgba(59,130,246,0.07)" stroke="#3b82f6" stroke-width="1" stroke-dasharray="5 4"/>
+                </g>
+
+                <!-- STATUS TICKER BAR -->
+                <rect x="15" y="400" width="870" height="28" rx="6" fill="#f8fafc" stroke="#e2e8f0"/>
+                <text id="tickerText" x="25" y="418" font-family="Fira Code, monospace" font-size="10" font-weight="700" fill="#475569">[ System initialized — press Run Simulation to begin ]</text>
+            </svg>
+            </div>
+
+            <!-- Analytics row below SVG -->
+            <div class="analytics-row">
+                <div class="ana-item">
+                    <span class="ana-label">OEE (Efficiency)</span>
+                    <span class="ana-val" id="anaOee">--%</span>
+                </div>
+                <div class="ana-item">
+                    <span class="ana-label">Machine Utilization</span>
+                    <span class="ana-val" id="anaUtil">--%</span>
+                </div>
+                <div class="ana-item">
+                    <span class="ana-label">Production Output</span>
+                    <span class="ana-val" id="anaOut">-- u/hr</span>
+                </div>
+                <div class="ana-item">
+                    <span class="ana-label">Energy Consumption</span>
+                    <span class="ana-val" id="anaEng">-- kW</span>
+                </div>
+            </div>
+        </main>
+
+        <!-- ═══════════════════════════════════
+             RIGHT: DIAGNOSTICS & CHARTS
+        ═══════════════════════════════════ -->
+        <aside class="diagnostics-panel">
+
+            <!-- Factory Status -->
+            <div class="panel-title">
+                <i class="fa-solid fa-circle-info"></i>
+                <h2>Factory Status</h2>
+            </div>
+
+            <div class="status-list">
+                <div class="status-row">
+                    <i class="fa-solid fa-gears status-icon"></i>
+                    <span class="s-label">Machine Status</span>
+                    <span class="s-val" id="sMachineStatus">Standby</span>
+                </div>
+                <div class="status-row">
+                    <i class="fa-solid fa-heart-pulse status-icon"></i>
+                    <span class="s-label">Factory Health</span>
+                    <span class="s-val" id="sHealth">--%</span>
+                </div>
+                <div class="status-row">
+                    <i class="fa-solid fa-clock-rotate-left status-icon"></i>
+                    <span class="s-label">Downtime</span>
+                    <span class="s-val" id="sDowntime">--%</span>
+                </div>
+                <div class="status-row">
+                    <i class="fa-solid fa-bolt status-icon"></i>
+                    <span class="s-label">Power Usage</span>
+                    <span class="s-val" id="sPower">-- kW</span>
+                </div>
+                <div class="status-row">
+                    <i class="fa-solid fa-chart-bar status-icon"></i>
+                    <span class="s-label">Production State</span>
+                    <span class="s-val" id="sProdState">--</span>
+                </div>
+                <div class="status-row">
+                    <i class="fa-solid fa-bell status-icon"></i>
+                    <span class="s-label">Alarm Status</span>
+                    <span class="s-val" id="sAlarm">No Alarms</span>
+                </div>
+            </div>
+
+            <!-- KPI Trend Chart -->
+            <div class="chart-block">
+                <div class="chart-block-title"><i class="fa-solid fa-chart-line"></i> KPI Trend</div>
+                <div class="chart-container">
+                    <canvas id="kpiChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Observation -->
+            <div class="observation-block">
+                <div class="obs-title"><i class="fa-solid fa-robot"></i> AI Diagnostic</div>
+                <div id="aiDiag" class="obs-content">System initialized. Run simulation to generate AI diagnostics.</div>
+            </div>
+
+        </aside>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         BOTTOM ROW: HEATMAP + LOG TABLE
+    ═══════════════════════════════════════════ -->
+    <section class="bottom-row">
+
+        <!-- Zone Heatmap -->
+        <div class="heatmap-card">
+            <div class="panel-title">
+                <i class="fa-solid fa-map-location-dot"></i>
+                <h2>Factory Zone Heatmap</h2>
+            </div>
+            <div class="heatmap-body">
+                <svg viewBox="0 0 200 160" class="heatmap-svg">
+                    <rect id="hzA" x="8"   y="8"   width="85" height="62" rx="6" fill="#22c55e" opacity="0.35"/>
+                    <text x="50"  y="40"  text-anchor="middle" font-size="18" font-weight="800" fill="#14532d" font-family="Inter,sans-serif">A</text>
+                    <text x="50"  y="57"  text-anchor="middle" font-size="9"  fill="#14532d" font-family="Inter,sans-serif">Assembly</text>
+
+                    <rect id="hzB" x="107"  y="8"   width="85" height="62" rx="6" fill="#f59e0b" opacity="0.35"/>
+                    <text x="149" y="40"  text-anchor="middle" font-size="18" font-weight="800" fill="#78350f" font-family="Inter,sans-serif">B</text>
+                    <text x="149" y="57"  text-anchor="middle" font-size="9"  fill="#78350f" font-family="Inter,sans-serif">Machining</text>
+
+                    <rect id="hzC" x="8"   y="88"  width="85" height="62" rx="6" fill="#22c55e" opacity="0.35"/>
+                    <text x="50"  y="120" text-anchor="middle" font-size="18" font-weight="800" fill="#14532d" font-family="Inter,sans-serif">C</text>
+                    <text x="50"  y="137" text-anchor="middle" font-size="9"  fill="#14532d" font-family="Inter,sans-serif">Packaging</text>
+
+                    <rect id="hzD" x="107"  y="88"  width="85" height="62" rx="6" fill="#f97316" opacity="0.35"/>
+                    <text x="149" y="120" text-anchor="middle" font-size="18" font-weight="800" fill="#9a3412" font-family="Inter,sans-serif">D</text>
+                    <text x="149" y="137" text-anchor="middle" font-size="9"  fill="#9a3412" font-family="Inter,sans-serif">Storage</text>
+                </svg>
+                <div class="heat-bars-col">
+                    <div class="heat-bar-row">
+                        <span class="h-label">Zone A (Assembly)</span>
+                        <div class="h-track"><div id="barA" class="h-fill" style="width:72%;background:#22c55e;"></div></div>
+                        <span id="valA" class="h-pct">72%</span>
+                    </div>
+                    <div class="heat-bar-row">
+                        <span class="h-label">Zone B (Machining)</span>
+                        <div class="h-track"><div id="barB" class="h-fill" style="width:48%;background:#f59e0b;"></div></div>
+                        <span id="valB" class="h-pct">48%</span>
+                    </div>
+                    <div class="heat-bar-row">
+                        <span class="h-label">Zone C (Packaging)</span>
+                        <div class="h-track"><div id="barC" class="h-fill" style="width:80%;background:#22c55e;"></div></div>
+                        <span id="valC" class="h-pct">80%</span>
+                    </div>
+                    <div class="heat-bar-row">
+                        <span class="h-label">Zone D (Storage)</span>
+                        <div class="h-track"><div id="barD" class="h-fill" style="width:32%;background:#f97316;"></div></div>
+                        <span id="valD" class="h-pct">32%</span>
+                    </div>
+                    <div class="heat-legend">
+                        <span><span class="ldot" style="background:#22c55e;"></span> Low</span>
+                        <span><span class="ldot" style="background:#f59e0b;"></span> Medium</span>
+                        <span><span class="ldot" style="background:#f97316;"></span> High</span>
+                        <span><span class="ldot" style="background:#ef4444;"></span> Critical</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Recommendations -->
+        <div class="ai-card">
+            <div class="panel-title">
+                <i class="fa-solid fa-microchip"></i>
+                <h2>AI Recommendations</h2>
+            </div>
+            <div id="aiRecs" class="ai-recs-body">
+                <div class="ai-rec"><span class="ai-dot green"></span>System initialized. Run simulation to generate live AI recommendations.</div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         LOG TABLE
+    ═══════════════════════════════════════════ -->
+    <section class="log-card">
+        <div class="panel-title" style="justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <i class="fa-solid fa-table-list"></i>
+                <h2>Production Timeline / Factory Event Log</h2>
+            </div>
+            <div style="display:flex;gap:8px;">
+                <button id="logBtn2" class="btn btn-info btn-sm">
+                    <i class="fa-solid fa-camera"></i> Snapshot
+                </button>
+                <button id="exportBtn" class="btn btn-outline btn-sm" onclick="exportCSV()">
+                    <i class="fa-solid fa-download"></i> Export CSV
+                </button>
+            </div>
+        </div>
+        <div class="table-wrap">
+            <table class="log-table">
+                <thead>
+                    <tr>
+                        <th>Run</th>
+                        <th>Machine Count</th>
+                        <th>Production Rate (u/hr)</th>
+                        <th>Efficiency (%)</th>
+                        <th>Power Usage (kW)</th>
+                        <th>Downtime (%)</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="logTable"></tbody>
+            </table>
+        </div>
+    </section>
+
+</div><!-- /.dashboard -->
+
+<script src="js/main.js"></script>
+</body>
+</html>
