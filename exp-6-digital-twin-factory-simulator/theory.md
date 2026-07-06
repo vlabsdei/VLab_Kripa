@@ -177,7 +177,7 @@ The simulator generates **five context-aware recommendations** that update in re
 - **Downtime Assessment**: Recommends predictive maintenance when downtime exceeds 20%, or monitoring when above 5%.
 - **Overall OEE Assessment**: Provides a summary recommendation based on the combined OEE score.
 
-Each recommendation is color-coded: 🟢 Green (healthy), 🟡 Amber (warning), 🔴 Red (critical).
+Each recommendation is color-coded:  Green (healthy),  Amber (warning),  Red (critical).
 
 ### 3. Factory Zone Heatmap
 The heatmap displays the **activity intensity** of each factory zone using color-coded bars and an SVG grid:
