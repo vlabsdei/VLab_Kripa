@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Energy Optimization Laboratory | Experiment 7</title>
+    <meta name="description" content="Industrial Energy Management Dashboard and Digital Twin Simulator">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div class="dashboard">
+    <!-- Main Layout -->
+    <div class="main-layout">
+        
+        <!-- Left: Control Panel -->
+        <aside class="control-panel">
+            <div class="panel-title">
+                <i class="fa-solid fa-sliders"></i>
+                <h2>Operating Parameters</h2>
+            </div>
+            
+            <form id="controlForm" onsubmit="return false;">
+                <div class="control-group">
+                    <label for="machineLoad">
+                        Machine Load
+                        <span class="value-badge" id="machineLoadVal">75%</span>
+                    </label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="machineLoad" min="10" max="100" step="5" value="75">
+                        <span class="range-hint">10% – 100% capacity</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="operatingHours">
+                        Operating Hours
+                        <span class="value-badge" id="operatingHoursVal">8 hrs</span>
+                    </label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="operatingHours" min="1" max="24" step="1" value="8">
+                        <span class="range-hint">1 – 24 hours / day</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="renewableContribution">
+                        Renewable Contribution
+                        <span class="value-badge" id="renewableContributionVal">30%</span>
+                    </label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="renewableContribution" min="0" max="100" step="5" value="30">
+                        <span class="range-hint">Solar/Wind Offset</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="idleMachines">
+                        Idle Machines
+                        <span class="value-badge" id="idleMachinesVal">2 units</span>
+                    </label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="idleMachines" min="0" max="8" step="1" value="2">
+                        <span class="range-hint">Machines in Standby</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="powerFactor">
+                        Power Factor
+                        <span class="value-badge" id="powerFactorVal">0.85</span>
+                    </label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="powerFactor" min="0.5" max="1.0" step="0.01" value="0.85">
+                        <span class="range-hint">0.50 – 1.00 (cos θ)</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="electricityTariff">
+                        Electricity Tariff
+                        <span class="value-badge" id="electricityTariffVal">₹8.50/kWh</span>
+                    </label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="electricityTariff" min="4" max="20" step="0.25" value="8.5">
+                        <span class="range-hint">Utility Base Rate</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="batterySoc">
+                        Battery SOC
+                        <span class="value-badge" id="batterySocVal">60%</span>
+                    </label>
+                    <div class="slider-wrapper">
+                        <input type="range" id="batterySoc" min="0" max="100" step="5" value="60">
+                        <span class="range-hint">State of Charge</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="peakDemandMode">
+                        Peak Demand Mode
+                    </label>
+                    <div class="select-wrapper">
+                        <select id="peakDemandMode">
+                            <option value="standard">Standard Operation</option>
+                            <option value="shaving">BESS Peak Shaving</option>
+                            <option value="response">Demand Response Mode</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button type="button" id="runBtn" class="btn btn-primary">
+                        <i class="fa-solid fa-bolt"></i> Solve &amp; Log Run
+                    </button>
+                    <button type="button" id="resetBtn" class="btn btn-secondary">
+                        <i class="fa-solid fa-rotate-left"></i> Reset
+                    </button>
+                </div>
+            </form>
+        </aside>
+
+        <!-- Center: Digital Twin and Heatmap -->
+        <main class="twin-section">
+            <div class="panel-header-tab">
+                <i class="fa-solid fa-network-wired"></i>
+                <h2>Digital Twin Energy Flow</h2>
+            </div>
+            
+            <!-- SVG Energy Flow Network -->
+            <div class="flow-svg-container">
+                <svg id="energyTwinSvg" viewBox="0 0 800 440" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <!-- Glow filters -->
+                        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                            <feGaussianBlur stdDeviation="4" result="blur" />
+                            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                        </filter>
+                        <!-- Dark background gradients -->
+                        <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#ffffff"/>
+                            <stop offset="100%" stop-color="#f1f5f9"/>
+                        </linearGradient>
+                        <linearGradient id="gridGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#0f172a"/>
+                            <stop offset="100%" stop-color="#1e293b"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- Dark industrial background dashboard screen -->
+                    <rect width="800" height="440" rx="12" fill="url(#gridGrad)" stroke="#334155" stroke-width="2"/>
+                    
+                    <!-- Dashboard Tech Grid Lines -->
+                    <g stroke="#1e293b" stroke-width="1.5">
+                        <path d="M 0,55 L 800,55 M 0,110 L 800,110 M 0,165 L 800,165 M 0,220 L 800,220 M 0,275 L 800,275 M 0,330 L 800,330 M 0,385 L 800,385"/>
+                        <path d="M 100,0 L 100,440 M 200,0 L 200,440 M 300,0 L 300,440 M 400,0 L 400,440 M 500,0 L 500,440 M 600,0 L 600,440 M 700,0 L 700,440"/>
+                    </g>
+
+                    <!-- ============================================== -->
+                    <!-- FLOW WIRE PATHWAYS (behind everything)         -->
+                    <!-- ============================================== -->
+
+                    <!-- Grid to Transformer -->
+                    <path id="path-grid-trans" d="M 160,80 L 390,80 L 390,180" fill="none" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+                    <!-- Solar to Transformer -->
+                    <path id="path-solar-trans" d="M 160,200 L 270,200 L 270,140 L 390,140 L 390,180" fill="none" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+                    <!-- Battery to Transformer -->
+                    <path id="path-battery-trans" d="M 160,340 L 310,340 L 310,160 L 390,160 L 390,180" fill="none" stroke="#334155" stroke-width="6" stroke-linecap="round"/>
+
+                    <!-- Transformer to Busbar -->
+                    <path id="path-trans-bus" d="M 390,240 L 390,278" fill="none" stroke="#334155" stroke-width="8"/>
+                    
+                    <!-- Solid copper busbar graphical bar -->
+                    <rect x="310" y="272" width="430" height="12" rx="3" fill="#b45309" stroke="#ea580c" stroke-width="1" filter="url(#glow)"/>
+                    <text x="518" y="268" text-anchor="middle" font-family="'Fira Code', monospace" font-size="9" font-weight="700" fill="#f97316">24.0 kV FEEDER BUS</text>
+
+                    <!-- Feeder routes to load nodes -->
+                    <path id="path-bus-machines" d="M 400,284 L 400,360 L 490,360" fill="none" stroke="#334155" stroke-width="6"/>
+                    <path id="path-bus-conveyor" d="M 560,284 L 560,360 L 595,360" fill="none" stroke="#334155" stroke-width="6"/>
+                    <path id="path-bus-hvac" d="M 680,284 L 680,360 L 700,360" fill="none" stroke="#334155" stroke-width="6"/>
+
+                    <!-- Glowing Flow Lines Overlay (Dotted active flows) -->
+                    <path id="flow-grid-trans" d="M 160,80 L 390,80 L 390,180" fill="none" stroke="#38bdf8" stroke-width="4" stroke-dasharray="10,8" class="flow-active"/>
+                    <path id="flow-solar-trans" d="M 160,200 L 270,200 L 270,140 L 390,140 L 390,180" fill="none" stroke="#fbbf24" stroke-width="4" stroke-dasharray="10,8" class="flow-active"/>
+                    <path id="flow-battery-trans" d="M 160,340 L 310,340 L 310,160 L 390,160 L 390,180" fill="none" stroke="#34d399" stroke-width="4" stroke-dasharray="10,8" class="flow-active"/>
+                    
+                    <path id="flow-bus-machines" d="M 400,284 L 400,360 L 490,360" fill="none" stroke="#f87171" stroke-width="4" stroke-dasharray="10,8" class="flow-active"/>
+                    <path id="flow-bus-conveyor" d="M 560,284 L 560,360 L 595,360" fill="none" stroke="#f472b6" stroke-width="4" stroke-dasharray="10,8" class="flow-active"/>
+                    <path id="flow-bus-hvac" d="M 680,284 L 680,360 L 700,360" fill="none" stroke="#22d3ee" stroke-width="4" stroke-dasharray="10,8" class="flow-active"/>
+
+                    <!-- ============================================== -->
+                    <!-- WIRE LABELS: positioned on clear wire segments  -->
+                    <!-- ============================================== -->
+
+                    <!-- Grid → Transformer: on the long horizontal run at y=80 -->
+                    <g class="wire-label-group" id="wlabel-grid-trans">
+                        <rect x="248" y="62" width="60" height="16" rx="4" fill="#0c4a6e" opacity="0.9"/>
+                        <text x="278" y="74" text-anchor="middle" font-family="'Fira Code', monospace" font-size="8.5" font-weight="700" fill="#38bdf8" id="wire-grid-kw">0.0 kW</text>
+                    </g>
+
+                    <!-- Solar → Transformer: on horizontal run y=200, between node and bend -->
+                    <g class="wire-label-group" id="wlabel-solar-trans">
+                        <rect x="185" y="184" width="60" height="16" rx="4" fill="#713f12" opacity="0.9"/>
+                        <text x="215" y="196" text-anchor="middle" font-family="'Fira Code', monospace" font-size="8.5" font-weight="700" fill="#fbbf24" id="wire-solar-kw">0.0 kW</text>
+                    </g>
+
+                    <!-- Battery → Transformer: on horizontal run y=340, between node and bend -->
+                    <g class="wire-label-group" id="wlabel-battery-trans">
+                        <rect x="200" y="324" width="60" height="16" rx="4" fill="#064e3b" opacity="0.9"/>
+                        <text x="230" y="336" text-anchor="middle" font-family="'Fira Code', monospace" font-size="8.5" font-weight="700" fill="#34d399" id="wire-battery-kw">0.0 kW</text>
+                    </g>
+
+                    <!-- Transformer → Busbar: right side of the short vertical drop -->
+                    <g class="wire-label-group" id="wlabel-trans-bus">
+                        <rect x="400" y="248" width="66" height="16" rx="4" fill="#44403c" opacity="0.9"/>
+                        <text x="433" y="260" text-anchor="middle" font-family="'Fira Code', monospace" font-size="8.5" font-weight="700" fill="#f97316" id="wire-total-kw">0.0 kW</text>
+                    </g>
+
+                    <!-- Busbar → Machines: on vertical drop below busbar -->
+                    <g class="wire-label-group" id="wlabel-bus-machines">
+                        <rect x="410" y="306" width="56" height="16" rx="4" fill="#450a0a" opacity="0.9"/>
+                        <text x="438" y="318" text-anchor="middle" font-family="'Fira Code', monospace" font-size="8.5" font-weight="700" fill="#f87171" id="wire-machines-kw">0.0 kW</text>
+                    </g>
+
+                    <!-- Busbar → Conveyor: on vertical drop below busbar -->
+                    <g class="wire-label-group" id="wlabel-bus-conveyor">
+                        <rect x="566" y="306" width="56" height="16" rx="4" fill="#500724" opacity="0.9"/>
+                        <text x="594" y="318" text-anchor="middle" font-family="'Fira Code', monospace" font-size="8.5" font-weight="700" fill="#f472b6" id="wire-conveyor-kw">0.0 kW</text>
+                    </g>
+
+                    <!-- Busbar → HVAC: on vertical drop below busbar -->
+                    <g class="wire-label-group" id="wlabel-bus-hvac">
+                        <rect x="690" y="306" width="56" height="16" rx="4" fill="#083344" opacity="0.9"/>
+                        <text x="718" y="318" text-anchor="middle" font-family="'Fira Code', monospace" font-size="8.5" font-weight="700" fill="#22d3ee" id="wire-hvac-kw">0.0 kW</text>
+                    </g>
+
+                    <!-- ============================================== -->
+                    <!-- NODES: SOURCES                                 -->
+                    <!-- ============================================== -->
+                    
+                    <!-- Grid Node (Utility Power Pylon) -->
+                    <g transform="translate(110, 80)" style="cursor:pointer">
+                        <title>Utility Grid — supplying power from the national grid</title>
+                        <circle cx="0" cy="0" r="44" fill="none" stroke="#38bdf8" stroke-width="1" opacity="0.3" class="node-pulse"/>
+                        <rect x="-42" y="-32" width="84" height="64" rx="8" fill="#1e293b" stroke="#38bdf8" stroke-width="2" filter="url(#glow)"/>
+                        <path d="M -12,22 L -4,-12 L 4,-12 L 12,22 M -16,14 L 16,14 M -18,2 L 18,2 M -4,-12 L 0,-22 L 4,-12 M -4,22 L 4,22" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round"/>
+                        <text x="0" y="-40" text-anchor="middle" font-family="'Inter', sans-serif" font-size="10" font-weight="700" fill="#f8fafc">Utility Grid</text>
+                        <text x="0" y="46" text-anchor="middle" font-family="'Fira Code', monospace" font-size="9.5" font-weight="700" fill="#38bdf8" id="svg-grid-power">0.0 kW</text>
+                    </g>
+
+                    <!-- Solar PV Node (Solar Panels + Sun) -->
+                    <g transform="translate(110, 200)" style="cursor:pointer">
+                        <title>Solar PV Array — renewable photovoltaic generation</title>
+                        <circle cx="0" cy="0" r="44" fill="none" stroke="#fbbf24" stroke-width="1" opacity="0.3" class="node-pulse" style="animation-delay:0.5s"/>
+                        <rect x="-42" y="-32" width="84" height="64" rx="8" fill="#1e293b" stroke="#fbbf24" stroke-width="2" filter="url(#glow)"/>
+                        <g transform="translate(-12,-12) scale(0.7)">
+                            <polygon points="0,25 35,25 25,0 10,0" fill="#1e3a8a" stroke="#fbbf24" stroke-width="1.5"/>
+                            <line x1="17.5" y1="0" x2="17.5" y2="25" stroke="#fbbf24" stroke-width="1"/>
+                            <line x1="5" y1="12" x2="30" y2="12" stroke="#fbbf24" stroke-width="1"/>
+                        </g>
+                        <circle cx="18" cy="-12" r="6" fill="#fbbf24" filter="url(#glow)"/>
+                        <path d="M 18,-22 L 18,-20 M 18,-2 L 18,-4 M 8,-12 L 10,-12 M 26,-12 L 28,-12" stroke="#fbbf24" stroke-width="1.5"/>
+                        <text x="0" y="-40" text-anchor="middle" font-family="'Inter', sans-serif" font-size="10" font-weight="700" fill="#f8fafc">Solar PV Array</text>
+                        <text x="0" y="46" text-anchor="middle" font-family="'Fira Code', monospace" font-size="9.5" font-weight="700" fill="#fbbf24" id="svg-solar-power">0.0 kW</text>
+                    </g>
+
+                    <!-- BESS Battery Storage Node (Cabinet + Level Bar) -->
+                    <g transform="translate(110, 340)" style="cursor:pointer">
+                        <title>BESS Storage — Battery Energy Storage System for peak shaving</title>
+                        <circle cx="0" cy="0" r="44" fill="none" stroke="#34d399" stroke-width="1" opacity="0.3" class="node-pulse" style="animation-delay:1s"/>
+                        <rect x="-42" y="-32" width="84" height="64" rx="8" fill="#1e293b" stroke="#34d399" stroke-width="2" filter="url(#glow)"/>
+                        <rect x="-16" y="-16" width="32" height="22" rx="3" fill="none" stroke="#34d399" stroke-width="2"/>
+                        <rect x="16" y="-8" width="3" height="8" rx="1" fill="#34d399"/>
+                        <line x1="-8" y1="-5" x2="-3" y2="-5" stroke="#34d399" stroke-width="1.5"/>
+                        <line x1="3" y1="-5" x2="8" y2="-5" stroke="#34d399" stroke-width="1.5"/>
+                        <line x1="5.5" y1="-8" x2="5.5" y2="-2" stroke="#34d399" stroke-width="1.5"/>
+                        <rect x="-12" y="0" width="24" height="3" fill="#34d399"/>
+                        <text x="0" y="-40" text-anchor="middle" font-family="'Inter', sans-serif" font-size="10" font-weight="700" fill="#f8fafc">BESS Storage</text>
+                        <text x="0" y="46" text-anchor="middle" font-family="'Fira Code', monospace" font-size="9.5" font-weight="700" fill="#34d399" id="svg-battery-power">0.0 kW</text>
+                    </g>
+
+                    <!-- ============================================== -->
+                    <!-- CENTRAL HUB: TRANSFORMER MODULE                -->
+                    <!-- ============================================== -->
+                    <g transform="translate(390, 210)">
+                        <rect x="-42" y="-28" width="84" height="56" rx="8" fill="#1e293b" stroke="#94a3b8" stroke-width="2" filter="url(#glow)"/>
+                        <circle cx="-10" cy="0" r="12" fill="none" stroke="#94a3b8" stroke-width="2.5"/>
+                        <circle cx="10" cy="0" r="12" fill="none" stroke="#94a3b8" stroke-width="2.5"/>
+                        <path d="M -22,0 L -16,0 M 16,0 L 22,0" stroke="#94a3b8" stroke-width="2"/>
+                        <text x="48" y="-4" text-anchor="start" font-family="'Inter', sans-serif" font-size="10" font-weight="700" fill="#f8fafc">Primary Substation</text>
+                        <text x="48" y="10" text-anchor="start" font-family="'Fira Code', monospace" font-size="8.5" fill="#94a3b8" id="svg-pf-val">PF: 0.85</text>
+                    </g>
+
+                    <!-- ============================================== -->
+                    <!-- NODES: LOADS (CONSUMPTION)                     -->
+                    <!-- ============================================== -->
+                    
+                    <!-- Production CNC Machines -->
+                    <g transform="translate(525, 360)">
+                        <rect x="-32" y="-20" width="64" height="40" rx="6" fill="#1e293b" stroke="#f87171" stroke-width="2" filter="url(#glow)"/>
+                        <rect x="-22" y="-12" width="44" height="24" rx="2" fill="none" stroke="#f87171" stroke-width="1.5"/>
+                        <circle cx="-10" cy="0" r="4" fill="none" stroke="#f87171" stroke-width="1.5"/>
+                        <circle cx="10" cy="0" r="4" fill="none" stroke="#f87171" stroke-width="1.5"/>
+                        <text x="0" y="-28" text-anchor="middle" font-family="'Fira Code', monospace" font-size="9.5" font-weight="700" fill="#f87171" id="svg-machines-power">0.0 kW</text>
+                        <text x="0" y="34" text-anchor="middle" font-family="'Inter', sans-serif" font-size="9" font-weight="700" fill="#94a3b8">Machines</text>
+                    </g>
+
+                    <!-- Conveyor System -->
+                    <g transform="translate(630, 360)">
+                        <rect x="-28" y="-20" width="56" height="40" rx="6" fill="#1e293b" stroke="#f472b6" stroke-width="2" filter="url(#glow)"/>
+                        <line x1="-18" y1="4" x2="18" y2="4" stroke="#f472b6" stroke-width="2"/>
+                        <circle cx="-12" cy="4" r="3" fill="#f472b6"/>
+                        <circle cx="0" cy="4" r="3" fill="#f472b6"/>
+                        <circle cx="12" cy="4" r="3" fill="#f472b6"/>
+                        <rect x="-7" y="-8" width="14" height="10" fill="none" stroke="#f472b6" stroke-width="1.5"/>
+                        <text x="0" y="-28" text-anchor="middle" font-family="'Fira Code', monospace" font-size="9.5" font-weight="700" fill="#f472b6" id="svg-conveyor-power">0.0 kW</text>
+                        <text x="0" y="34" text-anchor="middle" font-family="'Inter', sans-serif" font-size="9" font-weight="700" fill="#94a3b8">Conveyor</text>
+                    </g>
+
+                    <!-- HVAC and Lighting -->
+                    <g transform="translate(735, 360)">
+                        <rect x="-28" y="-20" width="56" height="40" rx="6" fill="#1e293b" stroke="#22d3ee" stroke-width="2" filter="url(#glow)"/>
+                        <circle cx="-6" cy="0" r="9" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+                        <path d="M -6,-9 L -6,9 M -15,0 L 3,0" stroke="#22d3ee" stroke-width="1.5"/>
+                        <path d="M 10,-7 C 7,-7 7,-2 10,1 L 10,4 M 8,4 L 12,4" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+                        <text x="0" y="-28" text-anchor="middle" font-family="'Fira Code', monospace" font-size="9.5" font-weight="700" fill="#22d3ee" id="svg-hvac-power">0.0 kW</text>
+                        <text x="0" y="34" text-anchor="middle" font-family="'Inter', sans-serif" font-size="9" font-weight="700" fill="#94a3b8">HVAC/Light</text>
+                    </g>
+
+                    <!-- Footer credit inside SVG -->
+                    <text x="790" y="432" text-anchor="end" font-family="'Fira Code', monospace" font-size="7" fill="#334155">Smart Energy Digital Twin v1.0</text>
+                </svg>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- OBSERVATION PANEL                              -->
+            <!-- ============================================== -->
+            <div class="observation-panel" id="observationPanel">
+                <div class="obs-header">
+                    <span>Observation</span>
+                    <span class="obs-pulse-dot"></span>
+                </div>
+                <div class="obs-sentences">
+                    <p id="obs-sentence-1" class="obs-card-grid"><span>The utility grid is supplying power to the factory load.</span></p>
+                    <p id="obs-sentence-2" class="obs-card-solar"><span>Solar PV panels are generating power to offset grid dependency.</span></p>
+                    <p id="obs-sentence-3" class="obs-card-battery"><span>The battery storage system is on standby.</span></p>
+                    <p id="obs-sentence-4" class="obs-card-load"><span>Factory machines are running at standard capacity.</span></p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right: KPIs and AI Analysis -->
+        <aside class="diagnostics-panel">
+            <div class="panel-title">
+                <i class="fa-solid fa-chart-line"></i>
+                <h2>Energy KPIs & Metrics</h2>
+            </div>
+
+            <!-- KPIs Cards -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <span class="kpi-label">Total Power Consumption</span>
+                    <span class="kpi-val" id="kpiTotalPower">0.0 kW</span>
+                    <span class="kpi-trend neutral"><i class="fa-solid fa-wave-square"></i> Real-time Load</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-label">Total Energy Consumption</span>
+                    <span class="kpi-val" id="kpiTotalEnergy">0.0 kWh</span>
+                    <span class="kpi-trend" id="kpiEnergyHrs">For 8 hours</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-label">Grid Consumption</span>
+                    <span class="kpi-val" id="kpiGridEnergy">0.0 kWh</span>
+                    <span class="kpi-trend" id="kpiGridPercent">0% of total load</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-label">Carbon Footprint</span>
+                    <span class="kpi-val" id="kpiCarbon">0.0 kg CO₂</span>
+                    <span class="kpi-trend carbon-down" id="kpiCarbonOffset"><i class="fa-solid fa-leaf"></i> 0% offset</span>
+                </div>
+                <div class="kpi-card">
+                    <span class="kpi-label">Factory Efficiency</span>
+                    <span class="kpi-val" id="kpiEfficiency">0.0%</span>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="kpiEffProgress" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Indicator Panel -->
+            <div class="status-panel">
+                <h3>System Health Indicators</h3>
+                <div class="status-row">
+                    <span>Grid Connection Status</span>
+                    <span class="status-tag status-success" id="indGrid">Stable</span>
+                </div>
+                <div class="status-row">
+                    <span>Power Factor (cos θ)</span>
+                    <span class="status-tag" id="indPF">0.85 (Acceptable)</span>
+                </div>
+                <div class="status-row">
+                    <span>Battery Status</span>
+                    <span class="status-tag" id="indBattery">Idle (60%)</span>
+                </div>
+                <div class="status-row">
+                    <span>Peak Demand Billing</span>
+                    <span class="status-tag" id="indPeak">Normal</span>
+                </div>
+                <div class="status-row">
+                    <span>Hourly Tariff Cost</span>
+                    <span class="status-tag cost" id="indCost">₹0.00 / hr</span>
+                </div>
+            </div>
+
+            <!-- AI Optimizer Recommendation Card -->
+            <div class="ai-card">
+                <div class="ai-header">
+                    <i class="fa-solid fa-brain"></i>
+                    <h3>AI Energy Advisor</h3>
+                </div>
+                <div class="ai-content">
+                    <ul id="aiAdviceList">
+                        <li><i class="fa-solid fa-circle-info text-blue"></i> Load the parameters and click "Run Simulation" to solve energy network equations.</li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Bottom: Table Logs -->
+    <section class="log-card">
+        <div class="log-header">
+            <div class="header-left">
+                <i class="fa-solid fa-list-check"></i>
+                <h2>Simulation History Log</h2>
+            </div>
+            <div class="header-actions">
+                <button type="button" class="btn btn-outline" id="exportCsvBtn">
+                    <i class="fa-solid fa-file-csv"></i> Export CSV
+                </button>
+                <button type="button" class="btn btn-outline" id="clearLogBtn">
+                    <i class="fa-solid fa-trash-can"></i> Clear Log
+                </button>
+            </div>
+        </div>
+        <div class="log-table-wrapper">
+            <table id="logTable">
+                <thead>
+                    <tr>
+                        <th>Run #</th>
+                        <th>Machine Load</th>
+                        <th>Operating Hours</th>
+                        <th>Renewables</th>
+                        <th>Idle Count</th>
+                        <th>Power Factor</th>
+                        <th>Total Power (kW)</th>
+                        <th>Total Energy (kWh)</th>
+                        <th>Grid Energy (kWh)</th>
+                        <th>Carbon (kg CO₂)</th>
+                        <th>Efficiency (%)</th>
+                    </tr>
+                </thead>
+                <tbody id="logTableBody">
+                    <tr class="empty-row">
+                        <td colspan="11">No simulation runs recorded yet. Change parameters and click "Record Log".</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

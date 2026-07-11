@@ -1,0 +1,174 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "A factory increases its machine load from 50% to 90% while keeping the operating time constant. What is the most likely effect on total energy consumption?",
+      "answers": {
+        "a": "Energy consumption decreases",
+        "b": "Energy consumption remains unchanged",
+        "c": "Energy consumption increases",
+        "d": "Energy consumption becomes zero"
+      },
+      "explanations": {
+        "a": "Incorrect. Higher machine load requires more electrical power.",
+        "b": "Incorrect. Since power increases with machine load, energy consumption also increases.",
+        "c": "Correct. With operating time remaining constant, higher power demand directly increases total energy consumption according to E = P × t.",
+        "d": "Incorrect. Operating machines always consume electrical energy."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "During the simulation, renewable energy contribution increases from 20% to 70%. Which parameter is expected to decrease the most?",
+      "answers": {
+        "a": "Grid Energy Consumption",
+        "b": "Machine Efficiency",
+        "c": "Operating Hours",
+        "d": "Battery Capacity"
+      },
+      "explanations": {
+        "a": "Correct. Greater renewable contribution reduces the amount of energy drawn from the utility grid.",
+        "b": "Incorrect. Renewable energy does not directly affect machine efficiency.",
+        "c": "Incorrect. Operating hours are independent of renewable generation.",
+        "d": "Incorrect. Battery capacity is a fixed system specification."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Why does reducing the number of idle machines improve factory energy efficiency?",
+      "answers": {
+        "a": "Idle machines consume standby power without producing useful output",
+        "b": "Idle machines increase renewable energy generation",
+        "c": "Idle machines reduce production quality",
+        "d": "Idle machines increase battery capacity"
+      },
+      "explanations": {
+        "a": "Correct. Even when not producing, idle machines consume standby energy, reducing overall efficiency.",
+        "b": "Incorrect. Renewable energy generation depends on energy sources such as solar panels or wind turbines.",
+        "c": "Incorrect. Production quality is not directly affected by the number of idle machines.",
+        "d": "Incorrect. Battery capacity is unrelated to idle machine operation."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "A factory has a poor power factor of 0.72. What is the most appropriate engineering recommendation?",
+      "answers": {
+        "a": "Install capacitor banks for power factor correction",
+        "b": "Reduce machine lubrication",
+        "c": "Increase conveyor speed",
+        "d": "Increase warehouse storage capacity"
+      },
+      "explanations": {
+        "a": "Correct. Capacitor banks supply reactive power, improving power factor and reducing current drawn from the supply.",
+        "b": "Incorrect. Lubrication affects mechanical performance, not electrical power factor.",
+        "c": "Incorrect. Conveyor speed has no direct relationship with power factor correction.",
+        "d": "Incorrect. Warehouse storage capacity is unrelated to electrical power quality."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The simulation reports high carbon emissions despite efficient machine operation. What is the most likely reason?",
+      "answers": {
+        "a": "Most energy is supplied by the utility grid instead of renewable sources",
+        "b": "Machine efficiency is too high",
+        "c": "Battery capacity is too large",
+        "d": "Operating hours are too short"
+      },
+      "explanations": {
+        "a": "Correct. High dependence on grid electricity, especially from fossil-fuel-based generation, increases carbon emissions.",
+        "b": "Incorrect. High efficiency generally reduces energy consumption.",
+        "c": "Incorrect. Larger battery capacity can help reduce grid dependence rather than increase emissions.",
+        "d": "Incorrect. Shorter operating hours usually reduce total emissions."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },    {
+      "question": "A factory experiences high electricity bills due to peak demand charges. Which action would most effectively reduce these charges?",
+      "answers": {
+        "a": "Operate all machines simultaneously during peak hours",
+        "b": "Shift non-critical operations to off-peak hours and use battery storage",
+        "c": "Increase idle machine operation",
+        "d": "Disconnect all renewable energy sources"
+      },
+      "explanations": {
+        "a": "Incorrect. Operating all machines simultaneously increases peak demand and electricity charges.",
+        "b": "Correct. Demand-side management and Battery Energy Storage Systems (BESS) help reduce peak demand and associated electricity costs.",
+        "c": "Incorrect. Idle machines consume standby power and increase unnecessary energy consumption.",
+        "d": "Incorrect. Renewable energy helps reduce dependence on the utility grid and lowers operational costs."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The simulator shows a Load Factor of 0.95. What does this indicate about factory operation?",
+      "answers": {
+        "a": "The factory load is uniformly distributed over the operating period",
+        "b": "The machines are completely switched off",
+        "c": "The power factor is very low",
+        "d": "The renewable energy contribution is zero"
+      },
+      "explanations": {
+        "a": "Correct. A Load Factor close to 1 indicates stable and efficient utilization of electrical demand.",
+        "b": "Incorrect. A high Load Factor does not imply that machines are switched off.",
+        "c": "Incorrect. Load Factor and Power Factor are different electrical parameters.",
+        "d": "Incorrect. Renewable energy contribution is independent of Load Factor."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Specific Energy Consumption (SEC) is reduced after optimizing factory operations. What does this imply?",
+      "answers": {
+        "a": "More energy is required to manufacture each product",
+        "b": "Less electrical energy is consumed per unit of production",
+        "c": "Carbon emissions automatically become zero",
+        "d": "Machine load has become zero"
+      },
+      "explanations": {
+        "a": "Incorrect. Lower SEC means the opposite—it indicates improved energy efficiency.",
+        "b": "Correct. A reduction in Specific Energy Consumption means fewer kilowatt-hours are required to produce each unit, indicating better process efficiency.",
+        "c": "Incorrect. Lower SEC reduces emissions but does not eliminate them completely unless all energy is renewable.",
+        "d": "Incorrect. Machines must operate to produce goods; SEC does not imply zero machine load."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The Battery Energy Storage System (BESS) is fully charged before the peak demand period. What is the primary benefit?",
+      "answers": {
+        "a": "It can supply part of the factory load and reduce grid dependency during peak demand",
+        "b": "It increases transformer losses",
+        "c": "It decreases machine production capacity",
+        "d": "It permanently replaces the utility grid"
+      },
+      "explanations": {
+        "a": "Correct. A fully charged BESS supplies stored energy during peak demand, reducing grid power consumption and lowering demand charges.",
+        "b": "Incorrect. Battery systems are designed to improve energy management, not increase transformer losses.",
+        "c": "Incorrect. Battery storage supports production by ensuring a stable energy supply.",
+        "d": "Incorrect. Battery storage supplements the utility grid but cannot permanently replace it in most industrial applications."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Based on the Smart Energy Optimization simulation, which combination provides the most sustainable factory operation?",
+      "answers": {
+        "a": "High renewable energy contribution, high power factor, low idle machines, and optimized battery usage",
+        "b": "Low renewable energy, high peak demand, and many idle machines",
+        "c": "Maximum grid energy consumption with poor power factor",
+        "d": "High standby power and low machine efficiency"
+      },
+      "explanations": {
+        "a": "Correct. This combination minimizes grid energy usage, reduces electricity cost and carbon emissions, and maximizes overall factory efficiency.",
+        "b": "Incorrect. This configuration increases energy consumption, costs, and greenhouse gas emissions.",
+        "c": "Incorrect. Heavy dependence on the grid combined with a poor power factor leads to higher losses and operational costs.",
+        "d": "Incorrect. High standby power and poor efficiency waste energy and reduce overall system performance."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the primary objective of a Smart Energy Optimization System in an Industry 4.0 manufacturing plant?",
+      "answers": {
+        "a": "To maximize energy consumption",
+        "b": "To monitor and optimize industrial energy usage",
+        "c": "To replace all factory workers",
+        "d": "To increase machine temperature"
+      },
+      "explanations": {
+        "a": "Incorrect. The goal is to reduce unnecessary energy consumption while maintaining productivity.",
+        "b": "Correct. Smart Energy Optimization Systems continuously monitor, analyze, and optimize industrial energy consumption to improve efficiency and reduce costs.",
+        "c": "Incorrect. These systems assist operators and engineers rather than replacing the workforce.",
+        "d": "Incorrect. Machine temperature is only one monitored parameter and is not the primary objective."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Electrical energy consumed by industrial equipment is calculated using which equation?",
+      "answers": {
+        "a": "E = P × t",
+        "b": "P = V × I",
+        "c": "η = Output / Input",
+        "d": "F = ma"
+      },
+      "explanations": {
+        "a": "Correct. Energy (kWh) equals Power (kW) multiplied by Operating Time (hours).",
+        "b": "Incorrect. This equation calculates electrical power, not energy consumed over time.",
+        "c": "Incorrect. This equation represents efficiency, not energy consumption.",
+        "d": "Incorrect. This is Newton's Second Law and is unrelated to industrial energy calculation."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the SI unit of electrical energy commonly used in industrial energy management?",
+      "answers": {
+        "a": "Volt (V)",
+        "b": "Kilowatt-hour (kWh)",
+        "c": "Ampere (A)",
+        "d": "Hertz (Hz)"
+      },
+      "explanations": {
+        "a": "Incorrect. Volt measures electrical potential difference.",
+        "b": "Correct. Industrial electrical energy consumption is measured in kilowatt-hours (kWh).",
+        "c": "Incorrect. Ampere measures electric current.",
+        "d": "Incorrect. Hertz measures frequency."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which device primarily collects real-time electrical and operational data for an Industrial Energy Management System?",
+      "answers": {
+        "a": "Industrial IoT Sensors",
+        "b": "Mechanical Gearbox",
+        "c": "Hydraulic Cylinder",
+        "d": "Cooling Fan"
+      },
+      "explanations": {
+        "a": "Correct. Industrial IoT sensors continuously collect operational data such as voltage, current, power, and machine status.",
+        "b": "Incorrect. A gearbox transmits mechanical power but does not collect monitoring data.",
+        "c": "Incorrect. Hydraulic cylinders generate motion rather than monitoring electrical parameters.",
+        "d": "Incorrect. Cooling fans regulate temperature but are not sensing devices."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Increasing machine load generally results in which of the following?",
+      "answers": {
+        "a": "Lower power consumption",
+        "b": "Higher electrical power consumption",
+        "c": "Zero energy consumption",
+        "d": "Reduced production output"
+      },
+      "explanations": {
+        "a": "Incorrect. As machine load increases, electrical demand also increases.",
+        "b": "Correct. Higher machine load requires more electrical power to perform additional mechanical work.",
+        "c": "Incorrect. Machines always consume energy while operating.",
+        "d": "Incorrect. Higher machine loading generally increases production output until rated limits are reached."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },    {
+      "question": "Why is maintaining a high Power Factor important in industrial power systems?",
+      "answers": {
+        "a": "It reduces transmission losses and improves electrical efficiency",
+        "b": "It increases machine vibration",
+        "c": "It decreases production quality",
+        "d": "It increases carbon emissions"
+      },
+      "explanations": {
+        "a": "Correct. A high power factor reduces current drawn from the supply, minimizes transmission losses, improves voltage regulation, and avoids utility penalties.",
+        "b": "Incorrect. Machine vibration is mainly caused by mechanical imbalance, misalignment, or bearing faults rather than power factor.",
+        "c": "Incorrect. Production quality depends on manufacturing processes, not directly on power factor.",
+        "d": "Incorrect. A high power factor actually improves energy efficiency, indirectly reducing energy losses and associated emissions."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the primary advantage of integrating renewable energy sources into a smart factory?",
+      "answers": {
+        "a": "Increase dependence on the electrical grid",
+        "b": "Reduce grid energy consumption and carbon emissions",
+        "c": "Increase electricity tariff",
+        "d": "Decrease equipment reliability"
+      },
+      "explanations": {
+        "a": "Incorrect. Renewable energy decreases dependence on the utility grid.",
+        "b": "Correct. Renewable energy sources such as solar and wind reduce grid energy consumption, operating costs, and greenhouse gas emissions.",
+        "c": "Incorrect. Renewable energy generally reduces long-term operating costs rather than increasing tariffs.",
+        "d": "Incorrect. Properly integrated renewable systems improve energy sustainability without reducing equipment reliability."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the primary function of a Battery Energy Storage System (BESS) in a smart factory?",
+      "answers": {
+        "a": "Store electrical energy for later use",
+        "b": "Increase machine temperature",
+        "c": "Reduce production output",
+        "d": "Replace industrial robots"
+      },
+      "explanations": {
+        "a": "Correct. A Battery Energy Storage System stores excess electrical energy and supplies it during peak demand or power interruptions.",
+        "b": "Incorrect. Battery systems are not designed to increase machine temperature.",
+        "c": "Incorrect. BESS supports production by ensuring reliable power availability.",
+        "d": "Incorrect. Batteries provide electrical energy and cannot replace robotic systems."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which parameter is directly used to estimate industrial carbon emissions in this experiment?",
+      "answers": {
+        "a": "Machine Speed",
+        "b": "Grid Energy Consumption",
+        "c": "Number of Employees",
+        "d": "Warehouse Capacity"
+      },
+      "explanations": {
+        "a": "Incorrect. Machine speed influences production but is not directly used for emission calculation.",
+        "b": "Correct. Carbon emissions are estimated from the electrical energy supplied by the utility grid using an emission factor.",
+        "c": "Incorrect. Workforce size has no direct relationship with electrical carbon emissions.",
+        "d": "Incorrect. Warehouse capacity does not determine greenhouse gas emissions."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Why do industries monitor Peak Demand?",
+      "answers": {
+        "a": "To reduce electricity demand charges and optimize power usage",
+        "b": "To increase unnecessary energy consumption",
+        "c": "To reduce renewable energy generation",
+        "d": "To decrease battery storage capacity"
+      },
+      "explanations": {
+        "a": "Correct. Monitoring and controlling peak demand helps industries reduce demand charges, improve electrical infrastructure utilization, and lower operating costs.",
+        "b": "Incorrect. Industries aim to minimize unnecessary energy consumption.",
+        "c": "Incorrect. Renewable energy is encouraged to reduce dependence on conventional power sources.",
+        "d": "Incorrect. Peak demand management does not reduce battery capacity; battery systems often help reduce peak demand."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    }
+  ]
+}
