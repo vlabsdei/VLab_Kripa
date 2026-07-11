@@ -108,3 +108,38 @@ $$\text{SEC} = \frac{E_{\text{total}}}{\text{Total Units Produced}} \quad (\text
 $$\eta_{\text{factory}} = 100 \times \left(1 - \frac{P_{\text{idle}} + P_{\text{losses}}}{P_{\text{total}}}\right) \quad (\%)$$
 Where $P_{\text{losses}}$ are the transmission and reactive losses resulting from a low power factor:
 $$P_{\text{losses}} = P_{\text{total}} \times (1 - PF)^2 \times 0.25$$
+
+---
+
+## 7. Simulator Calibration Constants & Parameters
+For conducting numerical calculations during laboratory exercises, the simulator is calibrated using the following industrial constants:
+
+### 7.1 Constant Energy Coefficients
+- **Total Machines ($N_{\text{total}}$)**: $10$ units.
+- **Machine Rated Base Power ($P_{\text{base}}$)**: $15\text{ kW}$ (Active power per machine at $100\%$ capacity).
+- **Machine Standby Power ($P_{\text{standby}}$)**: $2.5\text{ kW}$ (Power consumed per machine in standby mode).
+- **Conveyor Base Power ($P_{\text{conv-base}}$)**: $5\text{ kW}$.
+- **HVAC Rated Power ($P_{\text{hvac-base}}$)**: $12\text{ kW}$.
+- **Lighting Rated Power ($P_{\text{light-base}}$)**: $3\text{ kW}$.
+- **BESS Battery Storage Capacity ($C_{\text{battery}}$)**: $100\text{ kWh}$.
+- **Grid Carbon Emission Factor ($\text{EF}_{\text{grid}}$)**: $0.82\text{ kg CO}_2\text{/kWh}$.
+
+### 7.2 Battery Storage Discharge Limits
+The battery state of charge ($SOC$) cannot discharge below a safety limit of $20\%$ to protect cell life. The maximum energy discharge allowed ($E_{\text{discharge-max}}$) is:
+$$E_{\text{discharge-max}} = C_{\text{battery}} \times \frac{\max(0, SOC - 20)}{100} \quad (\text{kWh})$$
+
+- **BESS Peak Shaving Mode**: Battery discharge is capped at $30\%$ of total factory energy requirement:
+  $$E_{\text{battery}} = \min(E_{\text{total}} \times 0.3, E_{\text{discharge-max}}) \quad (\text{kWh})$$
+- **Demand Response Mode**: Battery discharge is capped at $50\%$ of total factory energy requirement:
+  $$E_{\text{battery}} = \min(E_{\text{total}} \times 0.5, E_{\text{discharge-max}}) \quad (\text{kWh})$$
+
+### 7.3 Billing Penalty Formulations
+Utilities charge a penalty surcharge on low power factor levels below a target threshold of $0.90$:
+- **Power Factor Penalty Multiplier ($M_{\text{PF}}$)**:
+  $$\text{If } PF < 0.90: \quad M_{\text{PF}} = (0.90 - PF) \times 0.15$$
+  $$\text{If } PF \ge 0.90: \quad M_{\text{PF}} = 0$$
+- **Total Billing Cost ($C_{\text{total}}$)**:
+  $$C_{\text{total}} = (P_{\text{grid}} \times \text{Tariff}) \times (1 + M_{\text{PF}}) \quad (\text{₹/hour})$$
+  $$E_{\text{grid-cost}} = C_{\text{total}} \times t \quad (\text{₹})$$
+
+Students are encouraged to perform sample calculations using these configurations to verify the real-time feedback displayed on the digital twin.
