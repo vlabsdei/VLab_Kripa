@@ -54,31 +54,31 @@ The international standard **IEC 62443** governs cybersecurity for Industrial Au
 
 The simulator calculates network health, performance, and threat dynamics based on the following engineering equations:
 
-### A. Network Congestion
+### A. Network Congestion (%)
 Congestion occurs when the packet load exceeds the physical data processing capability of the core switch:
-$$\text{Congestion (\%)} = \min\left( \frac{\text{Packet Rate } (R_p) \times \text{Device Count } (N_d) \times 0.1}{\text{Network Capacity } (C_{net})} \times 100, 100 \right)$$
+$$\text{Congestion } (\%) = \min\left( \frac{\text{Packet Rate } (R_p) \times \text{Device Count } (N_d) \times 0.1}{\text{Network Capacity } (C_{net})} \times 100, 100 \right)$$
 *   **Physical Meaning**: Shows how traffic volume scales with both device density and transmission frequency relative to switch bandwidth limits.
 
-### B. Packet Loss
+### B. Packet Loss (%)
 Packet loss occurs due to network congestion or malicious packet injection (denial-of-service floods):
-$$\text{Packet Loss (\%)} = \text{Clamp}\left( \text{Attack Intensity } (I_{atk}) \times f_{fw} \times 0.5 + \text{Congestion} \times 0.18, 0, 100 \right)$$
+$$\text{Packet Loss } (\%) = \text{Clamp}\left( \text{Attack Intensity } (I_{atk}) \times f_{fw} \times 0.5 + \text{Congestion} \times 0.18, 0, 100 \right)$$
 where the firewall attenuation factor is defined as:
 $$f_{fw} = \frac{11 - \text{Firewall Strength } (S_{fw})}{10}$$
 *   **Physical Meaning**: High firewall strength lowers the impact of attack traffic. However, extreme traffic load can still cause packet loss via buffer queues overflowing.
 
-### C. Network Latency
+### C. Network Latency (ms)
 The time delay for a packet to travel from sensor to controller/cloud:
 $$\text{Latency (ms)} = \text{Baseline } (5\text{ ms}) + \left(\frac{R_p}{80}\right) \times (1 + N_d \times 0.03) \times (1 + I_{atk} \times 0.015) + \text{Delay}_{enc}$$
 *   where $\text{Delay}_{enc} = 18\text{ ms}$ for AES-256, $8\text{ ms}$ for AES-128, and $0\text{ ms}$ for None.
 *   **Physical Meaning**: Enforcing high-grade encryption (like AES-256) increases the cryptographic processing overhead on resource-constrained microcontrollers, adding latency to the transmission cycle.
 
-### D. Throughput
+### D. Throughput (pkt/s)
 The quantity of clean, useful packets arriving successfully per second:
 $$\text{Throughput (pkt/s)} = R_p \times \left(1 - \frac{\text{Packet Loss}}{100}\right)$$
 
-### E. Network Availability
+### E. Network Availability (%)
 The fraction of the network that remains online and serving communication requests:
-$$\text{Availability (\%)} = 100 - \text{Packet Loss}$$
+$$\text{Availability } (\%) = 100 - \text{Packet Loss}$$
 
 ### F. Security Score
 A composite index representing the overall security posture and cyber-resilience of the operational network:
