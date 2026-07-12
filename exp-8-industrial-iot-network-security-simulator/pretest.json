@@ -1,0 +1,174 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the primary purpose of an Industrial Internet of Things (IIoT) network in Industry 4.0?",
+      "answers": {
+        "a": "To enable communication between industrial devices and systems",
+        "b": "To replace all manufacturing equipment",
+        "c": "To increase machine temperature",
+        "d": "To eliminate production planning"
+      },
+      "explanations": {
+        "a": "Correct. IIoT enables real-time communication between sensors, PLCs, robots, machines, and cloud systems for monitoring and automation.",
+        "b": "Incorrect. IIoT connects and monitors equipment but does not replace manufacturing machines.",
+        "c": "Incorrect. Temperature monitoring is only one application of IIoT, not its primary purpose.",
+        "d": "Incorrect. Production planning remains an important manufacturing activity and is supported—not eliminated—by IIoT."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which device is primarily responsible for protecting an industrial network from unauthorized access?",
+      "answers": {
+        "a": "Firewall",
+        "b": "PLC",
+        "c": "Temperature Sensor",
+        "d": "Electric Motor"
+      },
+      "explanations": {
+        "a": "Correct. A firewall monitors and filters incoming and outgoing network traffic according to predefined security rules.",
+        "b": "Incorrect. A PLC controls industrial processes but does not provide network security.",
+        "c": "Incorrect. Sensors collect process data and are not network protection devices.",
+        "d": "Incorrect. Electric motors convert electrical energy into mechanical motion and have no security function."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Packet Loss in a communication network represents:",
+      "answers": {
+        "a": "The percentage of transmitted packets that fail to reach their destination",
+        "b": "The speed of packet transmission",
+        "c": "The voltage supplied to industrial equipment",
+        "d": "The total number of connected devices"
+      },
+      "explanations": {
+        "a": "Correct. Packet Loss measures the proportion of packets lost during communication and directly affects network reliability.",
+        "b": "Incorrect. Packet transmission speed is related to throughput or bandwidth, not packet loss.",
+        "c": "Incorrect. Electrical voltage is unrelated to packet loss.",
+        "d": "Incorrect. Device count may influence congestion but does not define packet loss."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which communication protocol is widely used for Industrial IoT applications due to its lightweight publish-subscribe architecture?",
+      "answers": {
+        "a": "MQTT",
+        "b": "HTTP",
+        "c": "FTP",
+        "d": "SMTP"
+      },
+      "explanations": {
+        "a": "Correct. MQTT is a lightweight messaging protocol commonly used in IIoT applications for efficient device communication.",
+        "b": "Incorrect. HTTP is mainly used for web communication and is less suitable for lightweight industrial messaging.",
+        "c": "Incorrect. FTP is used for file transfer rather than industrial telemetry.",
+        "d": "Incorrect. SMTP is an email protocol and is not used for industrial device communication."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Increasing Attack Intensity in an Industrial IoT network is most likely to:",
+      "answers": {
+        "a": "Increase Packet Loss and Network Latency",
+        "b": "Reduce communication traffic to zero immediately",
+        "c": "Improve Security Score",
+        "d": "Increase machine production efficiency"
+      },
+      "explanations": {
+        "a": "Correct. Higher attack intensity causes network congestion, packet drops, increased latency, and reduced communication reliability.",
+        "b": "Incorrect. Attacks may degrade communication but do not necessarily stop all traffic instantly.",
+        "c": "Incorrect. Increased attack intensity lowers the overall security score.",
+        "d": "Incorrect. Cyber attacks negatively affect industrial communication rather than improving production."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },    {
+      "question": "Network Latency refers to:",
+      "answers": {
+        "a": "The time taken for a data packet to travel from the sender to the receiver",
+        "b": "The total number of connected devices",
+        "c": "The storage capacity of a server",
+        "d": "The electrical power consumed by network equipment"
+      },
+      "explanations": {
+        "a": "Correct. Network latency is the communication delay between transmitting and receiving devices and is usually measured in milliseconds (ms). Lower latency is essential for real-time industrial control systems.",
+        "b": "Incorrect. Device count affects network traffic but does not define latency.",
+        "c": "Incorrect. Server storage capacity is unrelated to communication delay.",
+        "d": "Incorrect. Electrical power consumption is an energy parameter, not a communication parameter."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which factor most effectively improves the Security Score in this simulation?",
+      "answers": {
+        "a": "Increasing Firewall Strength",
+        "b": "Increasing Attack Intensity",
+        "c": "Increasing Packet Loss",
+        "d": "Disabling network security"
+      },
+      "explanations": {
+        "a": "Correct. A stronger firewall blocks more malicious traffic, reducing packet loss and improving the overall security score.",
+        "b": "Incorrect. Higher attack intensity increases security risks and lowers the security score.",
+        "c": "Incorrect. Greater packet loss indicates poorer network performance and reduces the security score.",
+        "d": "Incorrect. Disabling security exposes the network to attacks and significantly reduces security."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Throughput in an Industrial IoT network is defined as:",
+      "answers": {
+        "a": "The amount of useful data successfully transmitted through the network",
+        "b": "The number of electrical sensors installed in the factory",
+        "c": "The total storage capacity of the cloud server",
+        "d": "The temperature of network devices"
+      },
+      "explanations": {
+        "a": "Correct. Throughput represents the actual amount of data successfully delivered across the network within a given time.",
+        "b": "Incorrect. The number of sensors affects network traffic but is not the definition of throughput.",
+        "c": "Incorrect. Cloud storage capacity is unrelated to network throughput.",
+        "d": "Incorrect. Device temperature does not define communication throughput."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which industrial device typically collects sensor data and controls industrial machines in an automated production system?",
+      "answers": {
+        "a": "Programmable Logic Controller (PLC)",
+        "b": "Printer",
+        "c": "Desktop Speaker",
+        "d": "Projector"
+      },
+      "explanations": {
+        "a": "Correct. A PLC receives input signals from sensors, executes control logic, and controls industrial equipment in real time.",
+        "b": "Incorrect. A printer produces documents and has no industrial control function.",
+        "c": "Incorrect. Speakers output audio signals and are unrelated to industrial automation.",
+        "d": "Incorrect. Projectors display images but are not used for industrial process control."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Why is secure communication important in an Industrial IoT network?",
+      "answers": {
+        "a": "To protect industrial data and ensure reliable communication between connected devices",
+        "b": "To increase packet loss",
+        "c": "To decrease production quality",
+        "d": "To increase network congestion"
+      },
+      "explanations": {
+        "a": "Correct. Secure communication protects industrial systems against unauthorized access, data modification, and cyber attacks while maintaining reliable factory operations.",
+        "b": "Incorrect. Secure communication aims to reduce packet loss, not increase it.",
+        "c": "Incorrect. Secure communication helps maintain production reliability rather than reducing quality.",
+        "d": "Incorrect. Security mechanisms are designed to protect communication, not create congestion."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    }
+  ]
+}

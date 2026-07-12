@@ -1,0 +1,174 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "During the simulation, the Attack Intensity is increased from 20% to 80% while keeping the Firewall Strength constant. Which network parameter is most likely to increase?",
+      "answers": {
+        "a": "Packet Loss",
+        "b": "Security Score",
+        "c": "Network Availability",
+        "d": "Firewall Strength"
+      },
+      "explanations": {
+        "a": "Correct. Higher attack intensity introduces more malicious traffic, increasing packet drops and communication failures.",
+        "b": "Incorrect. Security Score generally decreases as attack intensity increases.",
+        "c": "Incorrect. Increased attacks reduce network reliability and availability rather than improving it.",
+        "d": "Incorrect. Firewall Strength is an input parameter and does not change automatically during the simulation."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "A factory network experiences high Packet Loss because the Packet Rate exceeds the network capacity. Which engineering solution is the most appropriate?",
+      "answers": {
+        "a": "Reduce Packet Rate or increase network bandwidth",
+        "b": "Increase Attack Intensity",
+        "c": "Disconnect the firewall",
+        "d": "Reduce the number of PLCs permanently"
+      },
+      "explanations": {
+        "a": "Correct. Lowering traffic or increasing available bandwidth reduces congestion and minimizes packet loss.",
+        "b": "Incorrect. Higher attack intensity further degrades network performance.",
+        "c": "Incorrect. Removing firewall protection exposes the network to cyber threats.",
+        "d": "Incorrect. Permanently removing PLCs is not a practical engineering solution."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The simulator reports a Security Score of 92. What does this indicate?",
+      "answers": {
+        "a": "The Industrial IoT network has strong protection and low security risk",
+        "b": "The network has failed completely",
+        "c": "Packet Loss is extremely high",
+        "d": "No industrial devices are connected"
+      },
+      "explanations": {
+        "a": "Correct. A high Security Score indicates strong firewall protection, low attack impact, and reliable communication.",
+        "b": "Incorrect. A failed network would have a very low security score and poor communication.",
+        "c": "Incorrect. High packet loss would reduce the security score.",
+        "d": "Incorrect. Security Score is unrelated to whether devices are connected."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Increasing Firewall Strength while keeping Attack Intensity constant will most likely:",
+      "answers": {
+        "a": "Reduce Packet Loss and improve Security Score",
+        "b": "Increase Network Latency significantly in every case",
+        "c": "Disconnect all industrial devices",
+        "d": "Decrease network throughput to zero"
+      },
+      "explanations": {
+        "a": "Correct. Stronger firewalls block malicious traffic more effectively, reducing packet loss and improving overall network security.",
+        "b": "Incorrect. Firewalls introduce only minimal processing delay under normal conditions.",
+        "c": "Incorrect. Firewalls secure communication rather than disconnect devices.",
+        "d": "Incorrect. Throughput may decrease slightly due to inspection overhead but not to zero."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Which industrial communication protocol is best suited for lightweight telemetry and real-time sensor data exchange in IIoT systems?",
+      "answers": {
+        "a": "MQTT",
+        "b": "SMTP",
+        "c": "FTP",
+        "d": "POP3"
+      },
+      "explanations": {
+        "a": "Correct. MQTT is a lightweight publish-subscribe protocol specifically designed for efficient IoT communication.",
+        "b": "Incorrect. SMTP is an email transfer protocol.",
+        "c": "Incorrect. FTP is used for transferring files rather than telemetry.",
+        "d": "Incorrect. POP3 is used for receiving emails and is unrelated to Industrial IoT communication."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },    {
+      "question": "The simulation shows a Network Availability of 99.6%. What does this indicate?",
+      "answers": {
+        "a": "The industrial communication network is operating reliably with minimal interruptions",
+        "b": "The firewall has failed completely",
+        "c": "All data packets are being lost",
+        "d": "The attack intensity is 100%"
+      },
+      "explanations": {
+        "a": "Correct. A Network Availability of 99.6% indicates that the communication system remains operational for almost the entire observation period, which is desirable for industrial automation.",
+        "b": "Incorrect. Firewall failure would likely reduce network availability rather than maintain a high value.",
+        "c": "Incorrect. If all packets were lost, network availability would be extremely low.",
+        "d": "Incorrect. High availability does not imply maximum attack intensity."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "During the simulation, enabling AES-256 encryption causes a slight increase in network latency. Why does this occur?",
+      "answers": {
+        "a": "Encryption requires additional processing before data transmission",
+        "b": "Encryption permanently blocks all communication",
+        "c": "Encryption increases packet loss intentionally",
+        "d": "Encryption disconnects the Industrial IoT Gateway"
+      },
+      "explanations": {
+        "a": "Correct. Encrypting and decrypting data requires computational processing, which may introduce a small communication delay while significantly improving security.",
+        "b": "Incorrect. Encryption protects communication without preventing normal data exchange.",
+        "c": "Incorrect. Encryption does not intentionally increase packet loss.",
+        "d": "Incorrect. Encryption secures communication and does not disconnect network devices."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The Intrusion Detection System (IDS) reports abnormal packet traffic from an unknown source. What should be the first engineering response?",
+      "answers": {
+        "a": "Investigate the suspicious traffic and isolate the affected network segment",
+        "b": "Disable all factory communication permanently",
+        "c": "Increase packet transmission rate",
+        "d": "Ignore the alert because production is running"
+      },
+      "explanations": {
+        "a": "Correct. Investigating the source and isolating the affected segment helps prevent the spread of potential cyber attacks while maintaining safe operation.",
+        "b": "Incorrect. Completely shutting down communication is rarely the first response and may unnecessarily interrupt production.",
+        "c": "Incorrect. Increasing packet rate could worsen congestion and make attack detection more difficult.",
+        "d": "Incorrect. Ignoring IDS alerts can allow attackers to compromise industrial systems."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The simulator indicates high Packet Loss together with high Network Latency. Which conclusion is most appropriate?",
+      "answers": {
+        "a": "The network is experiencing congestion or a cyber attack that is affecting communication performance",
+        "b": "The industrial network is operating at maximum efficiency",
+        "c": "Firewall protection is unnecessary",
+        "d": "Machine productivity will automatically increase"
+      },
+      "explanations": {
+        "a": "Correct. High packet loss and high latency usually indicate network congestion, excessive traffic, or malicious activity affecting communication quality.",
+        "b": "Incorrect. Efficient industrial networks maintain low latency and minimal packet loss.",
+        "c": "Incorrect. Firewall protection remains essential regardless of current network conditions.",
+        "d": "Incorrect. Poor communication generally reduces manufacturing performance rather than improving it."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Based on the simulation, which combination represents the most secure and efficient Industrial IoT network configuration?",
+      "answers": {
+        "a": "High Firewall Strength, Low Attack Intensity, Low Packet Loss, High Network Availability",
+        "b": "Low Firewall Strength, High Attack Intensity, High Packet Loss",
+        "c": "High Attack Intensity with Firewall Disabled",
+        "d": "Maximum Packet Loss with Low Security Score"
+      },
+      "explanations": {
+        "a": "Correct. Strong firewall protection, minimal attacks, reliable communication, and high network availability represent a secure and efficient Industrial IoT network.",
+        "b": "Incorrect. Weak security combined with frequent attacks creates a highly vulnerable industrial network.",
+        "c": "Incorrect. Disabling the firewall exposes the network to significant cybersecurity risks.",
+        "d": "Incorrect. High packet loss and a low security score indicate poor network performance and inadequate protection."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    }
+  ]
+}
