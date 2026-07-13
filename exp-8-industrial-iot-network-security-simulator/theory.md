@@ -1,4 +1,4 @@
-# Theory: Industrial IoT (IIoT) Network Security
+# Theory
 
 ## 1. Introduction: OT vs. IT Security in Smart Factories
 In the modern landscape of Industry 4.0, the **Industrial Internet of Things (IIoT)** acts as the digital nervous system of the smart factory. Sensors, actuators, Programmable Logic Controllers (PLCs), Human-Machine Interfaces (HMIs), and edge gateways continuously exchange critical data streams to coordinate production lines, drive robotic assembly cells, and stream telemetry to cloud databases (like AWS IoT Core or Microsoft Azure IoT Hub).
@@ -24,17 +24,14 @@ As smart factories connect these legacy devices to IT environments and cloud ser
 ## 3. Defense-in-Depth & The Purdue Model
 To protect connected IIoT devices, modern smart factories implement a **Defense-in-Depth** model based on the **Purdue Reference Model** (ISA-95/IEC 62443 standard):
 
-```text
-Level 4: Enterprise/Cloud  ──► AWS / Azure Cloud Services
-       ▲ (Firewall Border)
-Level 3: Operations        ──► SCADA Servers, Historians
-       ▲ (Firewall Border)
-Level 2: Control           ──► HMIs, Engineering Workstations
-       ▲ (Switch Routing)
-Level 1: Basic Control     ──► PLCs, Edge Gateways
-       ▲ (I/O Bus)
-Level 0: Physical Process  ──► Sensors, Motors, Cameras, Actuators
-```
+<table>
+<tr><th>Purdue Level</th><th>Components</th><th>Security Boundary</th></tr>
+<tr><td>Level 4</td><td>Enterprise / Cloud (AWS / Azure Cloud Services)</td><td>Firewall Border</td></tr>
+<tr><td>Level 3</td><td>SCADA Servers, Historians</td><td>Firewall Border</td></tr>
+<tr><td>Level 2</td><td>HMIs, Engineering Workstations</td><td>Switch Routing</td></tr>
+<tr><td>Level 1</td><td>PLCs, Edge Gateways</td><td>I/O Bus</td></tr>
+<tr><td>Level 0</td><td>Sensors, Motors, Cameras, Actuators</td><td>Physical Process</td></tr>
+</table>
 
 1.  **Industrial Firewalls**: Placed at network boundaries (e.g., Level 3 to Level 4) to perform **Deep Packet Inspection (DPI)**. Unlike standard firewalls, industrial firewalls inspect industrial protocol payloads to verify that command arguments match safe operational profiles.
 2.  **Network Segmentation**: Segmenting the factory floor into distinct physical or virtual zones (e.g., separating the assembly line from warehouse operations) so that a breach in one zone does not compromise the entire factory.
@@ -55,36 +52,62 @@ The international standard **IEC 62443** governs cybersecurity for Industrial Au
 The simulator calculates network health, performance, and threat dynamics based on the following engineering equations:
 
 ### A. Network Congestion (%)
-Congestion occurs when the packet load exceeds the physical data processing capability of the core switch:
-$$\text{Congestion } (\%) = \min\left( \frac{\text{Packet Rate } (R_p) \times \text{Device Count } (N_d) \times 0.1}{\text{Network Capacity } (C_{net})} \times 100, 100 \right)$$
-*   **Physical Meaning**: Shows how traffic volume scales with both device density and transmission frequency relative to switch bandwidth limits.
+
+Congestion occurs when the packet load exceeds the physical data processing capability of the core switch.
+
+<p align="center">
+<i>Congestion (%) = min(((Packet Rate (R<sub>p</sub>) × Device Count (N<sub>d</sub>) × 0.1) / Network Capacity (C<sub>net</sub>)) × 100, 100)</i>
+</p>
+
+- **Physical Meaning:** Shows how traffic volume scales with both device density and transmission frequency relative to the switch bandwidth limits.
 
 ### B. Packet Loss (%)
-Packet loss occurs due to network congestion or malicious packet injection (denial-of-service floods):
-$$\text{Packet Loss } (\%) = \text{Clamp}\left( \text{Attack Intensity } (I_{atk}) \times f_{fw} \times 0.5 + \text{Congestion} \times 0.18, 0, 100 \right)$$
+
+Packet loss occurs due to network congestion or malicious packet injection (Denial-of-Service floods).
+
+<p align="center">
+<i>Packet Loss (%) = Clamp(Attack Intensity (I<sub>atk</sub>) × f<sub>fw</sub> × 0.5 + Congestion × 0.18, 0, 100)</i>
+</p>
+
 where the firewall attenuation factor is defined as:
-$$f_{fw} = \frac{11 - \text{Firewall Strength } (S_{fw})}{10}$$
-*   **Physical Meaning**: High firewall strength lowers the impact of attack traffic. However, extreme traffic load can still cause packet loss via buffer queues overflowing.
+
+<p align="center">
+<i>f<sub>fw</sub> = (11 − Firewall Strength (S<sub>fw</sub>)) / 10</i>
+</p>
+
+- **Physical Meaning:** A higher firewall strength reduces the impact of malicious traffic by filtering harmful packets before they reach the network. However, excessive network congestion or high attack intensity can still lead to packet loss due to switch buffer overflow and limited network processing capacity.
 
 ### C. Network Latency (ms)
+
 The time delay for a packet to travel from sensor to controller/cloud:
-$$\text{Latency (ms)} = \text{Baseline } (5\text{ ms}) + \left(\frac{R_p}{80}\right) \times (1 + N_d \times 0.03) \times (1 + I_{atk} \times 0.015) + \text{Delay}_{enc}$$
-*   where $\text{Delay}_{enc} = 18\text{ ms}$ for AES-256, $8\text{ ms}$ for AES-128, and $0\text{ ms}$ for None.
-*   **Physical Meaning**: Enforcing high-grade encryption (like AES-256) increases the cryptographic processing overhead on resource-constrained microcontrollers, adding latency to the transmission cycle.
+
+<p align="center">
+<i>Latency (ms) = Baseline (5 ms) + (R<sub>p</sub> / 80) × (1 + N<sub>d</sub> × 0.03) × (1 + I<sub>atk</sub> × 0.015) + Delay<sub>enc</sub></i>
+</p>
+
+- **Delay<sub>enc</sub>** = **18 ms** for AES-256, **8 ms** for AES-128, and **0 ms** for None.
+
+- **Physical Meaning:** Enforcing high-grade encryption (such as AES-256) increases the cryptographic processing overhead on resource-constrained microcontrollers, adding latency to the transmission cycle.
 
 ### D. Throughput (pkt/s)
 The quantity of clean, useful packets arriving successfully per second:
-$$\text{Throughput (pkt/s)} = R_p \times \left(1 - \frac{\text{Packet Loss}}{100}\right)$$
+<p align="center"><i>Throughput (pkt/s) = R<sub>p</sub> × (1 − Packet Loss / 100)</i></p>
 
 ### E. Network Availability (%)
 The fraction of the network that remains online and serving communication requests:
-$$\text{Availability } (\%) = 100 - \text{Packet Loss}$$
+<p align="center"><i>Availability (%) = 100 − Packet Loss</i></p>
 
 ### F. Security Score
+
 A composite index representing the overall security posture and cyber-resilience of the operational network:
-$$\text{Security Score} = \text{Availability} - (\text{Attack Intensity} \times 0.4) + (\text{Firewall Strength} \times 5) + \text{Bonus}_{enc}$$
-*   where $\text{Bonus}_{enc} = 15$ for AES-256, $8$ for AES-128, and $0$ for None.
-*   The final score is bounded to a maximum of $100\%$ and a minimum of $0\%$.
+
+<p align="center">
+<i>Security Score = Availability − (Attack Intensity × 0.4) + (Firewall Strength × 5) + Bonus<sub>enc</sub></i>
+</p>
+
+- **Bonus<sub>enc</sub>** = **15** for AES-256, **8** for AES-128, and **0** for None.
+
+- The final score is bounded to a maximum of **100%** and a minimum of **0%**.
 
 ---
 
@@ -93,7 +116,7 @@ Security implementation involves balancing security strength against processing 
 
 | Control Option | Security Level (IEC 62443) | Latency Penalty | Network Throughput Impact | Vulnerability Addressed |
 | :--- | :--- | :--- | :--- | :--- |
-| **No Encryption** | Low (None) | $0\text{ ms}$ | High (No encryption overhead) | Man-in-the-Middle (Eavesdropping / Packet tampering) |
-| **AES-128** | Medium (SL 2) | $+8\text{ ms}$ | Minor | Basic packet payload decryption |
-| **AES-256** | High (SL 3 - 4) | $+18\text{ ms}$ | Moderate | Cryptographic interception and brute-force attacks |
+| **No Encryption** | Low (None) | 0 ms | High (No encryption overhead) | Man-in-the-Middle (Eavesdropping / Packet tampering) |
+| **AES-128** | Medium (SL 2) | +8 ms | Minor | Basic packet payload decryption |
+| **AES-256** | High (SL 3 - 4) | +18 ms | Moderate | Cryptographic interception and brute-force attacks |
 | **Strong Firewall** | High (DPI Enabled) | Minimal | Filters out bad traffic, recovering throughput | Packet Injection, Flooding, Rogue commands |
