@@ -3,182 +3,285 @@
 ## Step 1: Launch the Simulator and Identify the Factory Layout
 
 1. Open the **Digital Twin Factory Simulator** in a web browser.
-2. Observe the main dashboard layout: a **left control panel** with sliders, a **center SVG factory visualization**, and a **right diagnostics panel** with status indicators and charts.
-3. Identify the four factory zones in the SVG visualization:
-   - **Zone A (Assembly)**: Three CNC machines — CNC-01, CNC-02, CNC-03 — in the top-left.
-   - **Zone B (Machining)**: Two robotic arms — ROB-01, ROB-02 — in the top-center.
-   - **Zone C (Packaging)**: Two packaging stations — PACK-01, PACK-02 — in the top-right.
-   - **Zone D (Storage & Logistics)**: AGV tracks, two AGVs (AGV-A, AGV-B), and storage racks (RACK-01, RACK-02) in the bottom section.
-4. Note the **main conveyor belt** spanning the full width between the upper zones and Zone D, with three blue sensor dots positioned along its length.
-5. Observe the **status ticker bar** at the bottom of the SVG showing the message: *"System initialized — press Run Simulation to begin"*.
+
+2. Observe the main dashboard layout, which consists of:
+   - A **left control panel** containing the simulation sliders.
+   - A **center SVG factory visualization** displaying the Digital Twin.
+   - A **right diagnostics panel** containing the factory status indicators, KPIs, and trend charts.
+
+3. Identify the four factory zones displayed in the SVG visualization:
+   - **Zone A (Assembly):** Three CNC machines — **CNC-01**, **CNC-02**, and **CNC-03** — located in the upper-left section.
+   - **Zone B (Machining):** Two robotic arms — **ROB-01** and **ROB-02** — located in the upper-center section.
+   - **Zone C (Packaging):** Two packaging stations — **PACK-01** and **PACK-02** — located in the upper-right section.
+   - **Zone D (Storage & Logistics):** AGV tracks, two Automated Guided Vehicles (**AGV-A** and **AGV-B**), and storage racks (**RACK-01** and **RACK-02**) located in the lower section of the factory.
+
+4. Observe the **main conveyor belt** spanning the entire width of the factory between the upper production zones and **Zone D**. Note the three blue IoT sensor indicators positioned along the conveyor.
+
+5. Observe the **status ticker** displayed at the bottom of the SVG visualization. Initially, it displays the message:
+
+   *"System initialized — press Run Simulation to begin."*
 
 ---
 
 ## Step 2: Explore the SVG Overlay Tabs
 
-1. Above the factory SVG, locate the **six visualization tabs**: Machines, Conveyor, AGVs, Sensors, Power Grid, and Storage.
-2. Click each tab to observe the different overlay layers:
-   - **Sensors**: Displays blue dashed circles representing IoT sensor coverage radii around each machine and along the conveyor.
-   - **Power Grid**: Shows amber dashed lines tracing the electrical power distribution from each CNC machine up to the main power junction.
-   - **Storage**: Highlights the storage racks in Zone D.
-3. Return to the **Machines** tab (default view) before proceeding.
+1. Above the factory SVG visualization, locate the **six visualization tabs**:
+   - **Machines**
+   - **Conveyor**
+   - **AGVs**
+   - **Sensors**
+   - **Power Grid**
+   - **Storage**
+
+2. Click each tab to observe the different visualization layers:
+   - **Sensors:** Displays blue dashed circles representing the IoT sensor coverage areas around each machine and along the conveyor belt.
+   - **Power Grid:** Displays amber dashed lines illustrating the electrical power distribution from each CNC machine to the main power junction.
+   - **Storage:** Highlights the storage racks located in **Zone D**.
+
+3. After exploring each visualization layer, return to the **Machines** tab (default view) before proceeding to the next step.
 
 ---
 
 ## Step 3: Understand the Baseline Configuration
 
-1. Before starting the simulation, read the default slider values on the left control panel:
-   - **Machine Count**: 12
-   - **Production Rate**: 450 u/hr
-   - **Power Usage**: 250 kW
-   - **Downtime Probability**: 10%
-2. On the right panel, note that all metrics display placeholder dashes (`--`) — these will populate once the simulation begins.
-3. Observe the **System Status** indicator at the bottom of the left panel showing **OFFLINE**.
+1. Before starting the simulation, observe the default slider values on the left control panel:
+
+   - **Machine Count:** 12
+   - **Production Rate:** 450 u/hr
+   - **Power Usage:** 250 kW
+   - **Downtime Probability:** 10%
+
+2. On the right diagnostics panel, observe that all performance metrics display placeholder dashes (`--`). These values will be populated once the simulation begins.
+
+3. Observe the **System Status** indicator located at the bottom of the left control panel. Initially, the simulator displays the status as **OFFLINE**.
 
 ---
 
 ## Step 4: Start the Simulation and Observe Real-Time Behavior
 
-1. Click the **Run Simulation** button on the left panel.
-2. Observe the following changes immediately:
-   - The **Live Badge** switches from "OFFLINE" to **"LIVE"** with a pulsing green indicator.
-   - The **System Status** dot turns green and shows **"RUNNING"**.
-   - **CNC spindles** begin rotating at a speed proportional to the Production Rate.
-   - **Robotic arms** (ROB-01 and ROB-02) start oscillating back and forth in opposite phases.
-   - **Conveyor belt** seam lines begin moving from left to right, and colored product boxes start spawning on the belt.
-   - **AGV-A** and **AGV-B** begin traversing their logistics tracks across the factory floor. AGV-A picks up cargo at one end and drops it off at the other.
-3. Read the **real-time analytics row** below the SVG:
-   - **OEE (Efficiency)**: The current OEE percentage (color-coded: green ≥ 75%, amber ≥ 50%, red < 50%).
-   - **Machine Utilization**: Percentage of installed machine capacity in active use.
-   - **Production Output**: Actual units produced per hour.
-   - **Energy Consumption**: Current power draw in kW.
-4. On the right panel, observe the **Factory Status** metrics: Factory Health, Downtime, Power Usage, Production State, and Alarm Status.
-5. Watch the **KPI Trend Chart** begin plotting three lines over time: Efficiency (green), Utilization (blue), and Energy (amber).
-6. Read the **AI Diagnostic** message that provides a natural-language assessment of factory performance.
+1. Click the **Run Simulation** button on the left control panel.
+
+2. Observe the following changes immediately after the simulation starts:
+
+   - The **Live Badge** changes from **OFFLINE** to **LIVE**, accompanied by a pulsing green indicator.
+   - The **System Status** indicator turns green and displays **RUNNING**.
+   - The **CNC spindles** begin rotating at a speed proportional to the configured **Production Rate**.
+   - The **robotic arms** (**ROB-01** and **ROB-02**) begin oscillating back and forth in opposite phases.
+   - The **conveyor belt** seam lines start moving from left to right, and colored product boxes begin spawning on the conveyor.
+   - **AGV-A** and **AGV-B** begin traversing their predefined logistics routes. **AGV-A** loads cargo at one end of the track and unloads it at the opposite end.
+
+3. Observe the **real-time analytics panel** located below the SVG visualization.
+
+   - **OEE (Efficiency):** Displays the current Overall Equipment Effectiveness percentage *(Green ≥ 75%, Amber ≥ 50%, Red < 50%)*.
+   - **Machine Utilization:** Displays the percentage of installed machine capacity currently in active use.
+   - **Production Output:** Displays the actual production throughput in units per hour.
+   - **Energy Consumption:** Displays the current electrical power consumption in kW.
+
+4. Observe the **Factory Status** section on the right diagnostics panel, which continuously updates the following parameters:
+
+   - Factory Health
+   - Downtime
+   - Power Usage
+   - Production State
+   - Alarm Status
+
+5. Observe the **KPI Trend Chart**, which begins plotting three real-time performance metrics:
+
+   - **Efficiency (OEE)** — Green line
+   - **Machine Utilization** — Blue line
+   - **Energy Consumption** — Amber line
+
+6. Read the **AI Diagnostic** message displayed on the right panel, which provides a natural-language assessment of the current factory operating conditions.
 
 ---
 
 ## Step 5: Experiment with Machine Count
 
-1. Move the **Machine Count** slider from 12 upwards towards 30–50.
+1. Increase the **Machine Count** slider from **12** towards **30–50**.
+
 2. Observe the following effects:
-   - **Machine Utilization** increases (more machines engaged in production).
-   - **Performance** component of OEE improves (more machines contribute to output capacity).
-   - **Production Output** rises as more machines process parts concurrently.
-3. Reduce the Machine Count to a very low value (1–3) and observe:
-   - Utilization and Performance drop significantly.
-   - OEE decreases even if downtime and power are optimal.
-4. **Key Insight**: Machine count directly scales the factory's throughput capacity. Under-provisioning machines creates a performance bottleneck regardless of other settings.
+
+   - **Machine Utilization** increases as more machines participate in production.
+   - The **Performance** component of OEE improves because additional machines contribute to the available production capacity.
+   - **Production Output** increases as more machines process products simultaneously.
+
+3. Reduce the **Machine Count** to a very low value (**1–3**) and observe the following:
+
+   - Machine Utilization and Performance decrease significantly.
+   - OEE decreases even when the Power Usage and Downtime settings remain optimal.
+
+4. **Key Insight:** Machine Count directly determines the factory's production capacity. Operating with too few machines creates a production bottleneck regardless of the other operating parameters.
 
 ---
 
 ## Step 6: Experiment with Production Rate
 
-1. Increase the **Production Rate** slider from 450 towards 800–1000 u/hr.
-2. Observe the following visual and metric changes:
-   - **CNC spindles rotate faster** (higher machining speed).
-   - **Conveyor belt moves faster** with more frequent product spawns.
-   - **AGVs move faster** to keep up with material demand.
-   - **Performance** component of OEE approaches 100%.
-   - **Production Output** increases.
-3. Lower the Production Rate to the minimum (10 u/hr) and observe:
-   - All animations slow dramatically.
-   - AGVs barely move, conveyor nearly stops, spindles rotate slowly.
-   - Performance drops to near zero, causing OEE to plummet.
-4. **Key Insight**: Production rate controls the factory's target speed, but actual output also depends on machine count, power, and downtime.
+1. Increase the **Production Rate** slider from **450** towards **800–1000 u/hr**.
+
+2. Observe the following visual and performance changes:
+
+   - The **CNC spindles** rotate faster, representing increased machining speed.
+   - The **conveyor belt** moves faster, with products spawning more frequently.
+   - The **AGVs** travel faster to meet the increased material handling demand.
+   - The **Performance** component of OEE approaches **100%**.
+   - **Production Output** increases accordingly.
+
+3. Reduce the **Production Rate** to the minimum value (**10 u/hr**) and observe the following:
+
+   - All factory animations slow down considerably.
+   - The AGVs move very slowly, the conveyor belt nearly stops, and the CNC spindle rotation speed decreases significantly.
+   - The **Performance** component drops close to zero, causing the Overall Equipment Effectiveness (OEE) to decrease substantially.
+
+4. **Key Insight:** The Production Rate controls the target operating speed of the factory. However, the actual production output also depends on the Machine Count, Power Usage, and Downtime Probability.
 
 ---
 
 ## Step 7: Test Power Overdrive and Quality Degradation
 
-1. Set the **Power Usage** slider to the standard range (around 200–350 kW). Note that OEE quality remains high.
-2. Push the **Power Usage above 350 kW** (overdrive zone). Observe:
-   - Initially, production output may spike slightly.
-   - The **Quality** component of OEE begins degrading — the higher the power above 350 kW, the more defects are produced.
-   - At maximum power (500 kW), quality drops to approximately 62.5% (1.0 − 150/400).
-   - The overall **OEE decreases** despite higher power input due to quality losses.
-   - **AI Recommendations** flag high energy consumption and suggest scheduling idle machines.
-3. Now set Power below 80 kW (underpowered mode):
-   - Quality is penalized to a fixed 70%.
-   - OEE drops significantly due to the quality penalty.
-4. Return Power to the standard range (200–300 kW).
-5. **Key Insight**: There is an optimal power range. Overdrive increases defects, and underpowering reduces quality — both lower OEE.
+1. Set the **Power Usage** slider within the standard operating range (**200–350 kW**). Observe that the **Quality** component of OEE remains high.
+
+2. Increase the **Power Usage** above **350 kW** (Overdrive Mode) and observe the following:
+
+   - Production Output may increase slightly during the initial stage.
+   - The **Quality** component of OEE begins to decrease. As the power level increases beyond **350 kW**, the number of defective products also increases.
+   - At the maximum power setting (**500 kW**), the Quality factor decreases to approximately **62.5%** *(1.0 − 150/400)*.
+   - The overall **OEE** decreases despite the higher power input because of the reduction in product quality.
+   - The **AI Recommendations** panel generates a warning for excessive energy consumption and recommends scheduling idle machines.
+
+3. Reduce the **Power Usage** below **80 kW** (Underpowered Mode) and observe the following:
+
+   - The **Quality** factor is reduced to a fixed value of **70%**.
+   - The Overall Equipment Effectiveness (OEE) decreases because of the quality penalty.
+
+4. Return the **Power Usage** slider to the standard operating range (**200–300 kW**).
+
+5. **Key Insight:** There is an optimal operating range for power consumption. Excessive power increases defect generation, while insufficient power reduces manufacturing quality. Both conditions decrease the Overall Equipment Effectiveness (OEE).
 
 ---
 
 ## Step 8: Simulate High Downtime and Use Interventions
 
-1. Increase the **Downtime Probability** slider to 30–50%.
-2. Observe:
-   - **OEE drops sharply** as Availability decreases (Availability = 1 − Downtime/100).
-   - **Factory Health** metric decreases.
-   - The **Alarm Status** changes to **"High Downtime!"** (if downtime > 30%).
-   - The **Factory Badge** may switch from "OPERATIONAL" to **"DEGRADED"** (OEE < 65%).
-   - **Status LEDs** on CNC machines turn **red**.
-   - The **AI Diagnostic** displays a critical warning message.
-   - **AI Recommendations** turn red and strongly recommend predictive maintenance.
-3. Use the **Interventions** section in the left panel:
-   - Click **"Schedule Maintenance" → Apply**: This reduces the Downtime Probability by 10 percentage points. Observe the downtime slider value decrease and OEE begin to recover.
-   - Click **"Optimize Power" → Apply**: This reduces Power Usage by 30 kW. Observe the power slider value decrease and energy consumption drop.
-4. **Key Insight**: Interventions simulate real-world maintenance actions. Proactive scheduling directly reduces downtime, while power optimization improves energy efficiency.
+1. Increase the **Downtime Probability** slider to **30–50%**.
+
+2. Observe the following effects:
+
+   - **OEE** decreases significantly as the **Availability** component is reduced.
+
+   <p align="center">
+   <i>Availability = 1 − (Downtime Probability / 100)</i>
+   </p>
+
+   - The **Factory Health** metric decreases.
+   - The **Alarm Status** changes to **"High Downtime!"** when the downtime probability exceeds **30%**.
+   - The **Factory Badge** may change from **OPERATIONAL** to **DEGRADED** when **OEE < 65%**.
+   - The **Status LEDs** on the CNC machines change from green to **red**.
+   - The **AI Diagnostic** panel displays a critical warning message.
+   - The **AI Recommendations** become red and strongly recommend predictive maintenance.
+
+3. Use the **Interventions** section on the left control panel.
+
+   - Click **Schedule Maintenance → Apply**. The simulator reduces the **Downtime Probability** by **10 percentage points**. Observe the downtime value decrease and the OEE begin to recover.
+
+   - Click **Optimize Power → Apply**. The simulator reduces the **Power Usage** by **30 kW**. Observe the reduction in the Power Usage value and the corresponding decrease in Energy Consumption.
+
+4. **Key Insight:** The intervention controls simulate real-world maintenance and optimization strategies. Preventive maintenance reduces downtime, while power optimization improves overall energy efficiency.
 
 ---
 
 ## Step 9: Analyze the Factory Zone Heatmap
 
-1. Scroll down to the **Factory Zone Heatmap** section below the main visualization.
-2. Observe the four zones displayed as both an SVG grid and horizontal progress bars:
-   - **Zone A (Assembly)**: Activity driven by Production Rate × Availability.
-   - **Zone B (Machining)**: Activity driven by Machine Count × Power allocation.
-   - **Zone C (Packaging)**: Follows Zone A at ~85% capacity (downstream effect).
-   - **Zone D (Storage)**: Activity driven by Production Rate (logistics demand).
-3. Adjust sliders and observe how the heatmap colors change:
-   - Green (< 40% load) → Amber (40–60%) → Orange (60–80%) → Red (> 80% critical load).
-4. **Key Insight**: The heatmap reveals which zones are under stress. A red zone indicates potential bottlenecks or overload.
+1. Scroll to the **Factory Zone Heatmap** section located below the main factory visualization.
+
+2. Observe the four production zones displayed using both an SVG grid and horizontal activity bars.
+
+   - **Zone A (Assembly):** Activity is proportional to **Production Rate × Availability**.
+   - **Zone B (Machining):** Activity is proportional to **Machine Count × Power Allocation**.
+   - **Zone C (Packaging):** Operates at approximately **85%** of Zone A activity because of downstream dependency.
+   - **Zone D (Storage):** Activity is proportional to the current **Production Rate**, representing logistics demand.
+
+3. Modify the factory control parameters and observe the corresponding changes in the heatmap colors.
+
+   - **Green:** Load below **40%**
+   - **Amber:** Load between **40% and 60%**
+   - **Orange:** Load between **60% and 80%**
+   - **Red:** Load above **80%** (Critical Load)
+
+4. **Key Insight:** The heatmap provides a visual representation of factory workload. Red zones indicate potential bottlenecks or overloaded production areas that may require operational adjustments.
 
 ---
 
 ## Step 10: Review AI Recommendations
 
-1. In the **AI Recommendations** panel (bottom of the page), read the five recommendations generated by the system.
-2. Each recommendation has a color-coded dot:
-   -  **Green**: The metric is within optimal range.
-   -  **Amber**: Warning — the metric needs attention.
-   -  **Red**: Critical — immediate action is required.
-3. Try to achieve a state where **all five recommendations are green** by finding the optimal combination of Machine Count, Production Rate, Power, and Downtime.
-4. **Key Insight**: The AI Recommendations serve as an intelligent advisory system that helps operators tune factory parameters for maximum efficiency.
+1. Navigate to the **AI Recommendations** panel located at the bottom of the simulator.
+
+2. Review the five recommendations generated by the Digital Twin.
+
+   - 🟢 **Green:** The corresponding metric is operating within the optimal range.
+   - 🟠 **Amber:** Warning — the metric requires attention.
+   - 🔴 **Red:** Critical — immediate corrective action is recommended.
+
+3. Adjust the **Machine Count**, **Production Rate**, **Power Usage**, and **Downtime Probability** sliders to achieve a condition where **all five recommendations are green**.
+
+4. **Key Insight:** The AI Recommendations function as an intelligent decision-support system, assisting operators in selecting the optimal operating conditions for maximum manufacturing efficiency.
 
 ---
 
 ## Step 11: Record Data and Compare Configurations
 
-1. Once you have found an interesting configuration, click the **Record Data** button (on the left panel or in the log section header).
-2. A new row appears in the **Production Timeline / Factory Event Log** table showing:
-   - Run number, Machine Count, Production Rate, Efficiency (%), Power Usage (kW), Downtime (%), and a color-coded Status badge (Optimal / Good / Warning / High Downtime).
-3. Adjust the sliders to a different configuration and click **Record Data** again.
-4. Repeat for 4–5 different configurations to build a comparison dataset.
-5. **Key Insight**: Recording multiple configurations allows you to empirically determine the optimal operating point where OEE is maximized.
+1. After identifying an interesting factory configuration, click the **Record Data** button (available on the left control panel or in the Factory Event Log section).
+
+2. Observe that a new entry is added to the **Production Timeline / Factory Event Log** table containing the following information:
+
+   - Run Number
+   - Machine Count
+   - Production Rate
+   - Efficiency (%)
+   - Power Usage (kW)
+   - Downtime (%)
+   - Status badge (**Optimal / Good / Warning / High Downtime**)
+
+3. Modify one or more factory control parameters and click **Record Data** again to save the new configuration.
+
+4. Repeat this process for **4–5 different operating configurations** to create a comparison dataset.
+
+5. **Key Insight:** Recording multiple operating configurations enables a comparative analysis of factory performance and helps identify the operating point that maximizes the Overall Equipment Effectiveness (OEE).
 
 ---
 
 ## Step 12: Export Data for External Analysis
 
-1. After recording several data points, click the **Export CSV** button.
-2. A CSV file named `factory_twin_log.csv` is downloaded containing all recorded entries with columns: Run, Machine Count, Production Rate, Efficiency, Power Usage, Downtime, Status.
-3. Open the CSV in a spreadsheet application (Excel, Google Sheets) or import it into a data analysis tool (Python/Pandas) for further analysis:
-   - Plot Efficiency vs. Production Rate to find the point of diminishing returns.
-   - Analyze the relationship between Power Usage and Quality degradation.
-   - Identify the Downtime threshold at which OEE becomes unacceptable.
+1. After recording multiple simulation runs, click the **Export CSV** button.
+
+2. A CSV file named **`factory_twin_log.csv`** is downloaded containing all recorded simulation entries with the following columns:
+
+   - Run
+   - Machine Count
+   - Production Rate
+   - Efficiency
+   - Power Usage
+   - Downtime
+   - Status
+
+3. Open the exported CSV file using a spreadsheet application (such as **Microsoft Excel** or **Google Sheets**) or import it into a data analysis environment (such as **Python/Pandas**) for further analysis.
+
+   Possible analyses include:
+
+   - Plot **Efficiency** versus **Production Rate** to determine the point of diminishing returns.
+   - Analyze the relationship between **Power Usage** and **Quality** degradation.
+   - Identify the **Downtime Probability** threshold at which the Overall Equipment Effectiveness (OEE) becomes unacceptable.
 
 ---
 
 ## Step 13: Pause, Reset, and Reflect
 
-1. Click **Pause** to freeze the simulation while retaining the current state.
-2. Click **Reset** to restore all parameters to their default values and clear the event log.
-3. Document your findings:
-   - What is the maximum OEE you achieved? What parameters produced it?
-   - At what Power level did quality begin to degrade noticeably?
-   - What Downtime Probability threshold caused the factory to shift from "Operational" to "Degraded"?
-   - How did Machine Count interact with Production Rate to affect utilization?
-   - Which factory zones showed the highest activity in your optimal configuration?
+1. Click the **Pause** button to temporarily stop the simulation while preserving the current factory state.
+
+2. Click the **Reset** button to restore all simulation parameters to their default values and clear the Factory Event Log.
+
+3. Document your observations by answering the following questions:
+
+   - What was the maximum Overall Equipment Effectiveness (OEE) achieved during the experiment? Which parameter settings produced this result?
+   - At what **Power Usage** level did product quality begin to degrade noticeably?
+   - At what **Downtime Probability** did the factory transition from **Operational** to **Degraded**?
+   - How did the **Machine Count** interact with the **Production Rate** to influence Machine Utilization?
+   - Which factory zones exhibited the highest activity under the optimal operating configuration?
