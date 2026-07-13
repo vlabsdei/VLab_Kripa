@@ -163,17 +163,17 @@ Simulating faults allows for better understanding of system robustness and diagn
 
 ## Conveyor Velocity Formula
 
-The conveyor velocity depends on pulley radius and angular velocity.
+The conveyor velocity depends on the pulley radius and angular velocity.
 
-\[
-v = r\omega
-\]
+<p align="center">
+<i>v = r × ω</i>
+</p>
 
 Where:
 
-- v = Conveyor Velocity (m/s)
-- r = Pulley Radius (m)
-- ω = Angular Velocity (rad/s)
+- **v** = Conveyor Velocity (m/s)
+- **r** = Pulley Radius (m)
+- **ω** = Angular Velocity (rad/s)
 
 ---
 
@@ -181,15 +181,15 @@ Where:
 
 The power required for conveyor operation is:
 
-\[
-P = F \times v
-\]
+<p align="center">
+<i>P = F × v</i>
+</p>
 
 Where:
 
-- P = Power (W)
-- F = Applied Force (N)
-- v = Conveyor Velocity (m/s)
+- **P** = Power (W)
+- **F** = Applied Force (N)
+- **v** = Conveyor Velocity (m/s)
 
 ---
 
@@ -197,14 +197,14 @@ Where:
 
 Transport Time is calculated as:
 
-\[
-Time = \frac{Length}{Speed}
-\]
+<p align="center">
+<i>Transport Time = Length / Speed</i>
+</p>
 
 Where:
 
-- Length = Conveyor Length (m)
-- Speed = Belt Speed (m/s)
+- **Length** = Conveyor Length (m)
+- **Speed** = Belt Speed (m/s)
 
 ---
 
