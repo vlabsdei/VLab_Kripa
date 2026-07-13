@@ -51,16 +51,16 @@ Storage management refers to the efficient utilization of available warehouse sp
 
 The storage utilization percentage is calculated as:
 
-\[
-Storage\ Utilization = \frac{Used\ Storage}{Total\ Storage} \times 100
-\]
+<p align="center">
+<i>Storage Utilization = (Used Storage / Total Storage) × 100</i>
+</p>
 
 Where:
 
-- Used Storage = Occupied warehouse capacity
-- Total Storage = Maximum warehouse capacity
+- **Used Storage:** Occupied warehouse capacity.
+- **Total Storage:** Maximum warehouse capacity.
 
-Higher utilization improves efficiency but excessive utilization may lead to congestion and operational delays.
+Higher storage utilization improves warehouse efficiency. However, excessive utilization may lead to congestion and operational delays.
 
 ---
 
@@ -74,17 +74,25 @@ Important inventory parameters include:
 
 Current quantity of goods available in storage.
 
+---
+
 ### Inventory Threshold
 
 Minimum inventory level that triggers replenishment activities.
+
+---
 
 ### Reorder Point
 
 The inventory quantity at which new stock must be ordered.
 
+---
+
 ### Safety Stock
 
 Extra inventory maintained to prevent stockouts during unexpected demand fluctuations.
+
+**Observation**
 
 Effective inventory management helps maintain continuous warehouse operations.
 
@@ -123,11 +131,11 @@ Order processing performance directly affects:
 - Warehouse efficiency
 - Logistics costs
 
-Order processing time can be estimated as:
+The order processing time can be estimated as:
 
-\[
-Processing\ Time = \frac{Number\ of\ Orders}{Robot\ Speed}
-\]
+<p align="center">
+<i>Processing Time = Number of Orders / Robot Speed</i>
+</p>
 
 A lower processing time indicates a more efficient warehouse operation.
 
@@ -137,12 +145,9 @@ A lower processing time indicates a more efficient warehouse operation.
 
 Robot utilization measures how effectively warehouse robots are being used.
 
-\[
-Robot\ Utilization =
-\frac{Active\ Time}
-{Available\ Time}
-\times 100
-\]
+<p align="center">
+<i>Robot Utilization = (Active Time / Available Time) × 100</i>
+</p>
 
 High robot utilization indicates efficient use of automation resources.
 
@@ -194,31 +199,43 @@ Digital twins enable warehouse managers to simulate operational scenarios before
 
 ## 11. Key Performance Indicators (KPIs)
 
-Smart warehouses use KPIs to evaluate operational performance.
+Smart warehouses use **Key Performance Indicators (KPIs)** to evaluate operational performance.
 
 ### Storage Utilization (%)
 
 Measures warehouse space efficiency.
 
+---
+
 ### Order Processing Time
 
 Measures order fulfillment speed.
+
+---
 
 ### Robot Utilization (%)
 
 Measures automation efficiency.
 
+---
+
 ### Warehouse Efficiency
 
 Indicates overall warehouse productivity.
+
+---
 
 ### Congestion Index
 
 Measures operational congestion risk.
 
+---
+
 ### Inventory Health
 
 Represents the condition of inventory availability and stock balance.
+
+---
 
 These KPIs help managers identify performance bottlenecks and optimize warehouse operations.
 
@@ -235,6 +252,7 @@ Smart warehouse systems are widely used in:
 - Automotive supply chains
 - Food and beverage warehouses
 - Third-party logistics providers (3PL)
+
 Organizations such as Amazon, Walmart, Flipkart, and DHL use smart warehouse technologies to manage large-scale logistics operations efficiently.
 
 ---
@@ -250,97 +268,129 @@ After completing this experiment, learners will be able to:
 
 ## 14. Simulation Calculation Engine
 
-The warehouse simulator utilizes real-time mathematical models to calculate various KPIs based on the configured parameters. All values are capped at 100% where applicable.
+The warehouse simulator utilizes real-time mathematical models to calculate various KPIs based on the configured parameters. All values are capped at **100%** where applicable.
+
+---
 
 ### 1. Storage Utilization (%)
+
 Calculates how much of the warehouse capacity is currently occupied by incoming orders.
 
 **Formula:**
 
-\[
-Storage\ Utilization = \min\!\Bigl(100,\ \frac{Incoming\ Orders}{Storage\ Capacity} \times 100\Bigr)
-\]
+<p align="center">
+<i>Storage Utilization = min(100, (Incoming Orders / Storage Capacity) × 100)</i>
+</p>
+
+---
 
 ### 2. AGV Processing Time (minutes)
+
 Estimates the time required to process and transport all incoming orders based on the size and speed of the AGV fleet, as well as the travel efficiency of the routing algorithm.
 
 **Formula:**
 
-\[
-Processing\ Time = \frac{Incoming\ Orders}{Fleet\ Size \times AGV\ Speed \times 20} \times M_{algo}
-\]
+<p align="center">
+<i>Processing Time = (Incoming Orders / (Fleet Size × AGV Speed × 20)) × M<sub>algo</sub></i>
+</p>
 
 Where:
-- $M_{algo} = 0.80$ for Nearest Neighbor (reduces travel time by 20%)
-- $M_{algo} = 0.90$ for Balanced Load (reduces congestion delays by 10%)
-- $M_{algo} = 1.00$ for FIFO (baseline travel time)
+
+- **M<sub>algo</sub> = 0.80** for **Nearest Neighbor** (reduces travel time by **20%**).
+- **M<sub>algo</sub> = 0.90** for **Balanced Load** (reduces congestion delays by **10%**).
+- **M<sub>algo</sub> = 1.00** for **FIFO** (baseline travel time).
+
+---
 
 ### 3. AGV Utilization (%)
-Measures the workload placed on the Automated Guided Vehicle (AGV) fleet relative to their fleet size and operational speed.
+
+Measures the workload placed on the Automated Guided Vehicle (AGV) fleet relative to its fleet size and operational speed.
 
 **Formula:**
 
-\[
-AGV\ Utilization = \min\!\Bigl(100,\ \frac{Incoming\ Orders}{Fleet\ Size \times AGV\ Speed \times 10}\Bigr)
-\]
+<p align="center">
+<i>AGV Utilization = min(100, Incoming Orders / (Fleet Size × AGV Speed × 10))</i>
+</p>
+
+---
 
 ### 4. Overall Efficiency Score (%)
-A derived metric that indicates the overall health of the warehouse operation. It starts at 100% and applies penalties based on storage and fleet bottlenecks, while adding bonuses for advanced routing.
+
+A derived metric that indicates the overall health of the warehouse operation. It starts at **100%** and applies penalties based on storage and fleet bottlenecks, while adding bonuses for advanced routing.
 
 **Formula:**
 
-\[
-Efficiency = \max\!\Bigl(40,\ \min\!\bigl(100,\ 100 - (Utilization \times 0.3) - P_{agv} - P_{time} + B_{algo}\bigr)\Bigr)
-\]
+<p align="center">
+<i>Efficiency = max(40, min(100, 100 − (Utilization × 0.3) − P<sub>agv</sub> − P<sub>time</sub> + B<sub>algo</sub>))</i>
+</p>
 
 Where:
-- $P_{agv} = 12$ if AGV Utilization > 80%, otherwise 0
-- $P_{time} = 8$ if Processing Time > 5 minutes, otherwise 0
-- $B_{algo}$ is the routing bonus: $+5\%$ for Nearest Neighbor, $+3\%$ for Balanced Load, and $+0\%$ for FIFO
-- The efficiency score is capped at 100% and has a floor of 40%
+
+- **P<sub>agv</sub> = 12** if **AGV Utilization > 80%**, otherwise **0**.
+- **P<sub>time</sub> = 8** if **Processing Time > 5 minutes**, otherwise **0**.
+- **B<sub>algo</sub>** is the routing bonus:
+  - **+5%** for **Nearest Neighbor**
+  - **+3%** for **Balanced Load**
+  - **+0%** for **FIFO**
+- The efficiency score is capped at **100%** and has a minimum value of **40%**.
+
+---
 
 ### 5. Pending Orders
+
 Estimates the backlog of orders that cannot be fulfilled immediately by the current active AGV fleet.
 
 **Formula:**
 
-\[
-Pending\ Orders = \max\!\bigl(0,\ Incoming\ Orders - Fleet\ Size \times AGV\ Speed \times 60\bigr)
-\]
+<p align="center">
+<i>Pending Orders = max(0, Incoming Orders − (Fleet Size × AGV Speed × 60))</i>
+</p>
+
+---
 
 ### 6. Congestion Index
+
 A categorical indicator derived from storage utilization that classifies the level of warehouse congestion.
 
-| Storage Utilization | Congestion Level |
-|---------------------|-----------------|
-| Below 60% | Low |
-| 60% to 84% | Medium |
-| 85% and above | High |
+| **Storage Utilization** | **Congestion Level** |
+|-------------------------|----------------------|
+| Below **60%** | Low |
+| **60% to 84%** | Medium |
+| **85% and above** | High |
+
+---
 
 ### 7. Inventory Health
-Indicates whether current stock levels are adequate relative to the configured inventory threshold. In the simulation UI, this health status is reflected via messages in the **Smart Recommendations** and **Live Calculation Trace** panels:
 
-| Condition | Health Status (UI Indicators) |
-|-----------|--------------|
-| Incoming Orders >= Inventory Threshold | Healthy (No stock warnings) |
+Indicates whether current stock levels are adequate relative to the configured inventory threshold. In the simulation UI, this health status is reflected through the **Smart Recommendations** and **Live Calculation Trace** panels.
+
+| **Condition** | **Health Status (UI Indicators)** |
+|---------------|-----------------------------------|
+| Incoming Orders ≥ Inventory Threshold | Healthy (No stock warnings) |
 | Incoming Orders < Inventory Threshold | Low Stock ("Low Stock Alert" warning in recommendations and trace) |
 
-### 8. Rack Zone Distribution
-The warehouse contains four physical rack zones (A, B, C, D) in the SVG layout that are filled proportionally based on overall storage utilization.
+---
 
-| Rack Zone | Fill Percentage |
-|-----------|----------------|
+### 8. Rack Zone Distribution
+
+The warehouse contains four physical rack zones (**A**, **B**, **C**, and **D**) in the SVG layout that are filled proportionally based on the overall storage utilization.
+
+| **Rack Zone** | **Fill Percentage** |
+|---------------|---------------------|
 | Zone A | Storage Utilization |
-| Zone B | Storage Utilization x 0.90 |
-| Zone C | Storage Utilization x 0.75 |
-| Zone D | Storage Utilization x 0.60 |
+| Zone B | Storage Utilization × 0.90 |
+| Zone C | Storage Utilization × 0.75 |
+| Zone D | Storage Utilization × 0.60 |
+
+---
 
 ### 9. Congestion Heatmap Zone Distribution
-The congestion heatmap displays the activity levels across four key functional areas. Zones A and B scale with storage utilization, while the activity-driven packaging and dispatch areas (Zones C and D) scale with AGV utilization:
 
-| Heatmap Zone | Functional Area | Activity Level Percentage |
-|--------------|-----------------|---------------------------|
+The congestion heatmap displays the activity levels across four key functional areas. Zones **A** and **B** scale with storage utilization, while the activity-driven packaging and dispatch areas (**Zones C** and **D**) scale with AGV utilization.
+
+| **Heatmap Zone** | **Functional Area** | **Activity Level Percentage** |
+|------------------|---------------------|-------------------------------|
 | Zone A | Storage | Storage Utilization |
-| Zone B | Picking | Storage Utilization x 0.90 |
-| Zone C | Packaging | AGV Utilization x 0.80 |
-| Zone D | Dispatch | AGV Utilization x 0.60 |
+| Zone B | Picking | Storage Utilization × 0.90 |
+| Zone C | Packaging | AGV Utilization × 0.80 |
+| Zone D | Dispatch | AGV Utilization × 0.60 |
