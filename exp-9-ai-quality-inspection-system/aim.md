@@ -1,0 +1,3 @@
+# Aim of the Experiment
+
+To study the principles of Artificial Intelligence (AI)-based quality inspection used in Industry 4.0 manufacturing by simulating automated visual inspection, defect detection, and intelligent decision-making for product quality assessment. The experiment enables students to analyze the influence of product dimensions, defect threshold, camera diagnostics (focus, exposure, contrast), and inspection speed on defect detection, AI confidence, and overall inspection accuracy in a smart manufacturing environment.

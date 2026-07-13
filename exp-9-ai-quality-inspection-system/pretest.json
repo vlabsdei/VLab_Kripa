@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the primary objective of an AI-based Quality Inspection System in Industry 4.0?",
+      "answers": {
+        "a": "To increase machine temperature",
+        "b": "To automatically inspect products and identify manufacturing defects",
+        "c": "To replace industrial robots",
+        "d": "To increase energy consumption"
+      },
+      "explanations": {
+        "a": "Incorrect. Machine temperature is monitored for maintenance purposes and is unrelated to quality inspection.",
+        "b": "Correct. AI-based quality inspection automatically detects manufacturing defects using computer vision and machine learning, improving inspection speed and consistency.",
+        "c": "Incorrect. AI inspection systems complement robotic automation but do not replace industrial robots.",
+        "d": "Incorrect. Quality inspection focuses on product quality rather than energy consumption."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which component captures images of products for AI-based inspection?",
+      "answers": {
+        "a": "PLC",
+        "b": "Compressor",
+        "c": "Electric Motor",
+        "d": "Industrial Camera"
+      },
+      "explanations": {
+        "a": "Incorrect. A PLC controls industrial equipment but does not capture images.",
+        "b": "Incorrect. Compressors generate compressed air and are unrelated to image acquisition.",
+        "c": "Incorrect. Electric motors provide mechanical motion and are not imaging devices.",
+        "d": "Correct. Industrial cameras acquire high-quality images that are processed by computer vision algorithms for defect detection."
+      },
+      "correctAnswer": "d",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Computer Vision in manufacturing is primarily used to:",
+      "answers": {
+        "a": "Generate electrical power",
+        "b": "Control factory lighting",
+        "c": "Analyze images and identify product defects",
+        "d": "Increase conveyor speed"
+      },
+      "explanations": {
+        "a": "Incorrect. Power generation is unrelated to computer vision.",
+        "b": "Incorrect. Lighting supports image acquisition but is not the primary function of computer vision.",
+        "c": "Correct. Computer Vision analyzes product images to detect defects, verify dimensions, and automate quality inspection.",
+        "d": "Incorrect. Conveyor speed is controlled by automation systems rather than vision algorithms."
+      },
+      "correctAnswer": "c",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Inspection Accuracy is calculated as:",
+      "answers": {
+        "a": "Rejected Products / Accepted Products × 100",
+        "b": "Inspection Speed / Product Size",
+        "c": "Camera Focus × Product Size",
+        "d": "Correct Detections / Total Inspections × 100"
+      },
+      "explanations": {
+        "a": "Incorrect. This does not represent inspection accuracy.",
+        "b": "Incorrect. Inspection speed and product size do not directly calculate inspection accuracy.",
+        "c": "Incorrect. Camera focus influences performance but is not the mathematical definition of inspection accuracy.",
+        "d": "Correct. Inspection Accuracy measures the percentage of products correctly classified by the AI inspection system."
+      },
+      "correctAnswer": "d",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which of the following is a common manufacturing defect detected by AI vision systems?",
+      "answers": {
+        "a": "Internet Bandwidth",
+        "b": "Surface Scratch",
+        "c": "Battery Voltage",
+        "d": "Network Latency"
+      },
+      "explanations": {
+        "a": "Incorrect. Internet bandwidth is a network parameter and not a product defect.",
+        "b": "Correct. Surface scratches are common visual defects detected during automated quality inspection.",
+        "c": "Incorrect. Battery voltage is an electrical parameter.",
+        "d": "Incorrect. Network latency relates to communication systems, not product inspection."
+      },
+      "correctAnswer": "b",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What does the AI Confidence Score represent during product inspection?",
+      "answers": {
+        "a": "The operating speed of the conveyor belt",
+        "b": "The total number of inspected products",
+        "c": "The electrical power consumed by the camera",
+        "d": "The probability that the AI has correctly identified the detected defect"
+      },
+      "explanations": {
+        "a": "Incorrect. Conveyor speed influences inspection throughput but is not represented by the confidence score.",
+        "b": "Incorrect. The number of inspected products is a production metric, not an AI confidence metric.",
+        "c": "Incorrect. Camera power consumption is unrelated to AI prediction confidence.",
+        "d": "Correct. The AI Confidence Score indicates how certain the AI model is about its prediction. A higher confidence score generally represents a more reliable defect classification."
+      },
+      "correctAnswer": "d",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "What is the primary purpose of setting a Defect Threshold in an AI quality inspection system?",
+      "answers": {
+        "a": "To define the maximum permissible defect size before a product is rejected",
+        "b": "To increase conveyor speed",
+        "c": "To reduce camera resolution",
+        "d": "To calculate electrical power consumption"
+      },
+      "explanations": {
+        "a": "Correct. The Defect Threshold determines the acceptable defect limit. Products exceeding this limit are classified as defective and rejected.",
+        "b": "Incorrect. Conveyor speed affects production throughput but is unrelated to defect threshold.",
+        "c": "Incorrect. Camera resolution is a hardware specification and is not controlled by the defect threshold.",
+        "d": "Incorrect. Electrical power calculations are unrelated to defect threshold settings."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Why is Precision an important metric in AI-based quality inspection?",
+      "answers": {
+        "a": "It measures conveyor belt efficiency",
+        "b": "It measures how many rejected products are actually defective",
+        "c": "It measures camera brightness",
+        "d": "It measures electrical energy consumption"
+      },
+      "explanations": {
+        "a": "Incorrect. Conveyor efficiency is unrelated to AI precision.",
+        "b": "Correct. Precision evaluates the accuracy of defect predictions by indicating how many products identified as defective are truly defective. High precision reduces unnecessary rejection of good products.",
+        "c": "Incorrect. Camera brightness affects image quality but is not measured by precision.",
+        "d": "Incorrect. Precision is an AI performance metric, not an energy metric."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Increasing Inspection Speed without improving the imaging system may result in:",
+      "answers": {
+        "a": "Zero product defects",
+        "b": "Automatic improvement in AI confidence",
+        "c": "Higher image resolution",
+        "d": "Lower inspection accuracy due to reduced processing time"
+      },
+      "explanations": {
+        "a": "Incorrect. Increasing inspection speed does not eliminate manufacturing defects.",
+        "b": "Incorrect. AI confidence does not automatically increase with inspection speed.",
+        "c": "Incorrect. Image resolution depends on camera hardware rather than inspection speed.",
+        "d": "Correct. Very high inspection speeds reduce the available image acquisition and processing time, which may decrease detection accuracy."
+      },
+      "correctAnswer": "d",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Why is AI-based quality inspection preferred over manual inspection in modern smart factories?",
+      "answers": {
+        "a": "It only works without industrial cameras",
+        "b": "It completely eliminates the need for manufacturing processes",
+        "c": "It provides faster, more consistent, and more accurate defect detection",
+        "d": "It increases production defects intentionally"
+      },
+      "explanations": {
+        "a": "Incorrect. Industrial cameras are fundamental components of AI-based visual inspection systems.",
+        "b": "Incorrect. AI supports manufacturing but does not replace manufacturing processes themselves.",
+        "c": "Correct. AI inspection systems operate continuously with high speed, repeatability, and accuracy, reducing human error and improving product quality.",
+        "d": "Incorrect. The purpose of AI inspection is to reduce defects, not increase them."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    }
+  ]
+}

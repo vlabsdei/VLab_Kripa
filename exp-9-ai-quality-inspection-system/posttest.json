@@ -1,0 +1,175 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "During the simulation, Optics Focus is increased from 70% to 95% while all other parameters remain constant. Which outcome is most likely?",
+      "answers": {
+        "a": "Conveyor speed decreases automatically",
+        "b": "Product size becomes smaller",
+        "c": "Inspection Accuracy and AI Confidence Score increase",
+        "d": "Defect Threshold becomes zero"
+      },
+      "explanations": {
+        "a": "Incorrect. Conveyor speed is controlled independently and does not change with optics focus.",
+        "b": "Incorrect. Product size is a user-defined parameter and is unrelated to optics focus.",
+        "c": "Correct. Higher optics focus provides better image clarity and more reliable feature extraction, leading to improved inspection accuracy and higher AI confidence.",
+        "d": "Incorrect. The defect threshold remains unchanged unless modified by the user."
+      },
+      "correctAnswer": "c",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "The simulator reports a high number of False Positives. What does this indicate?",
+      "answers": {
+        "a": "Many good products are incorrectly classified as defective",
+        "b": "No products are being inspected",
+        "c": "Many defective products are correctly detected",
+        "d": "The conveyor belt has stopped"
+      },
+      "explanations": {
+        "a": "Correct. False Positives occur when acceptable products are mistakenly rejected, increasing production cost and material waste.",
+        "b": "Incorrect. False Positive values can only exist if products are being inspected.",
+        "c": "Incorrect. Correctly identifying defective products represents True Positives.",
+        "d": "Incorrect. Conveyor operation is unrelated to the definition of False Positives."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Inspection Speed is increased significantly while the image processing capability remains unchanged. Which effect is most likely?",
+      "answers": {
+        "a": "Camera resolution increases automatically",
+        "b": "AI Confidence automatically becomes 100%",
+        "c": "Every product is rejected regardless of quality",
+        "d": "Inspection Throughput increases, but inspection accuracy may decrease"
+      },
+      "explanations": {
+        "a": "Incorrect. Camera resolution is determined by hardware specifications.",
+        "b": "Incorrect. AI confidence depends on image quality and model performance, not inspection speed alone.",
+        "c": "Incorrect. Product rejection depends on detected defects and decision thresholds.",
+        "d": "Correct. Higher inspection speed improves throughput but may reduce the time available for image analysis, potentially lowering inspection accuracy."
+      },
+      "correctAnswer": "d",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "A product has a defect size below the selected Defect Threshold. How should the AI inspection system classify the product?",
+      "answers": {
+        "a": "SYSTEM FAILURE",
+        "b": "PASS",
+        "c": "UNKNOWN",
+        "d": "REJECT"
+      },
+      "explanations": {
+        "a": "Incorrect. Defect threshold settings do not indicate system failure.",
+        "b": "Correct. If the detected defect remains within the allowable threshold, the product satisfies the quality requirement and is accepted.",
+        "c": "Incorrect. The AI system is designed to make a clear inspection decision.",
+        "d": "Incorrect. Products are rejected only when the detected defect exceeds the permissible threshold."
+      },
+      "correctAnswer": "b",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "The AI inspection system reports a Precision of 98% and a Recall of 62%. What is the most appropriate interpretation?",
+      "answers": {
+        "a": "The conveyor speed is too low",
+        "b": "The inspection system is completely inaccurate",
+        "c": "Every inspected product is defective",
+        "d": "Most rejected products are truly defective, but some defective products are still being missed"
+      },
+      "explanations": {
+        "a": "Incorrect. Precision and Recall evaluate AI detection performance rather than conveyor speed.",
+        "b": "Incorrect. The system demonstrates high precision and is not completely inaccurate.",
+        "c": "Incorrect. Precision and Recall do not indicate that every product is defective.",
+        "d": "Correct. High Precision means very few false positives, while lower Recall indicates that some defective products are escaping detection as false negatives."
+      },
+      "correctAnswer": "d",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The AI inspection system reports a Recall of 95%. What does this indicate?",
+      "answers": {
+        "a": "The system successfully detects most of the defective products",
+        "b": "Every inspected product is accepted",
+        "c": "Inspection speed is at its maximum",
+        "d": "The camera resolution has increased"
+      },
+      "explanations": {
+        "a": "Correct. A high Recall indicates that the AI system identifies most defective products, minimizing false negatives and reducing the chance of defective products reaching customers.",
+        "b": "Incorrect. Recall measures the detection of defective products, not the acceptance rate.",
+        "c": "Incorrect. Recall is an AI performance metric and is independent of inspection speed.",
+        "d": "Incorrect. Camera resolution affects image quality but is not represented by Recall."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The simulator displays a low F1 Score even though Precision is high. What is the most likely reason?",
+      "answers": {
+        "a": "The industrial camera has been switched off",
+        "b": "Product Size has become zero",
+        "c": "Recall is low, causing an imbalance between Precision and Recall",
+        "d": "The conveyor belt is moving too slowly"
+      },
+      "explanations": {
+        "a": "Incorrect. If the camera were switched off, inspection would not proceed normally.",
+        "b": "Incorrect. Product size does not mathematically affect the F1 Score.",
+        "c": "Correct. The F1 Score combines Precision and Recall. A low Recall significantly reduces the F1 Score even when Precision is high.",
+        "d": "Incorrect. Conveyor speed does not directly determine the F1 Score."
+      },
+      "correctAnswer": "c",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The AI Confidence Score suddenly decreases after reducing the lighting quality around the inspection station. What is the most appropriate explanation?",
+      "answers": {
+        "a": "Lighting increases conveyor speed",
+        "b": "Lighting determines the number of products on the conveyor",
+        "c": "Lighting automatically changes the product dimensions",
+        "d": "Poor lighting reduces image quality, making defect detection less reliable"
+      },
+      "explanations": {
+        "a": "Incorrect. Conveyor speed is controlled independently of lighting conditions.",
+        "b": "Incorrect. Lighting does not influence the number of products entering the inspection station.",
+        "c": "Incorrect. Lighting does not alter the physical dimensions of the product.",
+        "d": "Correct. Poor illumination decreases image quality, making feature extraction and defect classification more difficult, which reduces AI confidence."
+      },
+      "correctAnswer": "d",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "The Defect Percentage increases from 3% to 12% during production. What is the most appropriate engineering interpretation?",
+      "answers": {
+        "a": "The AI inspection system has automatically become inaccurate",
+        "b": "Manufacturing quality has deteriorated and the production process should be investigated",
+        "c": "The conveyor has stopped operating",
+        "d": "Every product should automatically be accepted"
+      },
+      "explanations": {
+        "a": "Incorrect. An increase in detected defects does not necessarily indicate that the AI system is inaccurate.",
+        "b": "Correct. A significant increase in defect percentage suggests deterioration in manufacturing quality, machine condition, material quality, or process stability and requires further investigation.",
+        "c": "Incorrect. Conveyor operation is unrelated to the defect percentage itself.",
+        "d": "Incorrect. Products should continue to be evaluated according to the inspection criteria."
+      },
+      "correctAnswer": "b",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Based on the simulation, which combination represents the most effective AI-based quality inspection system?",
+      "answers": {
+        "a": "Low Optics Focus, High False Negatives, and Maximum Inspection Speed",
+        "b": "Low Inspection Accuracy and Frequent Incorrect Product Classification",
+        "c": "High Defect Percentage with Low AI Confidence",
+        "d": "High Optics Focus, High Inspection Accuracy, High AI Confidence, Low Defect Percentage, and Balanced Inspection Speed"
+      },
+      "explanations": {
+        "a": "Incorrect. Low optics focus and high false negatives reduce product quality and allow defective products to pass inspection.",
+        "b": "Incorrect. Low inspection accuracy and frequent misclassification are undesirable characteristics of any AI quality inspection system.",
+        "c": "Incorrect. High defect rates combined with low confidence indicate poor inspection performance or manufacturing issues.",
+        "d": "Correct. High-quality imaging, reliable AI predictions, accurate inspection, and balanced production speed together produce an efficient and dependable industrial quality inspection system."
+      },
+      "correctAnswer": "d",
+      "difficulty": "advanced"
+    }
+  ]
+}

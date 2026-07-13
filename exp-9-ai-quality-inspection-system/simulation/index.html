@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SmartFactory 4.0 | AI Quality Inspection Game Console</title>
+  <meta name="description" content="AI-based quality inspection simulation game console for Industry 4.0 Virtual Labs" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/main.css" />
+</head>
+<body>
+
+  <!-- ═══════ HEADER ═══════ -->
+  <header class="app-header">
+    <div class="header-brand">
+      <div class="brand-icon">SF</div>
+      <div class="brand-text">
+        <span class="brand-name">SmartFactory <span class="brand-ver">4.0</span></span>
+        <span class="brand-sub">Inspection Console v9.2</span>
+      </div>
+    </div>
+    <div class="header-center">
+      <h1 class="exp-title">EXPERIMENT 9: <span class="exp-accent">AI QUALITY INSPECTION SYSTEM</span></h1>
+    </div>
+    <div class="header-right">
+      <div class="hdr-clock">
+        <div class="clock-time" id="hdr-time">--:--:-- --</div>
+        <div class="clock-date" id="hdr-date">-- --- ----</div>
+      </div>
+      <button class="hdr-btn" id="btn-fs" title="Fullscreen">&#9974;</button>
+    </div>
+  </header>
+
+  <!-- ═══════ MAIN GRID ═══════ -->
+  <main class="app-grid">
+
+    <!-- ─── LEFT COLUMN: CREATOR & SECTORS ─── -->
+    <aside class="left-col">
+
+      <!-- Factory Sector Toggles -->
+      <div class="card theme-card">
+        <div class="card-hdr">&#127981; SELECT FACTORY SECTOR</div>
+        <div class="sector-tabs">
+          <button class="sector-tab active" data-sector="auto" title="Automotive Sector">
+            <span class="tab-ico">🚗</span>
+            <span class="tab-lbl">Auto Parts</span>
+          </button>
+          <button class="sector-tab" data-sector="food" title="Food & Packaging">
+            <span class="tab-ico">🍏</span>
+            <span class="tab-lbl">Food Pack</span>
+          </button>
+          <button class="sector-tab" data-sector="silicon" title="Silicon Cleanroom">
+            <span class="tab-ico">🛡️</span>
+            <span class="tab-lbl">Silicon Lab</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Interactive Object Creator -->
+      <div class="card creator-card">
+        <div class="card-hdr">&#128736; INTERACTIVE OBJECT CREATOR</div>
+        <div class="card-body creator-body">
+          <div class="creator-instructions">
+            Click directly on the object template below to stamp a defect, then tune properties.
+          </div>
+
+          <!-- Creator Canvas Container -->
+          <div class="creator-canvas-wrapper">
+            <canvas id="cv-creator" width="204" height="136" aria-label="Object Creator Canvas"></canvas>
+            <div class="creator-hint">CLICK TO STAMP DEFECT</div>
+          </div>
+
+          <div class="ctrl-group pt-4">
+            <label class="ctrl-lbl" for="sel-type">Product Geometry</label>
+            <select id="sel-type" class="sel-inp">
+              <!-- Dynamically populated based on sector -->
+            </select>
+          </div>
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sl-psize">Object Size (cm)</label>
+            <div class="sl-row">
+              <input type="range" id="sl-psize" class="slider" min="5" max="100" step="1" value="25" />
+              <span class="val-badge" id="badge-psize">25 cm</span>
+            </div>
+          </div>
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sel-surface">Surface Finish</label>
+            <select id="sel-surface" class="sel-inp">
+              <option value="clean">Clean (Optimum)</option>
+              <option value="dirty">Grease / Smudges</option>
+              <option value="damaged">Scuffed / Scratched</option>
+            </select>
+          </div>
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sel-dtype">Defect Stamp Tool</label>
+            <select id="sel-dtype" class="sel-inp">
+              <option>Surface Scratch</option>
+              <option>Crack</option>
+              <option>Dent</option>
+              <option>Missing Component</option>
+              <option>Dimensional Error</option>
+              <option>Color Variation</option>
+            </select>
+          </div>
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sl-dsize">Defect Size (mm)</label>
+            <div class="sl-row">
+              <input type="range" id="sl-dsize" class="slider" min="0.05" max="3.00" step="0.05" value="0.75" />
+              <span class="val-badge" id="badge-dsize">0.75 mm</span>
+            </div>
+          </div>
+
+          <div class="creator-actions">
+            <button class="btn-clear-defect" id="btn-clear-defect">&#128465; RESET STAMP</button>
+          </div>
+
+          <div class="btn-col">
+            <button class="sim-btn btn-inspect" id="btn-inspect">&#128640; INJECT INTO CONVEYOR</button>
+          </div>
+
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ─── CENTER COLUMN: LIVE SIMULATOR ─── -->
+    <section class="center-col">
+
+      <!-- Vision Cell -->
+      <div class="card vision-card">
+        <div class="card-hdr">AI VISION INSPECTION CELL</div>
+        <div class="canvas-area">
+          <div class="live-tag"><span class="live-dot animate"></span>LIVE CAMERA FEED</div>
+          <canvas id="cv-main"></canvas>
+
+          <!-- CV Edge Detection overlay button -->
+          <button class="cv-overlay-btn" id="btn-cv-mode" title="Toggle CV Computer Vision filter">
+            ⚡ CV EDGE SCANNER: OFF
+          </button>
+
+          <!-- Workflow overlay -->
+          <div class="wf-panel">
+            <div class="wf-title">INSPECTION PIPELINE</div>
+            <div class="wf-step" data-s="1"><span class="wf-chk" id="wf1">○</span><span>1. Camera Acquisition</span></div>
+            <div class="wf-step" data-s="2"><span class="wf-chk" id="wf2">○</span><span>2. Focus Alignment</span></div>
+            <div class="wf-step" data-s="3"><span class="wf-chk" id="wf3">○</span><span>3. Edge Segmentation</span></div>
+            <div class="wf-step" data-s="4"><span class="wf-chk" id="wf4">○</span><span>4. Neural Feature Match</span></div>
+            <div class="wf-step" data-s="5"><span class="wf-chk" id="wf5">○</span><span>5. Defect Classification</span></div>
+            <div class="wf-step" data-s="6"><span class="wf-chk" id="wf6">○</span><span>6. Tolerance Gate Check</span></div>
+            <div class="wf-step" data-s="7"><span class="wf-chk" id="wf7">○</span><span>7. Sorting Gate Output</span></div>
+          </div>
+        </div>
+
+        <!-- Result strip -->
+        <div class="result-strip">
+          <div class="prod-img-box">
+            <canvas id="cv-prod" width="90" height="70"></canvas>
+            <div class="prod-img-label" id="prod-img-label">–</div>
+          </div>
+
+          <div class="prod-facts">
+            <div class="fact-row">
+              <div class="fact-item"><span class="fact-lbl">PRODUCT ID</span><span class="fact-val mono" id="r-id">–</span></div>
+              <div class="fact-item"><span class="fact-lbl">PRODUCT TYPE</span><span class="fact-val" id="r-type">–</span></div>
+              <div class="fact-item"><span class="fact-lbl">TIME</span><span class="fact-val mono" id="r-time">–</span></div>
+            </div>
+            <div class="fact-row">
+              <div class="fact-item"><span class="fact-lbl">DETECTED DEFECT</span><span class="fact-val" id="r-defect">–</span></div>
+              <div class="fact-item"><span class="fact-lbl">DEFECT SIZE</span><span class="fact-val mono" id="r-dsize">– mm</span></div>
+              <div class="fact-item"><span class="fact-lbl">LOCATION</span><span class="fact-val" id="r-loc">–</span></div>
+            </div>
+          </div>
+
+          <div class="conf-block">
+            <div class="conf-lbl">AI CONFIDENCE</div>
+            <div class="conf-wrap">
+              <canvas id="cv-gauge" width="80" height="80"></canvas>
+              <div class="conf-num" id="conf-num">–</div>
+            </div>
+          </div>
+
+          <div class="decision-block">
+            <div class="dec-lbl">DECISION</div>
+            <div class="dec-badge" id="dec-badge">–</div>
+          </div>
+        </div>
+
+        <!-- AI Reasoning Banner -->
+        <div class="reasoning-banner" id="reasoning-banner">
+          <div class="rb-icon" id="rb-icon">&#129302;</div>
+          <div class="rb-text">
+            <div class="rb-title" id="rb-title">Awaiting Object Insertion</div>
+            <div class="rb-detail" id="rb-detail">Select a sector, stamp a defect, adjust camera diagnostics on the right, and insert the object!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom row -->
+      <div class="bottom-row">
+
+        <!-- Defect Analytics -->
+        <div class="card bot-card">
+          <div class="card-hdr">DEFECT SECTOR DISTRIBUTION</div>
+          <div class="card-body donut-body">
+            <div class="donut-wrap">
+              <canvas id="cv-donut" width="110" height="110"></canvas>
+              <div class="donut-center">
+                <div class="dc-lbl">TOTAL<br>DEFECTS</div>
+                <div class="dc-val" id="dc-val">0</div>
+              </div>
+            </div>
+            <div class="donut-legend" id="donut-legend">
+              <div class="legend-empty">No defects logged</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confidence Distribution -->
+        <div class="card bot-card">
+          <div class="card-hdr">CONFIDENCE RANGE (HISTOGRAM)</div>
+          <div class="card-body bar-body">
+            <canvas id="cv-bar"></canvas>
+          </div>
+        </div>
+
+        <!-- Inspection History -->
+        <div class="card bot-card">
+          <div class="card-hdr">CONSOLE LOGGER / HISTORY</div>
+          <div class="hist-scroll">
+            <table class="hist-table">
+              <thead><tr>
+                <th>ID</th><th>Type</th><th>Defect</th><th>Size</th><th>Conf.</th><th>Decision</th>
+              </tr></thead>
+              <tbody id="hist-body">
+                <tr><td colspan="6" class="hist-empty">No objects inspected yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ─── RIGHT COLUMN: DIAGNOSTICS & SYSTEM CONTROLS ─── -->
+    <aside class="right-col">
+
+      <!-- Camera Advanced Diagnostics -->
+      <div class="card diag-card">
+        <div class="card-hdr">&#128249; CAMERA DIAGNOSTIC CONSOLE</div>
+        <div class="card-body settings-body">
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sl-focus">Optics Focus</label>
+            <div class="sl-row">
+              <input type="range" id="sl-focus" class="slider" min="10" max="100" step="1" value="95" />
+              <span class="val-badge" id="badge-focus">95%</span>
+            </div>
+            <span class="sl-hint">Out of focus blurs features and drops AI Confidence</span>
+          </div>
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sl-exposure">Sensor Exposure</label>
+            <div class="sl-row">
+              <input type="range" id="sl-exposure" class="slider" min="10" max="100" step="1" value="50" />
+              <span class="val-badge" id="badge-exposure">50%</span>
+            </div>
+            <span class="sl-hint">Extreme dark or bright values confuse edge segmentation</span>
+          </div>
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sl-contrast">Digital Contrast Boost</label>
+            <div class="sl-row">
+              <input type="range" id="sl-contrast" class="slider" min="10" max="100" step="1" value="60" />
+              <span class="val-badge" id="badge-contrast">60%</span>
+            </div>
+            <span class="sl-hint">Sharpens edges for neuro-feature matching</span>
+          </div>
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sl-zoom">Digital Zoom Magnification</label>
+            <div class="sl-row">
+              <input type="range" id="sl-zoom" class="slider" min="100" max="250" step="5" value="100" />
+              <span class="val-badge" id="badge-zoom">1.0x</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Core Sorting Parameters -->
+      <div class="card sorted-params-card">
+        <div class="card-hdr">&#127899; TOLERANCE & FLOW LIMITS</div>
+        <div class="card-body settings-body">
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sl-thresh">Defect Rejection Threshold (mm)</label>
+            <div class="sl-row">
+              <input type="range" id="sl-thresh" class="slider" min="0.10" max="2.00" step="0.01" value="0.50" />
+              <input type="number" id="num-thresh" class="num-inp" min="0.10" max="2.00" step="0.01" value="0.50" />
+            </div>
+            <span class="sl-hint">Gate rejections trigger above this limit</span>
+          </div>
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sl-spd">Flow Feed Rate (prod/min)</label>
+            <div class="sl-row">
+              <input type="range" id="sl-spd" class="slider" min="10" max="120" step="1" value="60" />
+              <input type="number" id="num-spd" class="num-inp" min="10" max="120" step="1" value="60" />
+            </div>
+          </div>
+
+          <div class="ctrl-group">
+            <label class="ctrl-lbl" for="sl-light">Base LED Backlight (%)</label>
+            <div class="sl-row">
+              <input type="range" id="sl-light" class="slider" min="50" max="100" step="1" value="85" />
+              <input type="number" id="num-light" class="num-inp" min="50" max="100" step="1" value="85" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Gamified Auto Engine Operations -->
+      <div class="card engine-card">
+        <div class="card-hdr">&#128668; AUTO SORT ENGINE</div>
+        <div class="card-body">
+          <div class="btn-col" style="padding:0">
+            <button class="sim-btn btn-auto" id="btn-auto">&#9654; START AUTO-SORT PIPELINE</button>
+            <button class="sim-btn btn-reset" id="btn-reset" style="margin-top:4px">&#8635; FACTORY RESET</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Diagnostics Panel -->
+      <div class="card metrics-console-card">
+        <div class="card-hdr">DIAGNOSTICS & SCOREBOARD</div>
+        <div class="metrics-grid">
+          <div class="metric-cell">
+            <span class="mc-lbl">ACCURACY</span>
+            <div class="mc-val blue" id="m-acc">0.00 %</div>
+            <canvas class="sparkline" id="sp-acc" width="80" height="22"></canvas>
+          </div>
+          <div class="metric-cell">
+            <span class="mc-lbl">AI CONFIDENCE</span>
+            <div class="mc-val teal" id="m-conf">0.00 %</div>
+            <canvas class="sparkline" id="sp-conf" width="80" height="22"></canvas>
+          </div>
+          <div class="metric-cell">
+            <span class="mc-lbl">DEFECT RATE</span>
+            <div class="mc-val red" id="m-dpct">0.00 %</div>
+            <canvas class="sparkline" id="sp-dpct" width="80" height="22"></canvas>
+          </div>
+          <div class="metric-cell">
+            <span class="mc-lbl">PASSED</span>
+            <div class="mc-val green" id="m-pass">0</div>
+            <canvas class="sparkline" id="sp-pass" width="80" height="22"></canvas>
+          </div>
+          <div class="metric-cell">
+            <span class="mc-lbl">REJECTED</span>
+            <div class="mc-val red" id="m-rej">0</div>
+            <canvas class="sparkline" id="sp-rej" width="80" height="22"></canvas>
+          </div>
+          <div class="metric-cell">
+            <span class="mc-lbl">FEED RATE</span>
+            <div class="mc-val amber" id="m-tput">0</div>
+            <canvas class="sparkline" id="sp-tput" width="80" height="22"></canvas>
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+  </main>
+
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer class="app-footer">
+    <div class="ft-group">
+      <span class="ft-lbl">PIPELINE STATUS</span>
+      <span class="sim-badge idle" id="sim-badge">Idle</span>
+    </div>
+    <div class="ft-divider"></div>
+    <div class="ft-group">
+      <span class="ft-lbl">TOTAL SORTED</span>
+      <span class="ft-num" id="ft-total">0</span>
+    </div>
+    <div class="ft-divider"></div>
+    <div class="ft-group">
+      <span class="ft-lbl">TOTAL PASSED</span>
+      <span class="ft-num green" id="ft-pass">0</span>
+    </div>
+    <div class="ft-divider"></div>
+    <div class="ft-group">
+      <span class="ft-lbl">TOTAL REJECTED</span>
+      <span class="ft-num red" id="ft-rej">0</span>
+    </div>
+    <div class="ft-spacer"></div>
+    <div class="ft-group">
+      <span class="ft-lbl">PIPELINE PROCESS LOAD</span>
+      <div class="prog-bar-wrap">
+        <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+        <span class="prog-pct" id="prog-pct">0%</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
