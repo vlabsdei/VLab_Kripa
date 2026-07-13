@@ -105,21 +105,45 @@ Health Levels:
 
 ## 5. Failure Probability
 
-Failure probability estimates the likelihood of machine breakdown.
+Failure Probability estimates the likelihood of machine breakdown.
 
-Higher values indicate increased maintenance urgency.
+Higher values indicate an increased need for maintenance.
 
-The simulation uses the following scientific formulas to calculate the machine state:
+The simulation uses the following scientific formulas to calculate the machine state.
 
-**Maintenance Score** = 5 + [ (Lubrication Level % / 100) × 10 ] - [ (Operating Hours / 10,000) × 10 ]
-*(Score ranges from 1 to 15)*
+### Maintenance Score
 
-**Raw Risk Index** = (Temperature + Vibration) / Maintenance Score
+<p align="center">
+<i>Maintenance Score = 5 + ((Lubrication Level (%) / 100) × 10) − ((Operating Hours / 10,000) × 10)</i>
+</p>
 
-**Failure Risk (%)** = (Raw Risk Index / 2.5) 
-*(Capped between 0% and 100%)*
+- **Score Range:** **1 to 15**
 
-**Machine Health (%)** = 100 - Failure Risk (%)
+---
+
+### Raw Risk Index
+
+<p align="center">
+<i>Raw Risk Index = (Temperature + Vibration) / Maintenance Score</i>
+</p>
+
+---
+
+### Failure Risk (%)
+
+<p align="center">
+<i>Failure Risk (%) = Raw Risk Index / 2.5</i>
+</p>
+
+- **Note:** The calculated value is capped between **0%** and **100%**.
+
+---
+
+### Machine Health (%)
+
+<p align="center">
+<i>Machine Health (%) = 100 − Failure Risk (%)</i>
+</p>
 
 ---
 
