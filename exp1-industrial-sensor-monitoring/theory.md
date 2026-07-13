@@ -61,16 +61,17 @@ Pressure sensors are used in hydraulic and pneumatic systems. Pressure variation
 
 ## Vibration Monitoring
 
-Vibration analysis is one of the most critical techniques used for predictive maintenance. Vibration is typically analyzed via its Root Mean Square (RMS) acceleration or velocity to measure the total energy of the vibration signal:
+Vibration analysis is one of the most critical techniques used for predictive maintenance. Vibration is typically analyzed using its **Root Mean Square (RMS)** acceleration or velocity to measure the total energy of the vibration signal.
 
-$$
-V_{RMS} = \sqrt{\frac{1}{N}\sum_{i=1}^{N}V_i^2}
-$$
+<p align="center">
+<i>V<sub>RMS</sub> = √[(1 / N) × Σ(V<sub>i</sub><sup>2</sup>)]</i>
+</p>
 
 Where:
-- $V_{RMS}$ = Effective Vibration Value (mm/s)
-- $V_i$ = Individual High-Frequency Vibration Readings
-- $N$ = Number of samples
+
+- **V<sub>RMS</sub>** = Effective Vibration Value (mm/s)
+- **V<sub>i</sub>** = Individual High-Frequency Vibration Readings
+- **N** = Number of samples
 
 High vibration levels indicate mechanical problems such as shaft misalignment, bearing degradation, or rotor imbalances.
 
@@ -87,33 +88,63 @@ Humidity affects machinery insulation performance and environmental conditions. 
 
 ## Predictive Maintenance & Health Calculation
 
-In this advanced simulation, Machine Health is computed dynamically using predictive risk models. Rather than simple singular thresholds, the system computes specific mechanical risks—**Cavitation Risk** and **Bearing Wear**—which then determine the overall Machine Health Index.
+In this advanced simulation, **Machine Health** is computed dynamically using predictive risk models. Rather than relying on simple threshold values, the system computes specific mechanical risks—**Cavitation Risk** and **Bearing Wear**—which together determine the overall **Machine Health Index**.
+
+---
 
 ### 1. Risk Penalty Functions
 
-The algorithms evaluate continuous sensor inputs to estimate physical degradation percentages (0% to 100%):
+The algorithms evaluate continuous sensor inputs to estimate physical degradation percentages (**0% to 100%**).
 
-- **Cavitation Risk**: Primarily driven by combinations of abnormally low fluid pressure and high-frequency vibration spikes (often seen in pumps and compressors). For example, if pressure drops below critical limits while vibration increases, the risk of fluid cavitation bubbles imploding against the impeller skyrockets.
-- **Bearing Wear**: Driven by excessive physical vibration (friction) combined with severe thermal overheating (temperature spikes). Prolonged high temperatures degrade bearing lubrication, leading to metal-on-metal abrasion.
+- **Cavitation Risk:** Primarily driven by combinations of abnormally low fluid pressure and high-frequency vibration spikes (often observed in pumps and compressors). For example, if pressure drops below critical limits while vibration increases, the risk of fluid cavitation bubbles imploding against the impeller rises significantly.
+
+- **Bearing Wear:** Driven by excessive physical vibration (friction) combined with severe thermal overheating (temperature spikes). Prolonged high temperatures degrade bearing lubrication, leading to metal-on-metal abrasion.
+
+---
 
 ### 2. Overall Health Index
 
-The overall Machine Health Score is calculated by applying a weighted deduction based on the highest active predictive risks:
+The overall **Machine Health Score** is calculated by applying a weighted deduction based on the highest active predictive risks.
 
-$$
-Health\ Score = 100 - (Cavitation\ Risk \times 0.6 + Bearing\ Wear \times 0.6)
-$$
+<p align="center">
+<i>Health Score = 100 − (Cavitation Risk × 0.6 + Bearing Wear × 0.6)</i>
+</p>
 
-If a critical fault is actively injected (like a forced Thermal Overload), the system automatically enforces a heavy penalty limit, dropping the health score firmly into the "Critical" zone (below 60).
+If a critical fault is actively injected (such as a forced **Thermal Overload**), the system automatically applies a heavy penalty, reducing the health score into the **Critical** operating zone (below **60**).
 
-The machine health score indicates the operational status of the machinery:
+The **Machine Health Score** indicates the operational status of the machinery.
 
-| Health Score | Condition | Diagnostic Response |
-|-------------|-----------|--------------------|
-| 90 - 100 | Excellent | Nominal parameters. Normal operations. |
-| 75 - 89 | Good | Acceptable range. Periodic monitoring. |
-| 60 - 74 | Warning | Minor abnormality. Schedule routine maintenance. |
-| Below 60 | Critical | Emergency threshold. Automatic or manual shutdown required. |
+<table>
+<thead>
+<tr>
+<th>Health Score</th>
+<th>Condition</th>
+<th>Diagnostic Response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>90 – 100</td>
+<td>Excellent</td>
+<td>Nominal parameters. Normal operations.</td>
+</tr>
+<tr>
+<td>75 – 89</td>
+<td>Good</td>
+<td>Acceptable range. Periodic monitoring.</td>
+</tr>
+<tr>
+<td>60 – 74</td>
+<td>Warning</td>
+<td>Minor abnormality. Schedule routine maintenance.</td>
+</tr>
+<tr>
+<td>Below 60</td>
+<td>Critical</td>
+<td>Emergency threshold. Automatic or manual shutdown required.</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -143,11 +174,31 @@ In industrial plants, sensors capture high-frequency physical vibrations, electr
 
 ## Simulation Parameters
 
-The simulator allows interactive control over physical parameters:
+The simulator allows interactive control over the following physical parameters.
 
-| Parameter | Operating Range |
-|------------|---------|
-| Temperature | $0^\circ\text{C} – 150^\circ\text{C}$ |
-| System Pressure | $0.0\text{ bar} – 50.0\text{ bar}$ |
-| Vibration RMS | $0.0\text{ mm/s} – 30.0\text{ mm/s}$ |
-| Relative Humidity | $0\% – 100\%$ |
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Operating Range</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><b>Temperature</b></td>
+<td>0°C – 150°C</td>
+</tr>
+<tr>
+<td><b>System Pressure</b></td>
+<td>0.0 bar – 50.0 bar</td>
+</tr>
+<tr>
+<td><b>Vibration RMS</b></td>
+<td>0.0 mm/s – 30.0 mm/s</td>
+</tr>
+<tr>
+<td><b>Relative Humidity</b></td>
+<td>0% – 100%</td>
+</tr>
+</tbody>
+</table>
