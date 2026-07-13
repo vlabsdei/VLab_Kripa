@@ -14,48 +14,80 @@ The goals of a Smart Energy Optimization System are:
 ## 2. Industrial Energy Management Formulas
 Industrial energy management relies on core mathematical models to represent electrical loads, power quality, and energy distribution.
 
-### 2.1 Total Active Power ($P_{\text{total}}$)
+### 2.1 Total Active Power (<i>P<sub>total</sub></i>)
 The total active power consumption of the factory at any instant is the sum of the power consumed by active production machines, conveyor systems, auxiliary loads (HVAC and lighting), and standby losses from idle machines:
 
-$$P_{\text{total}} = P_{\text{machines}} + P_{\text{conveyor}} + P_{\text{aux}} + P_{\text{idle}}$$
+
+<p align="center">
+<i>P<sub>total</sub> = P<sub>machines</sub> + P<sub>conveyor</sub> + P<sub>aux</sub> + P<sub>idle</sub></i>
+</p>
+
 
 Where:
-- **Machine Production Power ($P_{\text{machines}}$)**: Power consumed by machines performing active manufacturing processes.
-  $$P_{\text{machines}} = \left(\frac{\text{Machine Load (\%)}}{100}\right) \times N_{\text{active}} \times P_{\text{base}}$$
-  - $N_{\text{active}}$ is the number of active production machines (e.g., $10 - N_{\text{idle}}$ where total machines = 10).
-  - $P_{\text{base}}$ is the rated active power of a single machine under full load (e.g., $15\text{ kW}$).
-- **Idle/Standby Power ($P_{\text{idle}}$)**: Power wasted by idle machines left running in standby mode.
-  $$P_{\text{idle}} = N_{\text{idle}} \times P_{\text{standby}}$$
-  - $N_{\text{idle}}$ is the count of idle machines.
-  - $P_{\text{standby}}$ is the standby power consumed by a machine (e.g., $2.5\text{ kW}$).
-- **Conveyor Belt Power ($P_{\text{conveyor}}$)**: Power required to run the automated material handling system.
-  $$P_{\text{conveyor}} = P_{\text{conv-base}} \times \left(1 + \frac{\text{Machine Load (\%)}}{100}\right)$$
-  - $P_{\text{conv-base}}$ is the base conveyor power (e.g., $5\text{ kW}$).
-- **Auxiliary HVAC and Lighting Power ($P_{\text{aux}}$)**:
-  $$P_{\text{aux}} = P_{\text{hvac-base}} + P_{\text{light-base}}$$
-  - $P_{\text{hvac-base}}$ is the climate control power (e.g., $12\text{ kW}$).
-  - $P_{\text{light-base}}$ is the illumination power (e.g., $3\text{ kW}$).
+- **Machine Production Power (<i>P<sub>machines</sub></i>)**: Power consumed by machines performing active manufacturing processes.
+  
+<p align="center">
+<i>P<sub>machines</sub> = (Machine Load (%) / 100) × N<sub>active</sub> × P<sub>base</sub></i>
+</p>
 
-### 2.2 Total Energy Consumption ($E_{\text{total}}$)
-Energy consumption represents active power integrated over the factory's operating duration ($t$ in hours):
+  - <i>N<sub>active</sub></i> is the number of active production machines (e.g., <i>10 - N<sub>idle</sub></i> where total machines = 10).
+  - <i>P<sub>base</sub></i> is the rated active power of a single machine under full load (e.g., <i>15 kW</i>).
+- **Idle/Standby Power (<i>P<sub>idle</sub></i>)**: Power wasted by idle machines left running in standby mode.
+  
+<p align="center">
+<i>P<sub>idle</sub> = N<sub>idle</sub> × P<sub>standby</sub></i>
+</p>
 
-$$E_{\text{total}} = P_{\text{total}} \times t$$
+  - <i>N<sub>idle</sub></i> is the count of idle machines.
+  - <i>P<sub>standby</sub></i> is the standby power consumed by a machine (e.g., <i>2.5 kW</i>).
+- **Conveyor Belt Power (<i>P<sub>conveyor</sub></i>)**: Power required to run the automated material handling system.
+  
+<p align="center">
+<i>P<sub>conveyor</sub> = P<sub>conv-base</sub> × (1 + Machine Load (%) / 100)</i>
+</p>
+
+  - <i>P<sub>conv-base</sub></i> is the base conveyor power (e.g., <i>5 kW</i>).
+- **Auxiliary HVAC and Lighting Power (<i>P<sub>aux</sub></i>)**:
+  
+<p align="center">
+<i>P<sub>aux</sub> = P<sub>hvac-base</sub> + P<sub>light-base</sub></i>
+</p>
+
+  - <i>P<sub>hvac-base</sub></i> is the climate control power (e.g., <i>12 kW</i>).
+  - <i>P<sub>light-base</sub></i> is the illumination power (e.g., <i>3 kW</i>).
+
+### 2.2 Total Energy Consumption (<i>E<sub>total</sub></i>)
+Energy consumption represents active power integrated over the factory's operating duration (<i>t</i> in hours):
+
+
+<p align="center">
+<i>E<sub>total</sub> = P<sub>total</sub> × t</i>
+</p>
+
 
 ---
 
 ## 3. Power Quality and Power Factor Correction
-Industrial loads (like electric motors, induction heaters, and transformers) are inductive, drawing both active power ($P$, measured in kW) and reactive power ($Q$, measured in kVAR).
+Industrial loads (like electric motors, induction heaters, and transformers) are inductive, drawing both active power (<i>P</i>, measured in kW) and reactive power (<i>Q</i>, measured in kVAR).
 
-### 3.1 Apparent Power ($S$) and Power Factor ($PF$)
+### 3.1 Apparent Power (<i>S</i>) and Power Factor (<i>PF</i>)
 The relationship between active, reactive, and apparent power is represented by the power triangle:
 
-$$S = \frac{P}{PF} \quad (\text{measured in kVA})$$
 
-$$Q = \sqrt{S^2 - P^2} = P \times \tan(\theta) \quad (\text{measured in kVAR})$$
+<p align="center">
+<i>S = P / PF   (measured in kVA)</i>
+</p>
 
-Where $\cos(\theta) = PF$ represents the Power Factor.
-- A **low Power Factor** ($PF < 0.90$) indicates high reactive power draw, causing larger current flowing through transformers and lines, increasing transmission losses, and resulting in **Power Factor Penalties** on electricity bills.
-- **Power Factor Correction (PFC)**: The installation of capacitor banks near inductive loads supplies local reactive power, increasing the power factor toward unity ($1.00$).
+
+
+<p align="center">
+<i>Q = √(S<sup>2</sup> - P<sup>2</sup>) = P × \tan(θ)   (measured in kVAR)</i>
+</p>
+
+
+Where <i>\cos(θ) = PF</i> represents the Power Factor.
+- A **low Power Factor** (<i>PF < 0.90</i>) indicates high reactive power draw, causing larger current flowing through transformers and lines, increasing transmission losses, and resulting in **Power Factor Penalties** on electricity bills.
+- **Power Factor Correction (PFC)**: The installation of capacitor banks near inductive loads supplies local reactive power, increasing the power factor toward unity (<i>1.00</i>).
 
 ---
 
@@ -63,51 +95,87 @@ Where $\cos(\theta) = PF$ represents the Power Factor.
 To reduce utility grid dependence and carbon emissions, modern factories integrate rooftop solar photovoltaic (PV) generation and Battery Energy Storage Systems (BESS).
 
 ### 4.1 Solar Power Generation
-The solar energy output ($E_{\text{solar}}$) depends on the renewable contribution setting ($R_{\text{renewable}}$ in %):
+The solar energy output (<i>E<sub>solar</sub></i>) depends on the renewable contribution setting (<i>R<sub>renewable</sub></i> in %):
 
-$$E_{\text{solar}} = E_{\text{total}} \times \left(\frac{R_{\text{renewable}}}{100}\right)$$
+
+<p align="center">
+<i>E<sub>solar</sub> = E<sub>total</sub> × (R<sub>renewable</sub> / 100)</i>
+</p>
+
 
 ### 4.2 Battery Energy Storage Dynamics
-The BESS helps shift load and shave peak grid power. Let $SOC$ be the Battery State of Charge:
+The BESS helps shift load and shave peak grid power. Let <i>SOC</i> be the Battery State of Charge:
 - **Discharging**: When battery energy is utilized to support load (e.g., during Peak Shaving Mode).
 - **Charging**: Excess renewable power charges the battery.
-- The battery contribution to load ($E_{\text{battery}}$) is constrained by its $SOC$:
-  $$E_{\text{batt-max}} = C_{\text{battery}} \times \left(\frac{SOC - SOC_{\text{min}}}{100}\right)$$
-  - $C_{\text{battery}}$ is the total battery capacity (e.g., $100\text{ kWh}$).
-  - $SOC_{\text{min}}$ is the minimum allowed charge to prevent degradation (e.g., $20\%$).
+- The battery contribution to load (<i>E<sub>battery</sub></i>) is constrained by its <i>SOC</i>:
+  
+<p align="center">
+<i>E<sub>batt-max</sub> = C<sub>battery</sub> × (SOC - SOC<sub>min</sub> / 100)</i>
+</p>
 
-### 4.3 Net Grid Energy ($E_{\text{grid}}$)
+  - <i>C<sub>battery</sub></i> is the total battery capacity (e.g., <i>100 kWh</i>).
+  - <i>SOC<sub>min</sub></i> is the minimum allowed charge to prevent degradation (e.g., <i>20%</i>).
+
+### 4.3 Net Grid Energy (<i>E<sub>grid</sub></i>)
 The energy drawn from the utility grid is the remaining demand:
 
-$$E_{\text{grid}} = \max(0, E_{\text{total}} - E_{\text{solar}} - E_{\text{battery}})$$
+
+<p align="center">
+<i>E<sub>grid</sub> = max(0, E<sub>total</sub> - E<sub>solar</sub> - E<sub>battery</sub>)</i>
+</p>
+
 
 ---
 
 ## 5. Peak Demand Management & Tariffs
-Industrial tariffs charge for both energy consumption ($E_{\text{grid}} \times \text{Tariff}$) and peak demand.
-- **Peak Grid Demand ($P_{\text{grid-peak}}$)**: The maximum demand registered by the grid smart meter.
-  $$P_{\text{grid-peak}} = P_{\text{total}} - P_{\text{shaved}}$$
-- **Peak Shaving Mode**: If active and battery capacity permits, the battery discharges to keep the grid demand below a set threshold ($P_{\text{threshold}}$):
-  $$P_{\text{shaved}} = \min(P_{\text{total}} - P_{\text{threshold}}, P_{\text{discharge-max}})$$
+Industrial tariffs charge for both energy consumption (<i>E<sub>grid</sub> × Tariff</i>) and peak demand.
+- **Peak Grid Demand (<i>P<sub>grid-peak</sub></i>)**: The maximum demand registered by the grid smart meter.
+  
+<p align="center">
+<i>P<sub>grid-peak</sub> = P<sub>total</sub> - P<sub>shaved</sub></i>
+</p>
+
+- **Peak Shaving Mode**: If active and battery capacity permits, the battery discharges to keep the grid demand below a set threshold (<i>P<sub>threshold</sub></i>):
+  
+<p align="center">
+<i>P<sub>shaved</sub> = min(P<sub>total</sub> - P<sub>threshold</sub>, P<sub>discharge-max</sub>)</i>
+</p>
+
 
 ---
 
 ## 6. Environmental and Operational Metrics
 ### 6.1 Carbon Emissions
-Carbon dioxide emissions ($CO_2$) are calculated from the grid energy consumption using the local grid emission factor ($\text{EF}_{\text{grid}}$):
+Carbon dioxide emissions (<i>CO<sub>2</sub></i>) are calculated from the grid energy consumption using the local grid emission factor (<i>EF<sub>grid</sub></i>):
 
-$$\text{Carbon Emissions (kg } CO_2) = E_{\text{grid}} \times \text{EF}_{\text{grid}}$$
-- Typical grid emission factor $\text{EF}_{\text{grid}} = 0.82\text{ kg } CO_2/\text{kWh}$ (based on fossil-fuel heavy utility generation).
+
+<p align="center">
+<i>Carbon Emissions (kg  CO<sub>2</sub>) = E<sub>grid</sub> × EF<sub>grid</sub></i>
+</p>
+
+- Typical grid emission factor <i>EF<sub>grid</sub> = 0.82 kg  CO<sub>2</sub>/kWh</i> (based on fossil-fuel heavy utility generation).
 
 ### 6.2 Specific Energy Consumption (SEC)
 Specific Energy Consumption measures the efficiency of production by calculating the energy required to produce a single unit of output:
 
-$$\text{SEC} = \frac{E_{\text{total}}}{\text{Total Units Produced}} \quad (\text{kWh/unit})$$
 
-### 6.3 Factory Energy Efficiency ($\eta_{\text{factory}}$)
-$$\eta_{\text{factory}} = 100 \times \left(1 - \frac{P_{\text{idle}} + P_{\text{losses}}}{P_{\text{total}}}\right) \quad (\%)$$
-Where $P_{\text{losses}}$ are the transmission and reactive losses resulting from a low power factor:
-$$P_{\text{losses}} = P_{\text{total}} \times (1 - PF)^2 \times 0.25$$
+<p align="center">
+<i>SEC = E<sub>total</sub> / Total Units Produced   (kWh/unit)</i>
+</p>
+
+
+### 6.3 Factory Energy Efficiency (<i>η_{factory}</i>)
+
+<p align="center">
+<i>η_{factory} = 100 × (1 - P<sub>idle</sub> + P<sub>losses</sub> / P<sub>total</sub>)   (%)</i>
+</p>
+
+Where <i>P<sub>losses</sub></i> are the transmission and reactive losses resulting from a low power factor:
+
+<p align="center">
+<i>P<sub>losses</sub> = P<sub>total</sub> × (1 - PF)<sup>2</sup> × 0.25</i>
+</p>
+
 
 ---
 
@@ -115,31 +183,59 @@ $$P_{\text{losses}} = P_{\text{total}} \times (1 - PF)^2 \times 0.25$$
 For conducting numerical calculations during laboratory exercises, the simulator is calibrated using the following industrial constants:
 
 ### 7.1 Constant Energy Coefficients
-- **Total Machines ($N_{\text{total}}$)**: $10$ units.
-- **Machine Rated Base Power ($P_{\text{base}}$)**: $15\text{ kW}$ (Active power per machine at $100\%$ capacity).
-- **Machine Standby Power ($P_{\text{standby}}$)**: $2.5\text{ kW}$ (Power consumed per machine in standby mode).
-- **Conveyor Base Power ($P_{\text{conv-base}}$)**: $5\text{ kW}$.
-- **HVAC Rated Power ($P_{\text{hvac-base}}$)**: $12\text{ kW}$.
-- **Lighting Rated Power ($P_{\text{light-base}}$)**: $3\text{ kW}$.
-- **BESS Battery Storage Capacity ($C_{\text{battery}}$)**: $100\text{ kWh}$.
-- **Grid Carbon Emission Factor ($\text{EF}_{\text{grid}}$)**: $0.82\text{ kg CO}_2\text{/kWh}$.
+- **Total Machines (<i>N<sub>total</sub></i>)**: <i>10</i> units.
+- **Machine Rated Base Power (<i>P<sub>base</sub></i>)**: <i>15 kW</i> (Active power per machine at <i>100%</i> capacity).
+- **Machine Standby Power (<i>P<sub>standby</sub></i>)**: <i>2.5 kW</i> (Power consumed per machine in standby mode).
+- **Conveyor Base Power (<i>P<sub>conv-base</sub></i>)**: <i>5 kW</i>.
+- **HVAC Rated Power (<i>P<sub>hvac-base</sub></i>)**: <i>12 kW</i>.
+- **Lighting Rated Power (<i>P<sub>light-base</sub></i>)**: <i>3 kW</i>.
+- **BESS Battery Storage Capacity (<i>C<sub>battery</sub></i>)**: <i>100 kWh</i>.
+- **Grid Carbon Emission Factor (<i>EF<sub>grid</sub></i>)**: <i>0.82 kg CO<sub>2</sub>/kWh</i>.
 
 ### 7.2 Battery Storage Discharge Limits
-The battery state of charge ($SOC$) cannot discharge below a safety limit of $20\%$ to protect cell life. The maximum energy discharge allowed ($E_{\text{discharge-max}}$) is:
-$$E_{\text{discharge-max}} = C_{\text{battery}} \times \frac{\max(0, SOC - 20)}{100} \quad (\text{kWh})$$
+The battery state of charge (<i>SOC</i>) cannot discharge below a safety limit of <i>20%</i> to protect cell life. The maximum energy discharge allowed (<i>E<sub>discharge-max</sub></i>) is:
 
-- **BESS Peak Shaving Mode**: Battery discharge is capped at $30\%$ of total factory energy requirement:
-  $$E_{\text{battery}} = \min(E_{\text{total}} \times 0.3, E_{\text{discharge-max}}) \quad (\text{kWh})$$
-- **Demand Response Mode**: Battery discharge is capped at $50\%$ of total factory energy requirement:
-  $$E_{\text{battery}} = \min(E_{\text{total}} \times 0.5, E_{\text{discharge-max}}) \quad (\text{kWh})$$
+<p align="center">
+<i>E<sub>discharge-max</sub> = C<sub>battery</sub> × max(0, SOC - 20) / 100   (kWh)</i>
+</p>
+
+
+- **BESS Peak Shaving Mode**: Battery discharge is capped at <i>30%</i> of total factory energy requirement:
+  
+<p align="center">
+<i>E<sub>battery</sub> = min(E<sub>total</sub> × 0.3, E<sub>discharge-max</sub>)   (kWh)</i>
+</p>
+
+- **Demand Response Mode**: Battery discharge is capped at <i>50%</i> of total factory energy requirement:
+  
+<p align="center">
+<i>E<sub>battery</sub> = min(E<sub>total</sub> × 0.5, E<sub>discharge-max</sub>)   (kWh)</i>
+</p>
+
 
 ### 7.3 Billing Penalty Formulations
-Utilities charge a penalty surcharge on low power factor levels below a target threshold of $0.90$:
-- **Power Factor Penalty Multiplier ($M_{\text{PF}}$)**:
-  $$\text{If } PF < 0.90: \quad M_{\text{PF}} = (0.90 - PF) \times 0.15$$
-  $$\text{If } PF \ge 0.90: \quad M_{\text{PF}} = 0$$
-- **Total Billing Cost ($C_{\text{total}}$)**:
-  $$C_{\text{total}} = (P_{\text{grid}} \times \text{Tariff}) \times (1 + M_{\text{PF}}) \quad (\text{₹/hour})$$
-  $$E_{\text{grid-cost}} = C_{\text{total}} \times t \quad (\text{₹})$$
+Utilities charge a penalty surcharge on low power factor levels below a target threshold of <i>0.90</i>:
+- **Power Factor Penalty Multiplier (<i>M<sub>PF</sub></i>)**:
+  
+<p align="center">
+<i>If  PF < 0.90:   M<sub>PF</sub> = (0.90 - PF) × 0.15</i>
+</p>
+
+  
+<p align="center">
+<i>If  PF ≥ 0.90:   M<sub>PF</sub> = 0</i>
+</p>
+
+- **Total Billing Cost (<i>C<sub>total</sub></i>)**:
+  
+<p align="center">
+<i>C<sub>total</sub> = (P<sub>grid</sub> × Tariff) × (1 + M<sub>PF</sub>)   (₹/hour)</i>
+</p>
+
+  
+<p align="center">
+<i>E<sub>grid-cost</sub> = C<sub>total</sub> × t   (₹)</i>
+</p>
+
 
 Students are encouraged to perform sample calculations using these configurations to verify the real-time feedback displayed on the digital twin.
