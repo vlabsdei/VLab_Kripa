@@ -2,13 +2,24 @@
 
 ## Step 1: Launch the Simulator
 
-1. Open the Smart Warehouse Management Simulator.
-2. The dashboard displays the following sections:
-   - **Warehouse Controls** (left panel): Sliders for Storage Capacity, Incoming Orders, AGV Speed, AGV Fleet Size, and Inventory Threshold, a dropdown for Routing Algorithm, along with Run Simulation, Reset, and Export CSV buttons.
-   - **Warehouse Digital Twin** (center): A real-time 2D floor plan showing four physical rack zones (A, B, C, D), inbound dock, outbound dock, conveyor belt system, packaging/QC station, an animated AGV robot, and an analytics summary row at the bottom (Warehouse Efficiency, Pending Orders, Storage Health).
-   - **Operations Center & Diagnostics** (right panel): A circular core operations efficiency gauge, real-time inferred values (Storage Utilization, AGV Utilization, Processing Time, Pending Orders), a congestion heatmap, a smart recommendations panel, and a live calculation trace terminal.
-   - **Insights & Logs** (bottom): KPI Trend Analysis chart and the Warehouse Operation Log table recording all simulation runs.
-3. Verify that the system initializes with default warehouse parameters (Capacity: 500, Orders: 200, AGV Speed: 5, Threshold: 100).
+1. Open the **Smart Warehouse Management Simulator**.
+
+2. Observe the dashboard, which consists of the following sections:
+
+   - **Warehouse Controls (Left Panel):** Contains sliders for **Storage Capacity**, **Incoming Orders**, **AGV Speed**, **AGV Fleet Size**, and **Inventory Threshold**. It also includes a **Routing Algorithm** dropdown menu, along with the **Run Simulation**, **Reset**, and **Export CSV** buttons.
+
+   - **Warehouse Digital Twin (Center Panel):** Displays a real-time 2D warehouse floor plan showing **four physical rack zones (A, B, C, D)**, the **Inbound Dock**, **Outbound Dock**, **Conveyor Belt System**, **Packaging / Quality Control Station**, an **animated AGV robot**, and a real-time analytics summary row displaying **Warehouse Efficiency**, **Pending Orders**, and **Storage Health**.
+
+   - **Operations Center & Diagnostics (Right Panel):** Displays a circular **Core Operations Efficiency Gauge**, real-time calculated values (**Storage Utilization**, **AGV Utilization**, **Processing Time**, and **Pending Orders**), a **Congestion Heatmap**, a **Smart Recommendations** panel, and a **Live Calculation Trace** terminal.
+
+   - **Insights & Logs (Bottom Panel):** Contains the **KPI Trend Analysis** chart and the **Warehouse Operation Log** table, which records all simulation runs.
+
+3. Verify that the simulator initializes with the following default warehouse parameters:
+
+   - **Storage Capacity:** 500
+   - **Incoming Orders:** 200
+   - **AGV Speed:** 5
+   - **Inventory Threshold:** 100
 
 ---
 
@@ -62,54 +73,81 @@ Represents the minimum inventory level required before replenishment is triggere
 
 ## Step 4: Observe Warehouse KPIs
 
-Analyze the following performance indicators displayed in the analytics row below the digital twin and the inferred values section of the diagnostics panel:
+Analyze the following performance indicators displayed in the analytics row below the Digital Twin and the **Inferred Values** section of the **Diagnostics Panel**.
+
+---
 
 ### Storage Utilization
 
 Indicates how efficiently warehouse space is being used.
 
-\[
-Storage\ Utilization = \min\!\Bigl(100,\ \frac{Incoming\ Orders}{Storage\ Capacity} \times 100\Bigr)
-\]
+<p align="center">
+<i>Storage Utilization = min(100, (Incoming Orders / Storage Capacity) × 100)</i>
+</p>
+
+---
 
 ### AGV Processing Time
 
 Indicates the time required to process incoming orders.
 
-\[
-Processing\ Time = \frac{Incoming\ Orders}{Fleet\ Size \times AGV\ Speed \times 20} \times M_{algo}
-\]
+<p align="center">
+<i>Processing Time = (Incoming Orders / (Fleet Size × AGV Speed × 20)) × M<sub>algo</sub></i>
+</p>
 
-Where $M_{algo} = 0.80$ for Nearest Neighbor, $0.90$ for Balanced Load, and $1.00$ for FIFO.
+Where:
+
+- **M<sub>algo</sub> = 0.80** for **Nearest Neighbor**
+- **M<sub>algo</sub> = 0.90** for **Balanced Load**
+- **M<sub>algo</sub> = 1.00** for **FIFO**
+
+---
 
 ### AGV Utilization
 
-Indicates the percentage of the AGV fleet workload relative to speed.
+Indicates the percentage of the AGV fleet workload relative to its operational speed.
 
-\[
-AGV\ Utilization = \min\!\Bigl(100,\ \frac{Incoming\ Orders}{Fleet\ Size \times AGV\ Speed \times 10}\Bigr)
-\]
+<p align="center">
+<i>AGV Utilization = min(100, Incoming Orders / (Fleet Size × AGV Speed × 10))</i>
+</p>
+
+---
 
 ### Warehouse Efficiency
 
-Represents overall warehouse operational performance with conditional penalties and algorithm routing bonuses.
+Represents the overall warehouse operational performance with conditional penalties and routing algorithm bonuses.
 
-\[
-Efficiency = \max\!\Bigl(40,\ \min\!\bigl(100,\ 100 - (Utilization \times 0.3) - P_{agv} - P_{time} + B_{algo}\bigr)\Bigr)
-\]
+<p align="center">
+<i>Efficiency = max(40, min(100, 100 − (Utilization × 0.3) − P<sub>agv</sub> − P<sub>time</sub> + B<sub>algo</sub>))</i>
+</p>
 
 Where:
-- $P_{agv} = 12$ if AGV Utilization > 80%, otherwise 0
-- $P_{time} = 8$ if Processing Time > 5 minutes, otherwise 0
-- $B_{algo}$ is the routing bonus: $+5\%$ for Nearest Neighbor, $+3\%$ for Balanced Load, and $+0\%$ for FIFO
+
+- **P<sub>agv</sub> = 12** if **AGV Utilization > 80%**, otherwise **0**.
+- **P<sub>time</sub> = 8** if **Processing Time > 5 minutes**, otherwise **0**.
+- **B<sub>algo</sub>** is the routing bonus:
+  - **+5%** for **Nearest Neighbor**
+  - **+3%** for **Balanced Load**
+  - **+0%** for **FIFO**
+
+---
 
 ### Congestion Index
 
-Represents the risk of warehouse congestion: Low (utilization below 60%), Medium (60%-84%), or High (85% and above).
+Represents the risk of warehouse congestion:
+
+- **Low:** Storage Utilization below **60%**
+- **Medium:** Storage Utilization between **60% and 84%**
+- **High:** Storage Utilization **85% and above**
+
+---
 
 ### Inventory Health
 
-Indicates inventory stability: Healthy (when orders >= threshold) or Low Stock (when orders < threshold).
+Indicates inventory stability.
+
+- **Healthy:** Incoming Orders ≥ Inventory Threshold
+- **Low Stock:** Incoming Orders < Inventory Threshold
 
 ---
 
@@ -191,24 +229,73 @@ After running multiple simulations:
 
 ## Step 10: Export and Record Experimental Results
 
-1. Click the **Export CSV** button (available in both the control panel and the operation log section) to download a CSV file containing all simulation run data.
+1. Click the **Export CSV** button (available in both the control panel and the **Warehouse Operation Log** section) to download a CSV file containing all simulation run data.
 
-2. Review the **Warehouse Operation Log** table that records: Run number, Capacity, Incoming Orders, AGV Speed, Inventory Threshold, Storage Utilization, AGV Utilization, Processing Time, Operations Efficiency (η), and Warehouse State for each run.
+2. Review the **Warehouse Operation Log** table, which records the following information for each simulation run:
 
-3. Record the following outputs from a representative simulation run:
+   - Run Number
+   - Storage Capacity
+   - Incoming Orders
+   - AGV Speed
+   - Inventory Threshold
+   - Storage Utilization
+   - AGV Utilization
+   - Processing Time
+   - Operations Efficiency (η)
+   - Warehouse State
 
-| Parameter | Observation |
-|-----------|-------------|
-| AGV Fleet Size | ______ |
-| Routing Algorithm | ______ |
-| Storage Utilization | ______ |
-| AGV Processing Time | ______ |
-| AGV Utilization | ______ |
-| Warehouse Efficiency | ______ |
-| Pending Orders | ______ |
-| Congestion Index | ______ |
-| Storage Health | ______ |
-| Warehouse State | ______ |
+3. Record the following outputs from a representative simulation run.
+
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Observation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AGV Fleet Size</td>
+<td>__________</td>
+</tr>
+<tr>
+<td>Routing Algorithm</td>
+<td>__________</td>
+</tr>
+<tr>
+<td>Storage Utilization</td>
+<td>__________</td>
+</tr>
+<tr>
+<td>AGV Processing Time</td>
+<td>__________</td>
+</tr>
+<tr>
+<td>AGV Utilization</td>
+<td>__________</td>
+</tr>
+<tr>
+<td>Warehouse Efficiency</td>
+<td>__________</td>
+</tr>
+<tr>
+<td>Pending Orders</td>
+<td>__________</td>
+</tr>
+<tr>
+<td>Congestion Index</td>
+<td>__________</td>
+</tr>
+<tr>
+<td>Storage Health</td>
+<td>__________</td>
+</tr>
+<tr>
+<td>Warehouse State</td>
+<td>__________</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
