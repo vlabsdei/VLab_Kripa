@@ -1,0 +1,174 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "After changing the scheduling algorithm from FCFS to Shortest Job First (SJF), the simulator shows a decrease in Average Waiting Time. What is the most likely reason?",
+      "answers": {
+        "a": "Shorter jobs are processed first, reducing the waiting time for most jobs.",
+        "b": "The number of machines automatically increased.",
+        "c": "The production queue was removed.",
+        "d": "Machine processing speed doubled automatically."
+      },
+      "explanations": {
+        "a": "Correct. SJF gives priority to jobs with the shortest processing time, which generally reduces the average waiting time and improves production flow.",
+        "b": "Incorrect. Changing the scheduling algorithm does not change the number of machines.",
+        "c": "Incorrect. The production queue still exists regardless of the scheduling algorithm.",
+        "d": "Incorrect. Machine processing speed remains unchanged unless modified by the user."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "During the simulation, Machine A remains busy while Machine C stays idle for a long period. What does this indicate?",
+      "answers": {
+        "a": "Poor machine allocation leading to unbalanced resource utilization.",
+        "b": "Production throughput has reached its maximum.",
+        "c": "The production queue is empty.",
+        "d": "All machines are operating with equal utilization."
+      },
+      "explanations": {
+        "a": "Correct. Uneven workload distribution causes some machines to be overloaded while others remain underutilized, reducing scheduling efficiency.",
+        "b": "Incorrect. Maximum throughput cannot be concluded from one machine remaining idle.",
+        "c": "Incorrect. If one machine is continuously busy, production jobs are still being processed.",
+        "d": "Incorrect. The scenario clearly indicates unequal machine utilization."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The production queue continues to grow even though all machines are active. What is the most appropriate conclusion?",
+      "answers": {
+        "a": "The job arrival rate is higher than the production capacity, creating a bottleneck.",
+        "b": "The scheduling algorithm has stopped functioning.",
+        "c": "Machine utilization has become zero.",
+        "d": "The completed jobs are being deleted."
+      },
+      "explanations": {
+        "a": "Correct. When production demand exceeds processing capacity, waiting jobs accumulate, resulting in a production bottleneck.",
+        "b": "Incorrect. A growing queue does not necessarily indicate scheduler failure.",
+        "c": "Incorrect. Busy machines indicate high utilization rather than zero utilization.",
+        "d": "Incorrect. Job completion records do not affect queue formation."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "Which scheduling algorithm should be selected if urgent customer orders must always be processed before normal orders?",
+      "answers": {
+        "a": "Priority Scheduling",
+        "b": "First Come First Served (FCFS)",
+        "c": "Shortest Job First (SJF)",
+        "d": "Round Robin"
+      },
+      "explanations": {
+        "a": "Correct. Priority Scheduling processes jobs according to their assigned priority, ensuring urgent jobs are completed first.",
+        "b": "Incorrect. FCFS processes jobs only according to arrival order.",
+        "c": "Incorrect. SJF considers processing time rather than urgency.",
+        "d": "Incorrect. Round Robin allocates equal processor time and does not prioritize urgent jobs."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "The simulator reports a decrease in Makespan after increasing the number of active machines. What does this indicate?",
+      "answers": {
+        "a": "The total production completion time has been reduced due to improved parallel processing.",
+        "b": "Machine utilization has become zero.",
+        "c": "The production queue has permanently disappeared.",
+        "d": "The scheduling algorithm is no longer required."
+      },
+      "explanations": {
+        "a": "Correct. Additional machines allow more jobs to be processed simultaneously, reducing the overall completion time of the production schedule.",
+        "b": "Incorrect. Additional machines do not reduce utilization to zero.",
+        "c": "Incorrect. A queue may still exist depending on production demand.",
+        "d": "Incorrect. Scheduling remains essential regardless of the number of machines."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },    {
+      "question": "During the simulation, Machine Utilization increases from 62% to 91% after changing the scheduling algorithm. What is the most appropriate interpretation?",
+      "answers": {
+        "a": "The production machines are being utilized more efficiently, resulting in better resource usage.",
+        "b": "The machines have become physically larger.",
+        "c": "The production queue has been removed permanently.",
+        "d": "The processing time of every job has become zero."
+      },
+      "explanations": {
+        "a": "Correct. Higher machine utilization indicates that machines spend more time processing jobs instead of remaining idle, leading to improved production efficiency.",
+        "b": "Incorrect. Machine utilization measures operating time, not the physical dimensions of a machine.",
+        "c": "Incorrect. Queue length depends on production demand and scheduling decisions, not machine utilization alone.",
+        "d": "Incorrect. Jobs still require processing time even when machine utilization increases."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "After increasing the Job Arrival Rate, the simulator shows a significant increase in Queue Length. What is the most likely reason?",
+      "answers": {
+        "a": "Production jobs are arriving faster than the machines can process them.",
+        "b": "Machine processing speed has automatically increased.",
+        "c": "The scheduling algorithm has stopped assigning jobs.",
+        "d": "Completed jobs are being processed again."
+      },
+      "explanations": {
+        "a": "Correct. When production demand exceeds the processing capacity of available machines, waiting jobs accumulate in the production queue.",
+        "b": "Incorrect. Increasing machine processing speed would normally reduce the queue length.",
+        "c": "Incorrect. A growing queue does not necessarily indicate scheduler failure.",
+        "d": "Incorrect. Completed jobs are removed from the production system and are not processed again."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which production scheduling algorithm is generally expected to produce the lowest Average Waiting Time when job processing times are known in advance?",
+      "answers": {
+        "a": "Shortest Job First (SJF)",
+        "b": "First Come First Served (FCFS)",
+        "c": "Priority Scheduling",
+        "d": "Round Robin"
+      },
+      "explanations": {
+        "a": "Correct. SJF processes shorter jobs first, which generally minimizes the average waiting time compared to other scheduling algorithms.",
+        "b": "Incorrect. FCFS follows arrival order and may cause long jobs to delay shorter ones.",
+        "c": "Incorrect. Priority Scheduling focuses on job importance rather than minimizing waiting time.",
+        "d": "Incorrect. Round Robin emphasizes fairness rather than minimizing average waiting time."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    },
+    {
+      "question": "The simulator reports an increase in Production Throughput after reducing the Average Waiting Time. What does this indicate?",
+      "answers": {
+        "a": "More production jobs are being completed within the same period.",
+        "b": "The production machines have consumed more electrical energy.",
+        "c": "Machine utilization has decreased to zero.",
+        "d": "The number of customer orders has automatically reduced."
+      },
+      "explanations": {
+        "a": "Correct. Lower waiting time allows jobs to begin processing sooner, increasing the number of completed jobs over time and improving throughput.",
+        "b": "Incorrect. Throughput measures production output, not electrical energy consumption.",
+        "c": "Incorrect. Increased throughput usually requires machines to remain actively processing jobs.",
+        "d": "Incorrect. Customer order quantity is independent of throughput calculations."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Based on the simulation results, which production system demonstrates the most effective scheduling strategy?",
+      "answers": {
+        "a": "High Machine Utilization, Low Average Waiting Time, Low Queue Length, High Throughput, and Low Makespan",
+        "b": "Long Waiting Time, High Queue Length, and Low Machine Utilization",
+        "c": "Frequent Machine Idle Time with Increasing Production Delays",
+        "d": "High Makespan with Low Production Efficiency"
+      },
+      "explanations": {
+        "a": "Correct. An efficient scheduling strategy maximizes resource utilization while minimizing waiting time, queue length, and production completion time, resulting in high productivity.",
+        "b": "Incorrect. Long waiting times and high queue lengths indicate poor scheduling performance.",
+        "c": "Incorrect. Idle machines and increasing delays reduce manufacturing efficiency.",
+        "d": "Incorrect. High makespan and low production efficiency are indicators of an ineffective production schedule."
+      },
+      "correctAnswer": "a",
+      "difficulty": "advanced"
+    }
+  ]
+}

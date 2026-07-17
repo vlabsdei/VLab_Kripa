@@ -1,0 +1,174 @@
+{
+  "version": 2.0,
+  "questions": [
+    {
+      "question": "What is the primary objective of Production Scheduling in a smart manufacturing system?",
+      "answers": {
+        "a": "To assign production jobs to machines efficiently and optimize manufacturing performance",
+        "b": "To increase machine temperature",
+        "c": "To reduce warehouse lighting",
+        "d": "To increase network bandwidth"
+      },
+      "explanations": {
+        "a": "Correct. Production Scheduling determines the optimal sequence and allocation of jobs to available machines to improve productivity, reduce delays, and maximize resource utilization.",
+        "b": "Incorrect. Machine temperature is monitored for equipment health and is not the objective of production scheduling.",
+        "c": "Incorrect. Warehouse lighting does not influence production scheduling decisions.",
+        "d": "Incorrect. Network bandwidth is related to industrial communication, not production scheduling."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which scheduling algorithm processes production jobs strictly in the order they arrive?",
+      "answers": {
+        "a": "First Come First Served (FCFS)",
+        "b": "Shortest Job First (SJF)",
+        "c": "Priority Scheduling",
+        "d": "Round Robin"
+      },
+      "explanations": {
+        "a": "Correct. FCFS schedules jobs according to their arrival sequence without considering processing time or priority.",
+        "b": "Incorrect. SJF selects the job with the shortest processing time.",
+        "c": "Incorrect. Priority Scheduling processes jobs based on assigned priority levels.",
+        "d": "Incorrect. Round Robin allocates equal processing time to jobs in rotation."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the main advantage of the Shortest Job First (SJF) scheduling algorithm?",
+      "answers": {
+        "a": "It reduces the average waiting time of production jobs",
+        "b": "It always processes the oldest job first",
+        "c": "It assigns the same priority to every job",
+        "d": "It increases machine idle time"
+      },
+      "explanations": {
+        "a": "Correct. SJF executes shorter jobs first, which generally reduces the average waiting time and improves throughput.",
+        "b": "Incorrect. Processing the oldest job first is the principle of FCFS.",
+        "c": "Incorrect. SJF is based on processing time rather than equal priority.",
+        "d": "Incorrect. SJF aims to improve machine utilization, not increase idle time."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Machine Utilization represents:",
+      "answers": {
+        "a": "The percentage of time a machine is actively processing production jobs",
+        "b": "The total number of machines in a factory",
+        "c": "The power rating of a production machine",
+        "d": "The physical size of a production machine"
+      },
+      "explanations": {
+        "a": "Correct. Machine Utilization indicates how effectively a machine is used during the available production time.",
+        "b": "Incorrect. The number of machines is a factory resource and not a utilization metric.",
+        "c": "Incorrect. Machine power rating describes electrical capacity, not utilization.",
+        "d": "Incorrect. Physical dimensions do not determine machine utilization."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Which of the following is considered a production bottleneck?",
+      "answers": {
+        "a": "A slow process that limits the overall production rate",
+        "b": "A machine operating efficiently with no waiting jobs",
+        "c": "An empty production queue",
+        "d": "A completed production order"
+      },
+      "explanations": {
+        "a": "Correct. A bottleneck is the slowest stage in the production process, restricting overall throughput and causing queues to build up.",
+        "b": "Incorrect. An efficiently operating machine is not a bottleneck.",
+        "c": "Incorrect. An empty queue usually indicates smooth production flow.",
+        "d": "Incorrect. A completed order is the outcome of production and not a bottleneck."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },    {
+      "question": "What does Makespan represent in a production scheduling system?",
+      "answers": {
+        "a": "The total time required to complete all production jobs",
+        "b": "The processing time of a single machine",
+        "c": "The number of jobs waiting in the queue",
+        "d": "The electrical energy consumed by the factory"
+      },
+      "explanations": {
+        "a": "Correct. Makespan is the total time from the start of the first production job until the completion of the last job. It is one of the most important performance measures in production scheduling.",
+        "b": "Incorrect. A machine's processing time is only one factor and does not represent the overall makespan.",
+        "c": "Incorrect. Queue length represents the number of waiting jobs and is unrelated to the definition of makespan.",
+        "d": "Incorrect. Makespan measures production completion time, not energy consumption."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Which scheduling algorithm always selects the highest-priority job for execution?",
+      "answers": {
+        "a": "Priority Scheduling",
+        "b": "First Come First Served (FCFS)",
+        "c": "Shortest Job First (SJF)",
+        "d": "Round Robin"
+      },
+      "explanations": {
+        "a": "Correct. Priority Scheduling assigns jobs based on their priority level, ensuring that the most important jobs are processed first.",
+        "b": "Incorrect. FCFS processes jobs only according to their arrival order.",
+        "c": "Incorrect. SJF schedules jobs based on the shortest processing time rather than priority.",
+        "d": "Incorrect. Round Robin allocates processor time equally among jobs without considering priority."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "What is the primary purpose of Round Robin Scheduling?",
+      "answers": {
+        "a": "To provide fair processing time to all jobs using a fixed time quantum",
+        "b": "To always execute the shortest job first",
+        "c": "To execute only high-priority jobs",
+        "d": "To minimize machine maintenance"
+      },
+      "explanations": {
+        "a": "Correct. Round Robin Scheduling gives each job an equal opportunity to execute for a fixed time interval before moving to the next job.",
+        "b": "Incorrect. Selecting the shortest job first is the principle of SJF scheduling.",
+        "c": "Incorrect. Processing only high-priority jobs is the principle of Priority Scheduling.",
+        "d": "Incorrect. Machine maintenance is unrelated to the objective of Round Robin Scheduling."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    },
+    {
+      "question": "Production Throughput refers to:",
+      "answers": {
+        "a": "The number of production jobs completed within a specified period",
+        "b": "The number of machines installed in a factory",
+        "c": "The amount of electricity consumed by machines",
+        "d": "The maximum storage capacity of the warehouse"
+      },
+      "explanations": {
+        "a": "Correct. Production Throughput measures the manufacturing output by counting the number of completed jobs over a given period of time.",
+        "b": "Incorrect. The number of installed machines is a factory resource, not a throughput metric.",
+        "c": "Incorrect. Electricity consumption is an energy parameter and does not define throughput.",
+        "d": "Incorrect. Warehouse storage capacity is unrelated to production throughput."
+      },
+      "correctAnswer": "a",
+      "difficulty": "beginner"
+    },
+    {
+      "question": "Why is Production Scheduling important in Industry 4.0 Smart Factories?",
+      "answers": {
+        "a": "It optimizes resource allocation, improves productivity, and reduces production delays",
+        "b": "It increases machine failures intentionally",
+        "c": "It eliminates the need for production planning",
+        "d": "It controls only warehouse lighting systems"
+      },
+      "explanations": {
+        "a": "Correct. Production Scheduling efficiently allocates jobs to available machines, improving productivity, reducing waiting time, minimizing bottlenecks, and maximizing resource utilization.",
+        "b": "Incorrect. The purpose of scheduling is to improve manufacturing performance, not increase failures.",
+        "c": "Incorrect. Production Planning and Production Scheduling are complementary processes; scheduling does not replace planning.",
+        "d": "Incorrect. Scheduling coordinates manufacturing operations and is not related to lighting control."
+      },
+      "correctAnswer": "a",
+      "difficulty": "intermediate"
+    }
+  ]
+}

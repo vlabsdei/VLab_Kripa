@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Production Scheduling Simulator | SmartFactory 4.0 Virtual Lab</title>
+  <meta name="description" content="Interactive production scheduling simulation for SmartFactory 4.0 Virtual Lab — Experiment 10. Study FCFS, SJF, Priority Scheduling, and Round Robin algorithms.">
+  <link rel="stylesheet" href="css/main.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div class="app-container" id="appRoot">
+
+  <!-- ══════════════════════════════════════════
+       TOOLBAR
+  ══════════════════════════════════════════ -->
+  <section class="toolbar" id="toolbarMain">
+
+    <!-- Sim Control Buttons -->
+    <div class="toolbar-group">
+      <button class="sim-btn start" id="startBtn"><i class="fa-solid fa-play"></i> Start</button>
+      <button class="sim-btn pause" id="pauseBtn" disabled><i class="fa-solid fa-pause"></i> Pause</button>
+      <button class="sim-btn reset" id="resetBtn"><i class="fa-solid fa-rotate-left"></i> Reset</button>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <!-- Algorithm A -->
+    <div class="toolbar-group" id="algoAGroup">
+      <label>Algorithm</label>
+      <select id="algoA">
+        <option value="FCFS">FCFS</option>
+        <option value="SJF">Shortest Job First (SJF)</option>
+        <option value="Priority">Priority Scheduling</option>
+        <option value="RR">Round Robin</option>
+      </select>
+    </div>
+
+    <!-- Algorithm B — compare mode only -->
+    <div class="toolbar-group hidden" id="algoBGroup">
+      <label>vs Algorithm B</label>
+      <select id="algoB">
+        <option value="FCFS">FCFS</option>
+        <option value="SJF" selected>Shortest Job First (SJF)</option>
+        <option value="Priority">Priority Scheduling</option>
+        <option value="RR">Round Robin</option>
+      </select>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <!-- Scenario -->
+    <div class="toolbar-group">
+      <label>Scenario</label>
+      <select id="scenario">
+        <option value="normal">Normal Production</option>
+        <option value="priority">Priority Orders</option>
+        <option value="heavy">Heavy Workload</option>
+        <option value="mixed" selected>Mixed Production</option>
+      </select>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <!-- Machine Count -->
+    <div class="toolbar-group">
+      <label>Machines</label>
+      <div class="mcount-btns">
+        <button class="mcount-btn" data-count="1">1</button>
+        <button class="mcount-btn active" data-count="2">2</button>
+        <button class="mcount-btn" data-count="3">3</button>
+      </div>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <!-- Simulation Speed -->
+    <div class="toolbar-group">
+      <label>Speed</label>
+      <div class="speed-btns">
+        <button class="speed-btn active" data-speed="1">1×</button>
+        <button class="speed-btn" data-speed="2">2×</button>
+        <button class="speed-btn" data-speed="5">5×</button>
+      </div>
+    </div>
+
+    <!-- Compare Toggle -->
+    <div class="compare-toggle-wrap">
+      <label>Compare Algorithms</label>
+      <label class="toggle-switch">
+        <input type="checkbox" id="compareToggle">
+        <span class="toggle-track"></span>
+      </label>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════
+       MAIN LAYOUT — 3 COLUMNS
+  ══════════════════════════════════════════ -->
+  <div class="main-layout">
+
+    <!-- ═══════════════════════════════
+         LEFT SIDEBAR
+    ═══════════════════════════════ -->
+    <aside class="left-sidebar">
+
+      <!-- Timer -->
+      <div class="side-card">
+        <div class="side-card-title"><i class="fa-solid fa-stopwatch"></i> Simulation Time</div>
+        <div class="sim-timer" id="timerDisplay">00:00</div>
+        <div class="sim-timer-label" id="timerStatus">Ready to start</div>
+      </div>
+
+      <!-- KPI Panel -->
+      <div class="side-card">
+        <div class="side-card-title"><i class="fa-solid fa-chart-bar"></i> Live KPIs</div>
+        <div class="kpi-grid">
+
+          <div class="kpi-item">
+            <div class="kpi-item-left">
+              <div class="kpi-icon-sm blue"><i class="fa-solid fa-stopwatch"></i></div>
+              <div>
+                <div class="kpi-label">Makespan</div>
+                <div class="kpi-value" id="kpiMakespan">0 s</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-item">
+            <div class="kpi-item-left">
+              <div class="kpi-icon-sm orange"><i class="fa-solid fa-clock"></i></div>
+              <div>
+                <div class="kpi-label">Avg Waiting Time</div>
+                <div class="kpi-value" id="kpiWaiting">0 s</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-item">
+            <div class="kpi-item-left">
+              <div class="kpi-icon-sm green"><i class="fa-solid fa-bolt"></i></div>
+              <div>
+                <div class="kpi-label">Throughput</div>
+                <div class="kpi-value" id="kpiThroughput">0 jobs/min</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-item">
+            <div class="kpi-item-left">
+              <div class="kpi-icon-sm purple"><i class="fa-solid fa-gears"></i></div>
+              <div>
+                <div class="kpi-label">Machine Utilization</div>
+                <div class="kpi-value" id="kpiUtilization">0%</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-item">
+            <div class="kpi-item-left">
+              <div class="kpi-icon-sm red"><i class="fa-solid fa-layer-group"></i></div>
+              <div>
+                <div class="kpi-label">Queue Length</div>
+                <div class="kpi-value" id="kpiQueue">0</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="kpi-item">
+            <div class="kpi-item-left">
+              <div class="kpi-icon-sm teal"><i class="fa-solid fa-award"></i></div>
+              <div>
+                <div class="kpi-label">Production Efficiency</div>
+                <div class="kpi-value" id="kpiEfficiency">100%</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Scheduler Decision -->
+      <div class="side-card">
+        <div class="side-card-title"><i class="fa-solid fa-microchip"></i> Scheduler Decision</div>
+        <div class="decision-panel" id="decisionPanel">
+          <div class="empty-state"><i class="fa-solid fa-brain"></i>Awaiting simulation…</div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ═══════════════════════════════
+         CENTER CONTENT
+    ═══════════════════════════════ -->
+    <main class="center-content">
+
+      <!-- ── SINGLE MODE ───────────────────────────────── -->
+      <div id="singleMode">
+
+        <!-- Factory Floor -->
+        <div class="factory-card">
+          <div class="factory-header">
+            <h2><i class="fa-solid fa-industry"></i> Live Production Floor</h2>
+            <span class="live-badge"><span class="live-dot"></span> LIVE</span>
+          </div>
+
+          <div class="production-flow">
+
+            <!-- Incoming Orders -->
+            <div class="flow-stage">
+              <div class="flow-stage-title"><i class="fa-solid fa-box-open"></i> Incoming Orders</div>
+              <div class="orders-list" id="incomingOrders">
+                <div class="empty-state"><i class="fa-solid fa-inbox"></i>No orders yet</div>
+              </div>
+            </div>
+
+            <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <!-- Queue -->
+            <div class="flow-stage">
+              <div class="flow-stage-title"><i class="fa-solid fa-list-ol"></i> Job Queue</div>
+              <div class="queue-list" id="jobQueue">
+                <div class="empty-state"><i class="fa-solid fa-database"></i>Queue empty</div>
+              </div>
+            </div>
+
+            <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <!-- Scheduler -->
+            <div class="flow-stage">
+              <div class="flow-stage-title"><i class="fa-solid fa-brain"></i> Scheduler</div>
+              <div class="scheduler-wrap">
+                <div class="scheduler-circle" id="schedulerCircle">
+                  <i class="fa-solid fa-microchip"></i>
+                </div>
+                <div class="scheduler-label" id="schedulerLabel">FCFS</div>
+                <div id="schedulerSelectedJob" style="margin-top:4px;"></div>
+              </div>
+            </div>
+
+            <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <!-- Machines -->
+            <div class="flow-stage" style="min-width:160px;">
+              <div class="flow-stage-title"><i class="fa-solid fa-robot"></i> Machines</div>
+              <div class="machines-row" id="machinesContainer">
+                <!-- dynamically rendered -->
+              </div>
+            </div>
+
+            <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <!-- Packaging -->
+            <div class="flow-stage">
+              <div class="flow-stage-title"><i class="fa-solid fa-box"></i> Packaging</div>
+              <div class="packaging-area">
+                <div class="package-icon"><i class="fa-solid fa-box"></i></div>
+                <div class="package-count" id="packagingCount">0</div>
+                <div class="package-label">jobs packaged</div>
+              </div>
+            </div>
+
+            <div class="flow-arrow"><i class="fa-solid fa-chevron-right"></i></div>
+
+            <!-- Completed -->
+            <div class="flow-stage">
+              <div class="flow-stage-title"><i class="fa-solid fa-check-circle"></i> Completed</div>
+              <div class="completed-area">
+                <div class="completed-counter">
+                  <div class="completed-num" id="completedCount">0</div>
+                  <div class="completed-label">Jobs</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- AI Decision Panel -->
+        <div class="ai-panel" id="aiPanel">
+          <div class="ai-panel-icon"><i class="fa-solid fa-robot"></i></div>
+          <div class="ai-panel-body">
+            <div class="ai-panel-title">AI Scheduler Insight</div>
+            <div class="ai-panel-text" id="aiPanelText">
+              Start the simulation to see real-time scheduling decisions. The AI will explain why each job is selected based on the chosen algorithm.
+            </div>
+          </div>
+        </div>
+
+        <!-- Gantt Chart -->
+        <div class="gantt-card">
+          <div class="gantt-header">
+            <h3><i class="fa-solid fa-timeline"></i> Machine Timeline (Live Gantt Chart)</h3>
+            <div class="gantt-legend">
+              <div class="gantt-legend-item"><div class="gantt-legend-dot gb-blue"></div> Machine A</div>
+              <div class="gantt-legend-item"><div class="gantt-legend-dot gb-green"></div> Machine B</div>
+              <div class="gantt-legend-item"><div class="gantt-legend-dot gb-orange"></div> Machine C</div>
+            </div>
+          </div>
+          <div class="gantt-body" id="ganttBody">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Live Charts -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h4><i class="fa-solid fa-chart-line"></i> Queue Length Over Time</h4>
+            <canvas class="chart-canvas" id="queueChart" height="120"></canvas>
+          </div>
+          <div class="chart-card">
+            <h4><i class="fa-solid fa-gauge-high"></i> Machine Utilization</h4>
+            <canvas class="chart-canvas" id="utilChart" height="120"></canvas>
+          </div>
+          <div class="chart-card">
+            <h4><i class="fa-solid fa-chart-column"></i> Completed Jobs Throughput</h4>
+            <canvas class="chart-canvas" id="throughputChart" height="120"></canvas>
+          </div>
+        </div>
+
+      </div><!-- /#singleMode -->
+
+
+      <!-- ── COMPARE MODE ───────────────────────────────── -->
+      <div id="compareSection" class="hidden">
+
+        <!-- Two Lanes -->
+        <div class="compare-lanes">
+
+          <!-- Lane A -->
+          <div class="compare-lane lane-a">
+            <div class="lane-header a">
+              <div>
+                <div style="font-size:10px;color:var(--primary);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Algorithm A</div>
+                <div class="lane-algo-name" id="laneAName">FCFS</div>
+              </div>
+              <span class="lane-status idle" id="laneAStatus">Idle</span>
+            </div>
+            <div class="lane-content">
+              <div class="mini-flow">
+                <div>
+                  <div class="mini-stage-title">Queue</div>
+                  <div class="mini-queue-row" id="queueLaneA"></div>
+                </div>
+                <div>
+                  <div class="mini-stage-title">Machines</div>
+                  <div class="mini-machines-list" id="machinesLaneA"></div>
+                </div>
+                <div class="mini-completed-row">
+                  <div class="mini-completed-num" id="completedLaneA">0</div>
+                  <div class="mini-completed-label">Jobs Completed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- VS -->
+          <div class="compare-vs">VS</div>
+
+          <!-- Lane B -->
+          <div class="compare-lane lane-b">
+            <div class="lane-header b">
+              <div>
+                <div style="font-size:10px;color:var(--purple);font-weight:600;text-transform:uppercase;letter-spacing:.06em;">Algorithm B</div>
+                <div class="lane-algo-name" id="laneBName">SJF</div>
+              </div>
+              <span class="lane-status idle" id="laneBStatus">Idle</span>
+            </div>
+            <div class="lane-content">
+              <div class="mini-flow">
+                <div>
+                  <div class="mini-stage-title">Queue</div>
+                  <div class="mini-queue-row" id="queueLaneB"></div>
+                </div>
+                <div>
+                  <div class="mini-stage-title">Machines</div>
+                  <div class="mini-machines-list" id="machinesLaneB"></div>
+                </div>
+                <div class="mini-completed-row">
+                  <div class="mini-completed-num" id="completedLaneB">0</div>
+                  <div class="mini-completed-label">Jobs Completed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.compare-lanes -->
+
+        <!-- Gantt for Compare -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="gantt-card">
+            <div class="gantt-header">
+              <h3><i class="fa-solid fa-timeline"></i> Algorithm A — Gantt</h3>
+            </div>
+            <div class="gantt-body" id="ganttCompareA"></div>
+          </div>
+          <div class="gantt-card">
+            <div class="gantt-header">
+              <h3><i class="fa-solid fa-timeline"></i> Algorithm B — Gantt</h3>
+            </div>
+            <div class="gantt-body" id="ganttCompareB"></div>
+          </div>
+        </div>
+
+        <!-- Compare Results -->
+        <div class="compare-results-card">
+          <h3><i class="fa-solid fa-code-compare"></i> Performance Comparison</h3>
+          <table class="compare-table">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th id="cmpHeaderA">Algorithm A (FCFS)</th>
+                <th id="cmpHeaderB">Algorithm B (SJF)</th>
+                <th>Winner</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><i class="fa-solid fa-stopwatch" style="color:var(--primary);margin-right:5px;"></i>Makespan</td>
+                <td id="cmpMakespanA">—</td>
+                <td id="cmpMakespanB">—</td>
+                <td id="cmpMakespanW">—</td>
+              </tr>
+              <tr>
+                <td><i class="fa-solid fa-clock" style="color:var(--warning);margin-right:5px;"></i>Avg Waiting Time</td>
+                <td id="cmpWaitA">—</td>
+                <td id="cmpWaitB">—</td>
+                <td id="cmpWaitW">—</td>
+              </tr>
+              <tr>
+                <td><i class="fa-solid fa-rotate" style="color:var(--cyan);margin-right:5px;"></i>Avg Turnaround Time</td>
+                <td id="cmpTatA">—</td>
+                <td id="cmpTatB">—</td>
+                <td id="cmpTatW">—</td>
+              </tr>
+              <tr>
+                <td><i class="fa-solid fa-bolt" style="color:var(--success);margin-right:5px;"></i>Throughput (jobs/min)</td>
+                <td id="cmpThroughA">—</td>
+                <td id="cmpThroughB">—</td>
+                <td id="cmpThroughW">—</td>
+              </tr>
+              <tr>
+                <td><i class="fa-solid fa-gears" style="color:var(--purple);margin-right:5px;"></i>Machine Utilization</td>
+                <td id="cmpUtilA">—</td>
+                <td id="cmpUtilB">—</td>
+                <td id="cmpUtilW">—</td>
+              </tr>
+              <tr>
+                <td><i class="fa-solid fa-award" style="color:var(--teal);margin-right:5px;"></i>Production Efficiency</td>
+                <td id="cmpEffA">—</td>
+                <td id="cmpEffB">—</td>
+                <td id="cmpEffW">—</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="winner-banner" id="winnerBanner" style="display:none;">
+            <i class="fa-solid fa-trophy"></i>
+            <div class="winner-text" id="winnerText"></div>
+          </div>
+        </div>
+
+        <!-- Compare Charts -->
+        <div class="charts-grid">
+          <div class="chart-card">
+            <h4><i class="fa-solid fa-chart-line"></i> Queue Length (Both)</h4>
+            <canvas class="chart-canvas" id="compareQueueChart" height="120"></canvas>
+          </div>
+          <div class="chart-card">
+            <h4><i class="fa-solid fa-gauge-high"></i> Utilization (Both)</h4>
+            <canvas class="chart-canvas" id="compareUtilChart" height="120"></canvas>
+          </div>
+          <div class="chart-card">
+            <h4><i class="fa-solid fa-chart-column"></i> Completed Jobs (Both)</h4>
+            <canvas class="chart-canvas" id="compareThroughChart" height="120"></canvas>
+          </div>
+        </div>
+
+      </div><!-- /#compareSection -->
+
+
+      <!-- ── PRODUCTION HISTORY ────────────────────────── -->
+      <div class="history-card">
+        <div class="history-header">
+          <h3><i class="fa-solid fa-clock-rotate-left"></i> Production History</h3>
+          <span style="font-size:11px;color:var(--text-faint);">Latest jobs on top</span>
+        </div>
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Job ID</th>
+                <th>Product</th>
+                <th>Priority</th>
+                <th>Machine</th>
+                <th>Arrival</th>
+                <th>Start</th>
+                <th>Finish</th>
+                <th>Wait</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody">
+              <tr>
+                <td colspan="9" class="text-center" style="color:var(--text-faint);padding:20px;">
+                  No jobs executed yet. Start the simulation to see production history.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </main><!-- /center-content -->
+
+
+    <!-- ═══════════════════════════════
+         RIGHT SIDEBAR
+    ═══════════════════════════════ -->
+    <aside class="right-sidebar">
+
+      <!-- Guided Observations -->
+      <div class="side-card">
+        <div class="side-card-title"><i class="fa-solid fa-eye"></i> What to Observe</div>
+        <div style="font-size:12px;color:var(--text-mid);line-height:1.6;padding-right:4px;">
+          <ul style="margin:0;padding-left:16px;list-style-type:square;">
+            <li style="margin-bottom:6px;"><b>Queue Build-up:</b> Watch how fast jobs pile up. A growing queue means the algorithm is struggling to keep up.</li>
+            <li style="margin-bottom:6px;"><b>Gantt Chart:</b> Look for preemption (split jobs) in Round Robin vs continuous blocks in FCFS.</li>
+            <li style="margin-bottom:6px;"><b>AI Decisions:</b> Check the bottom-left panel to see exactly <i>why</i> the scheduler picked the current job.</li>
+            <li><b>Compare Mode:</b> Toggle 'Compare Algorithms' to race two algorithms side-by-side and see the winner!</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Incoming Orders preview -->
+      <div class="side-card">
+        <div class="side-card-title"><i class="fa-solid fa-box-open"></i> Next Incoming Jobs</div>
+        <div id="nextJobsPanel">
+          <div class="empty-state"><i class="fa-solid fa-inbox"></i>No upcoming jobs</div>
+        </div>
+      </div>
+
+      <!-- AI Recommendation -->
+      <div class="side-card">
+        <div class="side-card-title"><i class="fa-solid fa-lightbulb"></i> AI Recommendations</div>
+        <div class="rec-card" id="recCard">
+          <div class="rec-item">
+            <i class="fa-solid fa-circle-info"></i>
+            <span id="rec1">Start the simulation to receive recommendations.</span>
+          </div>
+          <div class="rec-item" id="recItem2" style="display:none;">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span id="rec2"></span>
+          </div>
+          <div class="rec-item" id="recItem3" style="display:none;">
+            <i class="fa-solid fa-star"></i>
+            <span id="rec3"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Algorithm Info -->
+      <div class="side-card">
+        <div class="side-card-title"><i class="fa-solid fa-circle-info"></i> Algorithm Info</div>
+        <div id="algoInfoPanel" style="font-size:12px;color:var(--text-mid);line-height:1.7;">
+          <strong id="algoInfoName" style="color:var(--primary);font-size:13px;display:block;margin-bottom:6px;">FCFS</strong>
+          <span id="algoInfoDesc">First Come First Served — Jobs are processed in arrival order. Simple and fair, but can lead to long waiting times if large jobs arrive first.</span>
+          <div style="margin-top:10px;">
+            <div style="font-size:11px;font-weight:700;color:var(--text-light);margin-bottom:5px;">Pros &amp; Cons</div>
+            <div id="algoInfoPros" style="color:var(--success);font-size:11px;margin-bottom:3px;">✓ Simple, no starvation</div>
+            <div id="algoInfoCons" style="color:var(--danger);font-size:11px;">✗ Convoy effect with large jobs</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Summary -->
+      <div class="side-card">
+        <div class="side-card-title"><i class="fa-solid fa-chart-pie"></i> Session Summary</div>
+        <div id="sessionSummary" style="font-size:12px;color:var(--text-mid);line-height:1.8;">
+          <div>Total Jobs Generated: <strong id="totalJobsGenerated">0</strong></div>
+          <div>Jobs Completed: <strong id="totalCompleted">0</strong></div>
+          <div>High Priority: <strong id="highPriorityCount" style="color:var(--danger);">0</strong></div>
+          <div>Medium Priority: <strong id="medPriorityCount" style="color:var(--orange);">0</strong></div>
+          <div>Low Priority: <strong id="lowPriorityCount" style="color:var(--success);">0</strong></div>
+          <div>Best Machine: <strong id="bestMachine" style="color:var(--primary);">—</strong></div>
+        </div>
+      </div>
+
+    </aside>
+
+  </div><!-- /.main-layout -->
+
+
+  <!-- ══════════════════════════════════════════
+       TOAST
+  ══════════════════════════════════════════ -->
+  <div class="toast" id="toast">
+    <i class="fa-solid fa-robot toast-icon"></i>
+    <span class="toast-text" id="toastMsg">Scheduler initialized.</span>
+  </div>
+
+
+  <!-- ══════════════════════════════════════════
+       LOADING OVERLAY
+  ══════════════════════════════════════════ -->
+  <div id="loadingOverlay">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">
+      <h2>Initializing Smart Factory</h2>
+      <p>Loading Production Scheduling Engine…</p>
+    </div>
+  </div>
+
+
+
+</div><!-- /#appRoot -->
+
+<script src="js/main.js"></script>
+</body>
+</html>
