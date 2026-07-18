@@ -354,11 +354,7 @@ function loop(ts){
   const dt=Math.min((ts-lastTS)/1000,.05);
   lastTS=ts;
 
-  /* resize canvas to match wrapper */
-  const w=cv.parentElement.clientWidth||900;
-  const h=cv.parentElement.clientHeight||400;
-  if(cv.width!==w){cv.width=w;}
-  if(cv.height!==h){cv.height=h;}
+  /* fixed logical coordinate system, scaled by css aspect-ratio */
 
   /* visual speed effects */
   let effectiveS = +slS.value;
@@ -529,8 +525,8 @@ $('btnClr').addEventListener('click',()=>{$('tBody').innerHTML='';logData=[];run
 
 /* ════════ INIT — set canvas before first frame ════════ */
 (()=>{
-  cv.width  = cv.parentElement.clientWidth  || 900;
-  cv.height = cv.parentElement.clientHeight || 400;
+  cv.width  = 900;
+  cv.height = 300;
 })();
 
 requestAnimationFrame(loop);
