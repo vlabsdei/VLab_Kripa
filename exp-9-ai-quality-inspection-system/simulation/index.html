@@ -13,25 +13,8 @@
 <body>
 
   <!-- ═══════ HEADER ═══════ -->
-  <header class="app-header">
-    <div class="header-brand">
-      <div class="brand-icon">SF</div>
-      <div class="brand-text">
-        <span class="brand-name">SmartFactory <span class="brand-ver">4.0</span></span>
-        <span class="brand-sub">Inspection Console v9.2</span>
-      </div>
-    </div>
-    <div class="header-center">
-      <h1 class="exp-title">EXPERIMENT 9: <span class="exp-accent">AI QUALITY INSPECTION SYSTEM</span></h1>
-    </div>
-    <div class="header-right">
-      <div class="hdr-clock">
-        <div class="clock-time" id="hdr-time">--:--:-- --</div>
-        <div class="clock-date" id="hdr-date">-- --- ----</div>
-      </div>
-      <button class="hdr-btn" id="btn-fs" title="Fullscreen">&#9974;</button>
-    </div>
-  </header>
+  <!-- Header removed per user request -->
+
 
   <!-- ═══════ MAIN GRID ═══════ -->
   <main class="app-grid">
@@ -121,7 +104,7 @@
           </div>
 
           <div class="btn-col">
-            <button class="sim-btn btn-inspect" id="btn-inspect">&#128640; INJECT INTO CONVEYOR</button>
+            <button class="sim-btn btn-inspect" id="btn-inspect">INJECT INTO CONVEYOR</button>
           </div>
 
         </div>
@@ -232,6 +215,9 @@
         <!-- Inspection History -->
         <div class="card bot-card">
           <div class="card-hdr">CONSOLE LOGGER / HISTORY</div>
+          <div class="hist-controls" style="justify-content: flex-end; padding: 4px 8px;">
+            <button id="btn-export-csv" class="btn-export">Export CSV</button>
+          </div>
           <div class="hist-scroll">
             <table class="hist-table">
               <thead><tr>
@@ -252,7 +238,7 @@
 
       <!-- Camera Advanced Diagnostics -->
       <div class="card diag-card">
-        <div class="card-hdr">&#128249; CAMERA DIAGNOSTIC CONSOLE</div>
+        <div class="card-hdr">  CAMERA DIAGNOSTIC CONSOLE</div>
         <div class="card-body settings-body">
 
           <div class="ctrl-group">
@@ -295,7 +281,7 @@
 
       <!-- Core Sorting Parameters -->
       <div class="card sorted-params-card">
-        <div class="card-hdr">&#127899; TOLERANCE & FLOW LIMITS</div>
+        <div class="card-hdr"> TOLERANCE & FLOW LIMITS</div>
         <div class="card-body settings-body">
 
           <div class="ctrl-group">
@@ -328,7 +314,7 @@
 
       <!-- Gamified Auto Engine Operations -->
       <div class="card engine-card">
-        <div class="card-hdr">&#128668; AUTO SORT ENGINE</div>
+        <div class="card-hdr"> AUTO SORT ENGINE</div>
         <div class="card-body">
           <div class="btn-col" style="padding:0">
             <button class="sim-btn btn-auto" id="btn-auto">&#9654; START AUTO-SORT PIPELINE</button>

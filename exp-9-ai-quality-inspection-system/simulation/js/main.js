@@ -194,10 +194,51 @@ function initControls(){
   el('btn-inspect').addEventListener('click', inspectManual);
   el('btn-auto').addEventListener('click', toggleAuto);
   el('btn-reset').addEventListener('click', resetAll);
-  el('btn-fs').addEventListener('click',()=>{
-    if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
-    else document.exitFullscreen();
-  });
+
+  // Export CSV Button
+  const btnExport = el('btn-export-csv');
+  if(btnExport) btnExport.addEventListener('click', exportToCSV);
+
+  // Fullscreen toggle (safely checking element presence)
+  const btnFs = el('btn-fs');
+  if(btnFs){
+    btnFs.addEventListener('click',()=>{
+      if(!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+      else document.exitFullscreen();
+    });
+  }
+}
+
+function exportToCSV() {
+  if (S.history.length === 0) {
+    alert("No data available to export.");
+    return;
+  }
+  const headers = ["Product ID", "Product Type", "Defect Type", "Defect Size (mm)", "Defect Location", "AI Confidence (%)", "Decision", "Timestamp"];
+  const rows = S.history.map(p => [
+    p.id,
+    p.type,
+    p.hasDefect ? p.defectType : 'None',
+    p.hasDefect ? p.defectSize : 0,
+    p.hasDefect ? p.defectLoc : 'N/A',
+    p.confidence,
+    p.decision,
+    p.time
+  ]);
+
+  const csvContent = [headers.join(",")]
+    .concat(rows.map(e => e.map(val => `"${String(val).replace(/"/g, '""')}"`).join(",")))
+    .join("\n");
+
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", `ai_inspection_history_${Date.now()}.csv`);
+  link.style.visibility = 'hidden';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 function paintSlider(sl){
@@ -727,10 +768,7 @@ function addHistory(p){
     <td class="mono">${p.confidence}</td>
     <td class="${p.decision==='PASS'?'pass-td':'reject-td'}">${p.decision}</td>`;
   tbody.insertBefore(tr,tbody.firstChild);
-  while(tbody.rows.length>20) tbody.deleteRow(tbody.rows.length-1);
-
   S.history.unshift(p);
-  if(S.history.length>20) S.history.pop();
 }
 
 function pushSpark(p){
