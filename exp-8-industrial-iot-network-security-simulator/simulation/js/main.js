@@ -27,14 +27,14 @@ const PATHS = [
   { src:'cloud',  dst:'fw',     sXY:[426,80],  dXY:[426,116] },
   { src:'fw',     dst:'gw',     sXY:[426,180], dXY:[426,222] },
   { src:'gw',     dst:'sw',     sXY:[426,258], dXY:[426,307] },
-  { src:'sw',     dst:'plc',    sXY:[384,324], dXY:[55,400]  },
-  { src:'sw',     dst:'cam',    sXY:[402,324], dXY:[161,400] },
-  { src:'sw',     dst:'sensor', sXY:[420,326], dXY:[267,400] },
-  { src:'sw',     dst:'hmi',    sXY:[426,326], dXY:[373,400] },
-  { src:'sw',     dst:'rfid',   sXY:[432,326], dXY:[479,400] },
-  { src:'sw',     dst:'mc',     sXY:[438,324], dXY:[585,400] },
-  { src:'sw',     dst:'tmp',    sXY:[450,324], dXY:[691,400] },
-  { src:'sw',     dst:'wh',     sXY:[468,324], dXY:[797,400] },
+  { src:'sw',     dst:'plc',    sXY:[426,333], dXY:[55,396]  },
+  { src:'sw',     dst:'cam',    sXY:[426,333], dXY:[161,396] },
+  { src:'sw',     dst:'sensor', sXY:[426,333], dXY:[267,396] },
+  { src:'sw',     dst:'hmi',    sXY:[426,333], dXY:[373,396] },
+  { src:'sw',     dst:'rfid',   sXY:[426,333], dXY:[479,396] },
+  { src:'sw',     dst:'mc',     sXY:[426,333], dXY:[585,396] },
+  { src:'sw',     dst:'tmp',    sXY:[426,333], dXY:[691,396] },
+  { src:'sw',     dst:'wh',     sXY:[426,333], dXY:[797,396] },
   { src:'plc',    dst:'cloud',  sXY:[55,396],  dXY:[426,80]  },
   { src:'cam',    dst:'cloud',  sXY:[161,396], dXY:[426,80]  },
 ];
@@ -56,6 +56,7 @@ let simInterval = null;
 let simCount = 0;
 let logCount = 0;
 let totalPkts = 0, delPkts = 0, blkPkts = 0;
+let allLogData = [];
 
 let P = { devices:20, pktRate:250, fwStrength:5, attack:0, protocol:'MQTT', encryption:'None' };
 let M = {};
@@ -393,13 +394,21 @@ const RULES = [
 
 const LV_COL = { crit:'#EF4444', warn:'#F59E0B', info:'#2563EB', ok:'#22C55E' };
 
+let _lastThreatKey = '';
+
 function updateThreats() {
   const active = RULES.filter(r => r.chk(M, P)).slice(0, 5);
   const body = document.getElementById('threat-body');
   const led  = document.getElementById('threat-led');
+
+  // Build a key representing current threat state — only redraw when it changes
+  const key = active.map(r => r.lv + r.txt).join('|');
+  if (key === _lastThreatKey) return; // no change — skip to prevent flicker
+  _lastThreatKey = key;
+
   if (!active.length) {
     body.innerHTML = '<div style="font-size:9px;color:#22C55E;text-align:center;padding:10px 0;font-weight:700">No active threats detected - All systems normal</div>';
-    if (led) { led.style.background='#22C55E'; led.style.boxShadow='0 0 5px #22C55E'; }
+    if (led) { led.style.background='#22C55E'; led.style.boxShadow='0 0 5px #22C55E'; led.className='ph-led'; }
     return;
   }
   const hasCrit = active.some(r => r.lv === 'crit');
@@ -605,9 +614,11 @@ function addLog() {
     <td><span class="badge ${statusClass}">${statusText}</span></td>`;
   
   body.appendChild(tr);
-  if (body.children.length > 30) body.removeChild(body.firstChild);
 
-  // Auto-scroll logic if container is scrolled near bottom
+  // Store full data for CSV export
+  allLogData.push({ id: logCount, src: srcName, dst: dstName, proto, latency: latencyVal, status: statusText });
+
+  // Auto-scroll to bottom
   const container = document.querySelector('.log-body');
   if (container) {
     container.scrollTop = container.scrollHeight;
@@ -718,7 +729,7 @@ function pktLoop(ts) {
     if (el) {
       const x = 40 + t * 820;
       el.setAttribute('cx', x);
-      el.setAttribute('cy', 30 + Math.sin(t * Math.PI * 2) * 5);
+      el.setAttribute('cy', 30);
       el.setAttribute('opacity', t > 0.9 ? (1 - t) * 10 : 0.9);
     }
     if (t >= 1) flowDone.push(fp.id);
@@ -870,18 +881,13 @@ function makeSVG(tag, attrs) {
    CSV EXPORT
 ═══════════════════════════════════════════ */
 function exportCSV() {
-  const rows = document.querySelectorAll('#log-body tr');
-  if (!rows.length || (rows.length === 1 && rows[0].querySelector('td[colspan]'))) {
+  if (!allLogData.length) {
     alert('No log data available to export.');
     return;
   }
-  let csv = 'Time,Source -> Destination,Protocol,Latency,Status\n';
-  rows.forEach(tr => {
-    const cols = tr.querySelectorAll('td');
-    if (cols.length >= 5) {
-      const rowData = Array.from(cols).map(td => td.textContent.trim());
-      csv += rowData.join(',') + '\n';
-    }
+  let csv = '#,Source,Destination,Protocol,Latency (ms),Status\n';
+  allLogData.forEach(d => {
+    csv += `${d.id},"${d.src}","${d.dst}",${d.proto},${d.latency},${d.status}\n`;
   });
   const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
@@ -907,22 +913,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const expBtn = document.getElementById('btn-export-csv');
   if (expBtn) expBtn.addEventListener('click', exportCSV);
-
-  const scrollBtn = document.getElementById('btn-scroll-log');
-  if (scrollBtn) {
-    scrollBtn.addEventListener('click', () => {
-      const container = document.querySelector('.log-body');
-      if (container) {
-        if (scrollBtn.textContent === 'Scroll Down') {
-          container.scrollTop = container.scrollHeight;
-          scrollBtn.textContent = 'Scroll Up';
-        } else {
-          container.scrollTop = 0;
-          scrollBtn.textContent = 'Scroll Down';
-        }
-      }
-    });
-  }
 
   // Initial connection colors
   setConnColors();

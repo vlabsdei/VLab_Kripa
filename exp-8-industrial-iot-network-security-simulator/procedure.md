@@ -16,7 +16,7 @@ Before starting the simulation, understand the roles of the six core dashboard s
 4.  **Network Security Status (Right Panel)**: Displays real-time Key Performance Indicators (KPIs) such as Latency, Throughput, Packet Loss, Bandwidth, and the system's overall Security Score.
 5.  **Analytics & logs (Bottom Panels)**:
     *   **Communication Logs**: A scrolling list of every packet captured on the wire.
-    *   **AI Threat Intelligence**: Generates automated notifications and defensive recommendations based on traffic anomalies.
+    *   **Threat Intelligence**: Generates automated notifications and defensive recommendations based on traffic anomalies.
     *   **Selected Device Details**: Inspects the physical health (CPU load, memory allocation, and operating temperature) of the selected device node.
     *   **Analytics Charts**: Historical line charts tracking Throughput, Latency, and Packet Loss over time.
 
@@ -51,7 +51,7 @@ Here, you will observe the direct physical and operational consequences of an un
 1.  **Simulate Attack**: While the simulation is running, drag the **Attack Intensity** slider to `70%`. Leave all other parameters unchanged.
 2.  **Observe the Visual Shifts**:
     *   Watch the topology and timeline strip: Red packet dots will flood the lines.
-    *   Notice the **AI Threat Intelligence** box. It will flash red with alerts indicating a high-volume packet injection attack.
+    *   Notice the **Threat Intelligence** box. It will flash red with alerts indicating a high-volume packet injection attack.
 3.  **Analyze Performance Degradation**: Wait for the metrics to stabilize, then document the impact:
     *   **New Security Score**: ____________ % (Expect a drop below 50%)
     *   **New Latency**: ____________ ms (Notice how latency spikes as buffers saturate)
