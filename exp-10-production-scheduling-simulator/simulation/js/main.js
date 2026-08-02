@@ -37,7 +37,7 @@ const PRODUCTS = [
   'Bearing Set',   'Coupling Unit',  'Control Panel',  'Filter Cartridge'
 ];
 
-/* Algorithm metadata — for display and AI explanations only */
+/* Algorithm metadata — for display and explanations only */
 const ALGO_META = {
   FCFS: {
     name:  'FCFS — First Come First Served',
@@ -812,7 +812,7 @@ function renderNextJobs() {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   GANTT CHART  (proportional timeline, absolute pixel positions)
+   GANTT CHART
 ───────────────────────────────────────────────────────────── */
 function renderGantt() {
   const body = el('ganttBody');
@@ -922,7 +922,7 @@ function addHistoryRow(job, machineName, algo) {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   AI DECISION PANEL
+   DECISION PANEL
 ───────────────────────────────────────────────────────────── */
 function showDecision(job, algo) {
   const panel = el('decisionPanel');
@@ -951,7 +951,7 @@ function showDecision(job, algo) {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   AI RECOMMENDATIONS
+   RECOMMENDATIONS
 ───────────────────────────────────────────────────────────── */
 function updateRecommendations() {
   const algo      = STATE.algorithm;
@@ -967,7 +967,7 @@ function updateRecommendations() {
   let s2 = false, s3 = false;
 
   if (!STATE.running) {
-    r1 = 'Start the simulation to receive real-time AI recommendations.';
+    r1 = 'Start the simulation to receive real-time recommendations.';
   } else if (qLen > 8) {
     r1 = `⚠ Queue congestion: ${qLen} jobs waiting. Consider Shortest Job First (SJF) to drain the queue faster by clearing short jobs first.`;
     s2 = true; r2 = 'Increasing machine count to 3 can also reduce queue buildup under heavy load.';
@@ -1556,6 +1556,27 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Initial render */
   renderResetUI();
   updateAlgoInfoPanel();
+
+  /* Export CSV */
+  const exportBtn = el('btn-export-csv');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      let csv = 'Job ID,Product,Priority,Machine,Arrival,Start,Finish,Wait,Status\\n';
+      document.querySelectorAll('#historyBody tr').forEach(row => {
+        let cols = row.querySelectorAll('td');
+        let rowData = [];
+        cols.forEach(col => rowData.push('"' + col.innerText.replace(/"/g, '""') + '"'));
+        csv += rowData.join(',') + '\\n';
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'production_history.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
 
   showToast('SmartFactory 4.0 ready! Select an algorithm and press Start.');
 });

@@ -280,13 +280,13 @@
           </div>
         </div>
 
-        <!-- AI Decision Panel -->
+        <!-- Decision Panel -->
         <div class="ai-panel" id="aiPanel">
-          <div class="ai-panel-icon"><i class="fa-solid fa-robot"></i></div>
+          <div class="ai-panel-icon"><i class="fa-solid fa-info-circle"></i></div>
           <div class="ai-panel-body">
-            <div class="ai-panel-title">AI Scheduler Insight</div>
+            <div class="ai-panel-title">Scheduler Insights</div>
             <div class="ai-panel-text" id="aiPanelText">
-              Start the simulation to see real-time scheduling decisions. The AI will explain why each job is selected based on the chosen algorithm.
+              Start the simulation to see real-time scheduling decisions. This will explain why each job is selected based on the chosen algorithm.
             </div>
           </div>
         </div>
@@ -484,9 +484,12 @@
 
       <!-- ── PRODUCTION HISTORY ────────────────────────── -->
       <div class="history-card">
-        <div class="history-header">
-          <h3><i class="fa-solid fa-clock-rotate-left"></i> Production History</h3>
-          <span style="font-size:11px;color:var(--text-faint);">Latest jobs on top</span>
+        <div class="history-header" style="display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <h3><i class="fa-solid fa-clock-rotate-left"></i> Production History</h3>
+            <span style="font-size:11px;color:var(--text-faint);">Latest jobs on top</span>
+          </div>
+          <button id="btn-export-csv" class="btn" style="padding:4px 8px; font-size:11px; background:var(--primary); color:white; border:none; border-radius:3px; cursor:pointer;"><i class="fa-solid fa-download"></i> Export CSV</button>
         </div>
         <div class="history-table-wrap">
           <table class="history-table">
@@ -529,7 +532,7 @@
           <ul style="margin:0;padding-left:16px;list-style-type:square;">
             <li style="margin-bottom:6px;"><b>Queue Build-up:</b> Watch how fast jobs pile up. A growing queue means the algorithm is struggling to keep up.</li>
             <li style="margin-bottom:6px;"><b>Gantt Chart:</b> Look for preemption (split jobs) in Round Robin vs continuous blocks in FCFS.</li>
-            <li style="margin-bottom:6px;"><b>AI Decisions:</b> Check the bottom-left panel to see exactly <i>why</i> the scheduler picked the current job.</li>
+            <li style="margin-bottom:6px;"><b>Scheduler Decisions:</b> Check the bottom-left panel to see exactly <i>why</i> the scheduler picked the current job.</li>
             <li><b>Compare Mode:</b> Toggle 'Compare Algorithms' to race two algorithms side-by-side and see the winner!</li>
           </ul>
         </div>
@@ -543,9 +546,9 @@
         </div>
       </div>
 
-      <!-- AI Recommendation -->
+      <!-- Recommendation -->
       <div class="side-card">
-        <div class="side-card-title"><i class="fa-solid fa-lightbulb"></i> AI Recommendations</div>
+        <div class="side-card-title"><i class="fa-solid fa-lightbulb"></i> Recommendations</div>
         <div class="rec-card" id="recCard">
           <div class="rec-item">
             <i class="fa-solid fa-circle-info"></i>
