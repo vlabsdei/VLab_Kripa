@@ -139,11 +139,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnExportCSV) btnExportCSV.addEventListener('click', exportNotebookLedgerToCSV);
 
         // Mobile Sidebar Controls
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileControlHeader = document.getElementById('mobileControlHeader');
         const sidebarOverlay = document.getElementById('sidebarOverlay');
-        if (mobileMenuBtn && sidebarOverlay) {
-            mobileMenuBtn.addEventListener('click', () => {
-                document.body.classList.add('sidebar-open');
+        if (mobileControlHeader && sidebarOverlay) {
+            mobileControlHeader.addEventListener('click', () => {
+                document.body.classList.toggle('sidebar-open');
             });
             sidebarOverlay.addEventListener('click', () => {
                 document.body.classList.remove('sidebar-open');
