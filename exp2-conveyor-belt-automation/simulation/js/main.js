@@ -466,8 +466,10 @@ function setBar(fid,tid,v){
 $('togRun').addEventListener('change',e=>{
   running=e.target.checked;
   const tb=$('telemBadge');
-  tb.innerHTML=running?'<span class="pdot"></span>Telemetry Active':'<span class="pdot" style="background:#ef4444;animation:none"></span>Simulation Paused';
-  tb.style.cssText=running?'':'background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3);color:#f87171;';
+  if (tb) {
+    tb.innerHTML=running?'<span class="pdot"></span>Telemetry Active':'<span class="pdot" style="background:#ef4444;animation:none"></span>Simulation Paused';
+    tb.style.cssText=running?'':'background:rgba(239,68,68,.15);border-color:rgba(239,68,68,.3);color:#f87171;';
+  }
 });
 $('togNoise').addEventListener('change',e=>noisy=e.target.checked);
 
@@ -527,6 +529,17 @@ $('btnClr').addEventListener('click',()=>{$('tBody').innerHTML='';logData=[];run
 (()=>{
   cv.width  = 900;
   cv.height = 300;
+
+  const mobileControlHeader = $('mobileControlHeader');
+  const sidebarOverlay = $('sidebarOverlay');
+  if (mobileControlHeader && sidebarOverlay) {
+    mobileControlHeader.addEventListener('click', () => {
+      document.body.classList.toggle('sidebar-open');
+    });
+    sidebarOverlay.addEventListener('click', () => {
+      document.body.classList.remove('sidebar-open');
+    });
+  }
 })();
 
 requestAnimationFrame(loop);
